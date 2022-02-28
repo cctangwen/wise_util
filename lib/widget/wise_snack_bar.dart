@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 
 import '/util/screen/screen_size_extension.dart';
 
-class WiseSnackbar {
-  static showSnackbar({
+class WiseSnackBar {
+  static showSnackBar({
     required String title,
     required String msg,
     int duration = 3,
+    Color? backgroundColor,
   }) {
     Get.showSnackbar(GetBar(
       title: title,
@@ -16,6 +17,7 @@ class WiseSnackbar {
       snackPosition: SnackPosition.TOP,
       margin: EdgeInsets.all(16.w),
       borderRadius: 10.r,
+      backgroundColor: backgroundColor ?? Color(0xFF303030),
     ));
   }
 }

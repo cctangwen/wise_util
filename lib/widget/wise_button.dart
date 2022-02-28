@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '/res/wise_color.dart';
 import '/util/screen/screen_size_extension.dart';
 
+///按钮
 class WiseButton {
   ///主要按钮
   static Widget primaryButton(

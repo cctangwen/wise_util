@@ -17,9 +17,12 @@ class WiseMultiStateWidget extends StatefulWidget {
   ///返回null，则显示网络错误状态
   final Future<bool?> Function() future;
 
+  final Widget? loadingWidget;
+
   WiseMultiStateWidget({
     required this.successWidget,
     required this.future,
+    this.loadingWidget,
   });
 
   @override
@@ -67,7 +70,7 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
             ///异步数据处理中
             case ConnectionState.waiting:
             default:
-              return WiseMultiStateLoading();
+              return widget.loadingWidget ?? WiseMultiStateLoading();
           }
         },
       ),

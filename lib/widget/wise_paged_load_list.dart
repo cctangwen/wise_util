@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wise_util/widget/wise_skeleton.dart';
 
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
 
+///分页加载
 class WisePagedLoadList<T> extends StatefulWidget {
   ///分页查询方法
   final Future<List<T>> Function(Map<String, dynamic>) future;
@@ -50,6 +52,10 @@ class _WisePagedLoadListState<T> extends State<WisePagedLoadList> {
       future: () async {
         return await _loadMore();
       },
+      loadingWidget: WiseSkeleton(
+        wiseSkeletonType: WiseSkeletonType.listView,
+        mainAxisCount: 20,
+      ),
       successWidget: WisePullToRefresh(
           enablePullDown: true,
           enablePullUp: true,

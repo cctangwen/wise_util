@@ -9,6 +9,7 @@ import '/util/formatter/currency_formatter.dart';
 import '/util/screen/screen_size_extension.dart';
 import '/util/screen/screen_util.dart';
 
+///数字键盘
 class WiseDigitalKeyboard extends StatelessWidget {
   ///点击提交按钮事件
   final Function(String)? onOkPress;

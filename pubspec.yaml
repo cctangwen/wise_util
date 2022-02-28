@@ -42,9 +42,13 @@ dependencies:
   #权限控制
   permission_handler: ^8.1.6
 
+  #路径
   path_provider: ^2.0.2
 
+  #应用安装插件
   app_installer: ^1.1.0
+
+  shimmer: ^2.0.0
 
 flutter:
   uses-material-design: true

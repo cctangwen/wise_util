@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/util/screen/screen_size_extension.dart';
 
+///空盒子，占位使用
 class WiseBox {
   WiseBox._privateConstructor();
 
@@ -24,6 +25,7 @@ class WiseBox {
   ///高
   final Widget hBox0 = SizedBox.shrink();
   final Widget hBox4 = SizedBox(height: 4.w);
+  final Widget hBox6 = SizedBox(height: 6.w);
   final Widget hBox8 = SizedBox(height: 8.w);
   final Widget hBox10 = SizedBox(height: 10.w);
   final Widget hBox12 = SizedBox(height: 12.w);

@@ -10,6 +10,8 @@ import 'package:example/pages/paged_load/paged_load_binding.dart';
 import 'package:example/pages/paged_load/paged_load_view.dart';
 import 'package:example/pages/pull_to_refresh/pull_to_refresh_binding.dart';
 import 'package:example/pages/pull_to_refresh/pull_to_refresh_view.dart';
+import 'package:example/pages/skeleton/skeleton_binding.dart';
+import 'package:example/pages/skeleton/skeleton_view.dart';
 import 'package:example/pages/style/style_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
@@ -21,6 +23,7 @@ class AppRoute {
   static const String pageMultiState = '/multiState';
   static const String pagePullToRefresh = '/pullToRefresh';
   static const String pagePagedLoad = '/pagedLoad';
+  static const String pageSkeleton = '/skeleton';
 
   static final List<GetPage> pages = [
     GetPage(
@@ -56,6 +59,11 @@ class AppRoute {
       name: pagePagedLoad,
       page: () => PagedLoadPage(),
       binding: PagedLoadBinding(),
+    ),
+    GetPage(
+      name: pageSkeleton,
+      page: () => SkeletonPage(),
+      binding: SkeletonBinding(),
     ),
   ];
 }

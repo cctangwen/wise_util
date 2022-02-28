@@ -5,7 +5,7 @@ import 'package:get/get.dart' hide Response;
 import '/config/wise_config.dart';
 import '/res/wise_localizations.dart';
 import '/widget/wise_loading.dart';
-import '/widget/wise_snackbar.dart';
+import '/widget/wise_snack_bar.dart';
 import 'http_log_interceptor.dart';
 import 'http_response_data.dart';
 
@@ -106,7 +106,7 @@ class HttpManager {
         WiseLoading.dismiss();
       }
       if (!httpResponseData.isSuccess && withErrorHint) {
-        WiseSnackbar.showSnackbar(
+        WiseSnackBar.showSnackBar(
             title: strings.error, msg: httpResponseData.msg);
       }
     } catch (e) {
@@ -116,7 +116,7 @@ class HttpManager {
         WiseLoading.dismiss();
       }
       if (withErrorHint) {
-        WiseSnackbar.showSnackbar(
+        WiseSnackBar.showSnackBar(
             title: strings.error, msg: strings.networkError);
       }
     }
