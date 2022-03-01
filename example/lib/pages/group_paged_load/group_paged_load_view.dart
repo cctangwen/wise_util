@@ -22,18 +22,27 @@ class GroupPagedLoadPage extends StatelessWidget {
             child: WiseGroupPagedLoadList<String, int>(
               future: (map) async {
                 print("map:$map");
-                await Future.delayed(Duration(seconds: 3));
-                return Future.value(["1", "2", "3"]);
+                await Future.delayed(Duration(seconds: 1));
+                return Future.value([
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                ]);
               },
               group: (string) {
-                return WiseGroupPagedLoadListHeaderData<int>(
-                    key: string, value: int.parse(string));
+                return int.parse(string) % 3;
               },
               rowBuilder: (value) {
                 return Container(height: 70, child: Text(value));
               },
               headerBuilder: (value) {
-                return Container(height: 20, child: Text(value.toString()));
+                return Container(
+                    color: Colors.grey,
+                    height: 20,
+                    child: Text(value.toString()));
               },
             ),
           ),

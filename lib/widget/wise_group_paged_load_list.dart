@@ -1,30 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:group_list_view/group_list_view.dart';
+import 'package:grouped_list/grouped_list.dart';
 
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
 import '/widget/wise_skeleton.dart';
 
-///分组分页加载，
-///key：分组数据标识，若[WiseGroupPagedLoadListHeaderData.key]相同，则认为是同一组的数据
-///value：分组数据内容，用于构建header使用，[WiseGroupPagedLoadListHeaderData.value] 取第一次数据的header
-class WiseGroupPagedLoadListHeaderData<H> {
-  final String key;
-
-  final H value;
-
-  WiseGroupPagedLoadListHeaderData({required this.key, required this.value});
-}
-
 ///分组分页加载
 ///T：单条数据的数据泛型
 ///H：分组数据的数据泛型
-class WiseGroupPagedLoadList<T, H> extends StatefulWidget {
+class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
   ///分页查询方法
   final Future<List<T>> Function(Map<String, dynamic>) future;
 
   ///数据分组。返回单条数据的分组数据
-  final WiseGroupPagedLoadListHeaderData<H> Function(T) group;
+  final E Function(T) group;
 
   ///初始化装载数据
   final Map<String, dynamic>? payload;
@@ -36,7 +25,7 @@ class WiseGroupPagedLoadList<T, H> extends StatefulWidget {
   final Widget Function(T) rowBuilder;
 
   ///行组件
-  final Widget Function(H) headerBuilder;
+  final Widget Function(E) headerBuilder;
 
   WiseGroupPagedLoadList({
     required this.future,
@@ -48,14 +37,12 @@ class WiseGroupPagedLoadList<T, H> extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => WiseGroupPagedLoadListState<T, H>();
+  State<StatefulWidget> createState() => WiseGroupPagedLoadListState<T, E>();
 }
 
-class WiseGroupPagedLoadListState<T, H> extends State<WiseGroupPagedLoadList> {
-  ///所有数据集合，key为[WiseGroupPagedLoadListHeaderData.key]
-  Map<String, List<T>> _data = Map<String, List<T>>();
-
-  Map<String, H> _header = Map<String, H>();
+class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
+  ///所有数据集合
+  List<T> _data = [];
 
   ///页码
   int _pageNum = 1;
@@ -88,26 +75,27 @@ class WiseGroupPagedLoadListState<T, H> extends State<WiseGroupPagedLoadList> {
         onLoading: () async {
           return await _loadMore();
         },
-        child: GroupListView(
-          sectionsCount: _data.keys.toList().length,
-          countOfItemInSection: (int section) {
-            return _data.values.toList()[section].length;
-          },
-          itemBuilder: (BuildContext context, IndexPath index) {
-            T data = _data.values.toList()[index.section][index.index];
-            return (widget as WiseGroupPagedLoadList<T, H>).rowBuilder(data);
-          },
-          separatorBuilder: (BuildContext context, IndexPath index) {
-            return Divider(height: 1);
-          },
-          groupHeaderBuilder: (BuildContext context, int section) {
-            String key = _data.keys.toList()[section];
-            return (widget as WiseGroupPagedLoadList<T, H>)
-                .headerBuilder(_header[key]!);
-          },
-          sectionSeparatorBuilder: (BuildContext context, int section) {
-            return Divider(height: 1);
-          },
+        child: CustomScrollView(
+          physics: ClampingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: GroupedListView<T, E>(
+                  shrinkWrap: true,
+                  elements: _data,
+                  groupBy: (T t) {
+                    return (widget as WiseGroupPagedLoadList<T, E>).group(t);
+                  },
+                  itemBuilder: (BuildContext context, T t) {
+                    return (widget as WiseGroupPagedLoadList<T, E>)
+                        .rowBuilder(t);
+                  },
+                  separator: Divider(height: 1),
+                  groupSeparatorBuilder: (E e) {
+                    return (widget as WiseGroupPagedLoadList<T, E>)
+                        .headerBuilder(e);
+                  }),
+            ),
+          ],
         ),
       ),
     );
@@ -119,41 +107,19 @@ class WiseGroupPagedLoadListState<T, H> extends State<WiseGroupPagedLoadList> {
     params["page_num"] = pageNum ?? _pageNum;
     params["page_size"] = widget.pageSize;
     if (null != _payload) params.addAll(_payload!);
-    return await (widget as WiseGroupPagedLoadList<T, H>).future(params);
+    return await (widget as WiseGroupPagedLoadList<T, E>).future(params);
   }
 
   ///上拉加载更多
   Future<bool> _loadMore() async {
     List<T> newData = await _fetchData();
     if (newData.length > 0) {
-      _formatterData(newData);
       setState(() {
-        _data = _data;
+        _data.addAll(newData);
         _pageNum++;
       });
     }
     return newData.length > 0;
-  }
-
-  ///格式化
-  void _formatterData(List<T> newData) {
-    newData.forEach((element) {
-      ///获取单条数据的分组数据
-      WiseGroupPagedLoadListHeaderData<H> wiseGroupPagedLoadListHeaderData =
-          (widget as WiseGroupPagedLoadList<T, H>).group(element);
-      if (_data.containsKey(wiseGroupPagedLoadListHeaderData.key)) {
-        ///已存在分组数据
-        List<T> list = _data[wiseGroupPagedLoadListHeaderData.key]!;
-        list.add(element);
-      } else {
-        ///不存在分组数据
-        List<T> list = [];
-        list.add(element);
-        _data[wiseGroupPagedLoadListHeaderData.key] = list;
-        _header[wiseGroupPagedLoadListHeaderData.key] =
-            wiseGroupPagedLoadListHeaderData.value;
-      }
-    });
   }
 
   ///下拉刷新
@@ -163,7 +129,7 @@ class WiseGroupPagedLoadListState<T, H> extends State<WiseGroupPagedLoadList> {
     if (newData.length > 0) {
       setState(() {
         _data.clear();
-        _header.clear();
+        _data.addAll(newData);
         _pageNum++;
       });
     }
