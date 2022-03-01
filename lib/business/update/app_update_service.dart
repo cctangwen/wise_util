@@ -8,6 +8,7 @@ import '/business/update/app_update_dialog.dart';
 import '/util/app_util.dart';
 import '/util/http/http_manager.dart';
 
+///应用升级服务
 class AppUpdateService {
   ///检查应用版本信息
   static Future<bool> checkUpdate({bool showDialog = true}) async {
