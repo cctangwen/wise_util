@@ -23,8 +23,8 @@ class PagedLoadPage extends StatelessWidget {
             return Future.value(["1", "2", "3"]);
           },
           payload: {"name": "Tom"},
-          row: (String a) {
-            return Container(height: 70, child: Text(a));
+          rowBuilder: (value) {
+            return Container(height: 70, child: Text(value));
           },
         ),
       ),

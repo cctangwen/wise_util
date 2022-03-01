@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wise_util/widget/wise_skeleton.dart';
 
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
+import '/widget/wise_skeleton.dart';
 
 ///分页加载
 class WisePagedLoadList<T> extends StatefulWidget {
@@ -17,20 +16,20 @@ class WisePagedLoadList<T> extends StatefulWidget {
   final int pageSize;
 
   ///行组件
-  final Widget Function(T) row;
+  final Widget Function(T) rowBuilder;
 
   WisePagedLoadList({
     required this.future,
-    required this.row,
+    required this.rowBuilder,
     this.pageSize = 20,
     this.payload,
   });
 
   @override
-  State<StatefulWidget> createState() => _WisePagedLoadListState<T>();
+  State<StatefulWidget> createState() => WisePagedLoadListState<T>();
 }
 
-class _WisePagedLoadListState<T> extends State<WisePagedLoadList> {
+class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
   ///所有数据集合
   List<T> _data = [];
 
@@ -67,7 +66,8 @@ class _WisePagedLoadListState<T> extends State<WisePagedLoadList> {
           },
           child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
-                return (widget as WisePagedLoadList<T>).row(_data[index]);
+                return (widget as WisePagedLoadList<T>)
+                    .rowBuilder(_data[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(height: 1);

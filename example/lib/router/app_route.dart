@@ -1,5 +1,7 @@
 import 'package:example/pages/formatter/formatter_binding.dart';
 import 'package:example/pages/formatter/formatter_view.dart';
+import 'package:example/pages/group_paged_load/group_paged_load_binding.dart';
+import 'package:example/pages/group_paged_load/group_paged_load_view.dart';
 import 'package:example/pages/home/home_binding.dart';
 import 'package:example/pages/home/home_view.dart';
 import 'package:example/pages/keyboard/keyboard_binding.dart';
@@ -23,6 +25,7 @@ class AppRoute {
   static const String pageMultiState = '/multiState';
   static const String pagePullToRefresh = '/pullToRefresh';
   static const String pagePagedLoad = '/pagedLoad';
+  static const String pageGroupPagedLoad = '/groupPagedLoad';
   static const String pageSkeleton = '/skeleton';
 
   static final List<GetPage> pages = [
@@ -59,6 +62,11 @@ class AppRoute {
       name: pagePagedLoad,
       page: () => PagedLoadPage(),
       binding: PagedLoadBinding(),
+    ),
+    GetPage(
+      name: pageGroupPagedLoad,
+      page: () => GroupPagedLoadPage(),
+      binding: GroupPagedLoadBinding(),
     ),
     GetPage(
       name: pageSkeleton,

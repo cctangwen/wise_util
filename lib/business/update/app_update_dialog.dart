@@ -1,17 +1,20 @@
 import 'dart:io';
 
+import 'package:app_installer/app_installer.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '/res/wise_color.dart';
 import '/res/wise_localizations.dart';
 import '/res/wise_style.dart';
+import '/util/app_util.dart';
 import '/util/permission_util.dart';
 import '/util/screen/screen_size_extension.dart';
 import '/widget/wise_box.dart';
 import '/widget/wise_button.dart';
-import 'app_update_service.dart';
 
 ///应用更新弹窗
 class AppUpdateDialog extends StatefulWidget {
@@ -147,7 +150,6 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
 
   ///取消（稍后）更新
   void _cancelUpdate() async {
-    print("_cancelUpdate:${widget.isForceUpdate}");
     if (widget.isForceUpdate) {
       ///强制更新，退出应用
       exit(0);
@@ -160,37 +162,15 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
   ///确认（现在）更新
   void _confirmUpdate() async {
     if (GetPlatform.isAndroid) {
-      WiseString strings =
-          WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
-      bool hasStoragePermission = await PermissionUtil.checkPermission(
-          Permission.storage,
-          Get.context!,
-          strings.requestStoragePermissionToDownload);
-      if (!hasStoragePermission) {
-        return null;
-      }
-      AppUpdateService.androidUpdate(widget.fileKey!,
-          (num received, num total) {
-        setState(() {
-          downloadProgress = received / total;
-          print("downloadProgress:$downloadProgress");
-          if (downloadProgress == 1) {
-            Get.back();
-          }
-        });
-      });
-      setState(() {
-        isDownloadingApk = true;
-      });
+      if (null != widget.fileKey) _androidUpdate(widget.fileKey!);
     }
-
     if (GetPlatform.isIOS) {
-      if (null != widget.iosAppId) AppUpdateService.iosUpdate(widget.iosAppId!);
+      if (null != widget.iosAppId) _iosUpdate(widget.iosAppId!);
       Get.back();
     }
   }
 
-  androidUpdate() async {
+  void _androidUpdate(String fileUrl) async {
     WiseString strings =
         WiseLocalizations.of(Get.context!)?.currentLocalization ??
             EnWiseString();
@@ -203,5 +183,54 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
     if (!hasStoragePermission) {
       return null;
     }
+
+    /// 创建存储文件
+    Directory? storageDir = await getExternalStorageDirectory();
+    String storagePath = storageDir!.path;
+    String fileName =
+        "$storagePath/${DateTime.now().millisecondsSinceEpoch}.apk";
+    File file = new File(fileName);
+    if (!file.existsSync()) {
+      file.createSync();
+    }
+    try {
+      setState(() {
+        isDownloadingApk = true;
+      });
+
+      /// 发起下载请求
+      Response response = await Dio().get(
+        fileUrl,
+        onReceiveProgress: (num received, num total) {
+          setState(() {
+            downloadProgress = received / total;
+            if (downloadProgress == 1) {
+              Get.back();
+            }
+          });
+        },
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+        ),
+      );
+      file.writeAsBytesSync(response.data);
+      AppInstaller.installApk(fileName);
+    } on SocketException {
+      ///网络错误提示
+      setState(() {
+        isDownloadingApk = false;
+      });
+    } catch (e) {
+      setState(() {
+        isDownloadingApk = false;
+      });
+    }
+  }
+
+  /// "1582773616"
+  void _iosUpdate(String iosAppId) async {
+    ///跳转到IOS应用市场
+    AppInstaller.goStore(await AppUtil.appPackageName(), iosAppId);
   }
 }

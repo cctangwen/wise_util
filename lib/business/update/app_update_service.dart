@@ -1,19 +1,12 @@
 import 'dart:convert' as convert;
-import 'dart:io';
 
-import 'package:app_installer/app_installer.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:get/get_utils/src/platform/platform.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '/business/update/app_update_dialog.dart';
-import '/res/wise_localizations.dart';
 import '/util/app_util.dart';
 import '/util/http/http_manager.dart';
-import '/util/permission_util.dart';
 
 class AppUpdateService {
   ///检查应用版本信息
@@ -52,7 +45,7 @@ class AppUpdateService {
               AppUpdateDialog(
                 isForceUpdate: resp.data["force_update"].toString() == "1",
                 description: resp.data["description"],
-                fileKey: resp.data["file_name"],
+                fileKey: resp.data["oss_file_name"],
                 iosAppId: iosAppId,
               ),
               barrierDismissible: false);
@@ -63,59 +56,5 @@ class AppUpdateService {
       print("update data parse exception:$e");
     }
     return false;
-  }
-
-  static Future<void> androidUpdate(
-      String fileKey, Function(int, int) onReceiveProgress) async {
-    WiseString strings =
-        WiseLocalizations.of(Get.context!)?.currentLocalization ??
-            EnWiseString();
-
-    ///检查存储权限
-    bool hasStoragePermission = await PermissionUtil.checkPermission(
-        Permission.storage,
-        Get.context!,
-        strings.requestStoragePermissionToDownload);
-    if (!hasStoragePermission) {
-      return null;
-    }
-
-    /// 创建存储文件
-    Directory? storageDir = await getExternalStorageDirectory();
-    String storagePath = storageDir!.path;
-    String fileName =
-        "$storagePath/${DateTime.now().millisecondsSinceEpoch}.apk";
-    File file = new File(fileName);
-    print("filePath:${file.path}");
-    if (!file.existsSync()) {
-      file.createSync();
-    }
-
-    ///下载应用包
-    String url = kReleaseMode
-        ? "https://gw.paycloud.world/bis/sc/file/download/$fileKey"
-        : "https://gw.wisepaycloud.com/bis/sc/file/download/$fileKey";
-    try {
-      /// 发起下载请求
-      Response response = await Dio().get(
-        url,
-        onReceiveProgress: onReceiveProgress,
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-        ),
-      );
-      file.writeAsBytesSync(response.data);
-      AppInstaller.installApk(fileName);
-    } catch (e) {
-      print(e);
-    }
-    return null;
-  }
-
-  /// "1582773616"
-  static void iosUpdate(String iosAppId) async {
-    ///跳转到IOS应用市场
-    AppInstaller.goStore(await AppUtil.appPackageName(), iosAppId);
   }
 }

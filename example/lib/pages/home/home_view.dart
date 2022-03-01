@@ -124,6 +124,10 @@ class HomePage extends StatelessWidget {
             WiseButton.primaryButton("paged load list", onPressed: () async {
               Get.toNamed(AppRoute.pagePagedLoad);
             }),
+            WiseButton.primaryButton("group paged load list",
+                onPressed: () async {
+              Get.toNamed(AppRoute.pageGroupPagedLoad);
+            }),
             WiseButton.primaryButton("skeleton", onPressed: () async {
               Get.toNamed(AppRoute.pageSkeleton);
             }),
