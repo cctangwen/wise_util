@@ -8,6 +8,7 @@ import 'package:wise_util/res/wise_style.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
 import 'package:wise_util/widget/wise_loading.dart';
+import 'package:wise_util/widget/wise_toast.dart';
 
 import 'home_controller.dart';
 
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   _buildUtil(),
                   WiseBox().hBox20,
-                  _buildWidget(),
+                  _buildWidget(context),
                   WiseBox().hBox20,
                   _buildRes(),
                   WiseBox().hBox20,
@@ -96,7 +97,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildWidget() {
+  Widget _buildWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -133,6 +134,15 @@ class HomePage extends StatelessWidget {
             }),
             WiseButton.primaryButton("avatar", onPressed: () async {
               Get.toNamed(AppRoute.pageAvatar);
+            }),
+            WiseButton.primaryButton("successToast", onPressed: () async {
+              WiseToast.successToast(context, 'ppsp');
+            }),
+            WiseButton.primaryButton("failToast", onPressed: () async {
+              WiseToast.failToast(context, 'ppsp');
+            }),
+            WiseButton.primaryButton("infoToast", onPressed: () async {
+              WiseToast.infoToast(context, 'ppsp');
             }),
           ],
         ),
