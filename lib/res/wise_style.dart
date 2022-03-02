@@ -4,26 +4,17 @@ import 'package:get/get.dart';
 import '/util/screen/screen_size_extension.dart';
 
 class WiseStyle {
-  ///超大号标题-适配深色模式
-  static TextStyle textStyleSuperLargeTitle() => TextStyle(
+  ///显示Display-适配深色模式
+  static TextStyle textStyleDisplay() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.87)
           : Color(0xFF000000).withOpacity(0.87),
-      fontSize: 48.0.sp,
+      fontSize: 32.0.sp,
       fontWeight: FontWeight.w700);
 
-  ///大号标题-适配深色模式
-  static TextStyle textStyleLargeTitle() => TextStyle(
-      fontFamily: 'Regular',
-      color: Get.isDarkMode
-          ? Color(0xFFFFFFFF).withOpacity(0.87)
-          : Color(0xFF000000).withOpacity(0.87),
-      fontSize: 34.0.sp,
-      fontWeight: FontWeight.w700);
-
-  ///正常标题-适配深色模式
-  static TextStyle textStyleNormalTitle() => TextStyle(
+  ///大标题Headline-适配深色模式
+  static TextStyle textStyleHeadline() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.87)
@@ -31,8 +22,8 @@ class WiseStyle {
       fontSize: 24.0.sp,
       fontWeight: FontWeight.w700);
 
-  ///中号标题-适配深色模式
-  static TextStyle textStyleMediumTitle() => TextStyle(
+  ///标题Title-适配深色模式
+  static TextStyle textStyleTitle() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.87)
@@ -40,17 +31,8 @@ class WiseStyle {
       fontSize: 20.0.sp,
       fontWeight: FontWeight.w700);
 
-  ///小号标题-适配深色模式
-  static TextStyle textStyleSmallTitle() => TextStyle(
-      fontFamily: 'Regular',
-      color: Get.isDarkMode
-          ? Color(0xFFFFFFFF).withOpacity(0.87)
-          : Color(0xFF000000).withOpacity(0.87),
-      fontSize: 16.0.sp,
-      fontWeight: FontWeight.w700);
-
-  ///文本-适配深色模式
-  static TextStyle textStylePrimaryText() => TextStyle(
+  ///标签Label-适配深色模式
+  static TextStyle textStyleLabel() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.87)
@@ -58,17 +40,17 @@ class WiseStyle {
       fontSize: 16.0.sp,
       fontWeight: FontWeight.w400);
 
-  ///加粗文本-适配深色模式
-  static TextStyle textStyleBoldPrimaryText() => TextStyle(
+  ///正文Body-适配深色模式
+  static TextStyle textStyleBody() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.87)
           : Color(0xFF000000).withOpacity(0.87),
-      fontSize: 16.0.sp,
-      fontWeight: FontWeight.w800);
+      fontSize: 14.0.sp,
+      fontWeight: FontWeight.w400);
 
-  ///副文本-适配深色模式
-  static TextStyle textStyleSecondText() => TextStyle(
+  ///次要文本-适配深色模式
+  static TextStyle textStyleSecondaryBody() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode
           ? Color(0xFFFFFFFF).withOpacity(0.38)

@@ -21,36 +21,28 @@ class StylePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "超大号标题48",
-              style: WiseStyle.textStyleSuperLargeTitle(),
+              "显示Display32",
+              style: WiseStyle.textStyleDisplay(),
             ),
             Text(
-              "大号标题34",
-              style: WiseStyle.textStyleLargeTitle(),
+              "大标题Headline24",
+              style: WiseStyle.textStyleHeadline(),
             ),
             Text(
-              "正常标题24",
-              style: WiseStyle.textStyleNormalTitle(),
+              "标题Title20",
+              style: WiseStyle.textStyleTitle(),
             ),
             Text(
-              "中号标题20",
-              style: WiseStyle.textStyleMediumTitle(),
+              "标签Label16",
+              style: WiseStyle.textStyleLabel(),
             ),
             Text(
-              "小号标题16",
-              style: WiseStyle.textStyleSmallTitle(),
-            ),
-            Text(
-              "主要文本16",
-              style: WiseStyle.textStylePrimaryText(),
-            ),
-            Text(
-              "加粗文本16",
-              style: WiseStyle.textStyleBoldPrimaryText(),
+              "正文Body14",
+              style: WiseStyle.textStyleBody(),
             ),
             Text(
               "次要文本12",
-              style: WiseStyle.textStyleSecondText(),
+              style: WiseStyle.textStyleSecondaryBody(),
             ),
           ],
         ),

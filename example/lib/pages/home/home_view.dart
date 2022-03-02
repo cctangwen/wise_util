@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Util",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Res",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Widget",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -131,6 +131,9 @@ class HomePage extends StatelessWidget {
             WiseButton.primaryButton("skeleton", onPressed: () async {
               Get.toNamed(AppRoute.pageSkeleton);
             }),
+            WiseButton.primaryButton("avatar", onPressed: () async {
+              Get.toNamed(AppRoute.pageAvatar);
+            }),
           ],
         ),
       ],
@@ -143,7 +146,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Business",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Wrap(
           spacing: 16,

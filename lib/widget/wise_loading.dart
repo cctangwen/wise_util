@@ -69,7 +69,7 @@ class _LoadingDialogWidget extends StatelessWidget {
                   ),
                   Text(
                     tips ?? strings.loading,
-                    style: WiseStyle.textStylePrimaryText(),
+                    style: WiseStyle.textStyleBody(),
                   )
                 ],
               ),

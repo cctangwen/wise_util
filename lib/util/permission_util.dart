@@ -61,11 +61,11 @@ class PermissionUtil {
         builder: (context) => AlertDialog(
               title: Text(
                 strings.requestPermissionTitle,
-                style: WiseStyle.textStyleMediumTitle(),
+                style: WiseStyle.textStyleTitle(),
               ),
               content: Text(
                 errorHint,
-                style: WiseStyle.textStylePrimaryText(),
+                style: WiseStyle.textStyleBody(),
               ),
               actions: [
                 TextButton(

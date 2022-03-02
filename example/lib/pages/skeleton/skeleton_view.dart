@@ -27,7 +27,7 @@ class SkeletonPage extends StatelessWidget {
             children: [
               Text(
                 "grid skeleton",
-                style: WiseStyle.textStylePrimaryText(),
+                style: WiseStyle.textStyleTitle(),
               ),
               Container(
                   margin: EdgeInsets.all(16.w),
@@ -41,7 +41,7 @@ class SkeletonPage extends StatelessWidget {
               WiseBox().hBox20,
               Text(
                 "list skeleton",
-                style: WiseStyle.textStylePrimaryText(),
+                style: WiseStyle.textStyleTitle(),
               ),
               Container(
                   margin: EdgeInsets.all(16.w),

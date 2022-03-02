@@ -368,8 +368,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
           onPressed();
         },
         onLongPress: onLongPressed,
-        child:
-            isText ? Text(text, style: WiseStyle.textStyleSmallTitle()) : child,
+        child: isText ? Text(text, style: WiseStyle.textStyleTitle()) : child,
       ),
     );
   }

@@ -29,7 +29,7 @@ class WiseMultiStateNoData extends StatelessWidget {
           WiseBox().wBox20,
           Text(
             strings.multiStateNoData,
-            style: WiseStyle.textStyleSecondText(),
+            style: WiseStyle.textStyleBody(),
           )
         ],
       ),

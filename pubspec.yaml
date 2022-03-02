@@ -11,17 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  # 国际化
   intl: ^0.17.0
 
+  # Getx
   get: ^4.3.8
 
-  #  Wraps platform-specific persistent storage for simple data
-  #  (NSUserDefaults on iOS and macOS, SharedPreferences on Android, etc.).
-  #  Data may be persisted to disk asynchronously,
-  #  and there is no guarantee that writes will be persisted to disk after returning,
-  #  so this plugin must not be used for storing critical data.
-  #  Supported data types are int, double, bool, String and List<String>.
+  # 简单数据存储
   shared_preferences: ^2.0.7
 
   # 网络请求
@@ -30,27 +26,32 @@ dependencies:
   # 时区转换
   timezone: ^0.8.0
 
-  #包检查
+  # 包检查
   package_info: ^2.0.2
 
   # 瀑布流
   flutter_staggered_grid_view: ^0.6.1
 
-  #下拉刷新
+  # 下拉刷新
   pull_to_refresh: ^2.0.0
 
-  #权限控制
+  # 权限控制
   permission_handler: ^8.1.6
 
-  #路径
+  # 路径
   path_provider: ^2.0.2
 
-  #应用安装插件
+  # 应用安装插件
   app_installer: ^1.1.0
 
+  # 微光
   shimmer: ^2.0.0
 
+  # 分组列表
   grouped_list: ^4.2.0
+
+  # 网络图片缓存
+  cached_network_image: ^3.1.0
 
 flutter:
   uses-material-design: true

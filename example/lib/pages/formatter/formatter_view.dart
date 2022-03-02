@@ -54,27 +54,27 @@ class FormatterPage extends StatelessWidget {
       children: [
         Text(
           "Currency formatter",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Text(
           CurrencyFormatter.format(123456, showSymbol: true),
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           CurrencyFormatter.format(123456, showSymbol: false),
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "货币符号:     ${CurrencyFormatter.getSymbol()}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "小数分隔符:     ${CurrencyFormatter.getDecimalSeparator()}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "小数位数:     ${CurrencyFormatter.getDecimalPlaces()}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
       ],
     );
@@ -86,15 +86,15 @@ class FormatterPage extends StatelessWidget {
       children: [
         Text(
           "Number formatter",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Text(
           NumberFormatter.format(456789),
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           NumberFormatter.format(0.1, isPercent: true),
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
       ],
     );
@@ -107,47 +107,47 @@ class FormatterPage extends StatelessWidget {
       children: [
         Text(
           "Datetime formatter",
-          style: WiseStyle.textStyleSmallTitle(),
+          style: WiseStyle.textStyleTitle(),
         ),
         Text(
           "${DatetimeFormatter.formatDateYMMM(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatDateYMMMD(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatYMMMDJM(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatYMMMDJMS(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatYMMMDHM(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatYMMMDHMS(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatJM(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatJMS(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatHM(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
         Text(
           "${DatetimeFormatter.formatHMS(now)}",
-          style: WiseStyle.textStylePrimaryText(),
+          style: WiseStyle.textStyleBody(),
         ),
       ],
     );
@@ -161,7 +161,7 @@ class FormatterPage extends StatelessWidget {
           children: [
             Text(
               "当前货币类型:   ",
-              style: WiseStyle.textStylePrimaryText(),
+              style: WiseStyle.textStyleBody(),
             ),
             OutlinedButton(
               onPressed: () {
@@ -180,7 +180,7 @@ class FormatterPage extends StatelessWidget {
           children: [
             Text(
               "当前地区偏好:   ",
-              style: WiseStyle.textStylePrimaryText(),
+              style: WiseStyle.textStyleBody(),
             ),
             OutlinedButton(
               onPressed: () {

@@ -1,3 +1,5 @@
+import 'package:example/pages/avatar/avatar_binding.dart';
+import 'package:example/pages/avatar/avatar_view.dart';
 import 'package:example/pages/formatter/formatter_binding.dart';
 import 'package:example/pages/formatter/formatter_view.dart';
 import 'package:example/pages/group_paged_load/group_paged_load_binding.dart';
@@ -27,6 +29,7 @@ class AppRoute {
   static const String pagePagedLoad = '/pagedLoad';
   static const String pageGroupPagedLoad = '/groupPagedLoad';
   static const String pageSkeleton = '/skeleton';
+  static const String pageAvatar = '/avatar';
 
   static final List<GetPage> pages = [
     GetPage(
@@ -72,6 +75,11 @@ class AppRoute {
       name: pageSkeleton,
       page: () => SkeletonPage(),
       binding: SkeletonBinding(),
+    ),
+    GetPage(
+      name: pageAvatar,
+      page: () => AvatarPage(),
+      binding: AvatarBinding(),
     ),
   ];
 }

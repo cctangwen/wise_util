@@ -83,7 +83,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 children: [
                   Text(
                     strings.appUpdateDialogTitle,
-                    style: WiseStyle.textStyleBoldPrimaryText(),
+                    style: WiseStyle.textStyleTitle(),
                   ),
                   WiseBox().hBox12,
                   //更新内容点
@@ -91,7 +91,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       widget.description,
-                      style: WiseStyle.textStylePrimaryText(),
+                      style: WiseStyle.textStyleBody(),
                       maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -120,7 +120,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                       children: [
                         Text(
                           strings.downloading,
-                          style: WiseStyle.textStylePrimaryText(),
+                          style: WiseStyle.textStyleBody(),
                         ),
                         Container(
                             width: 240.w,

@@ -39,7 +39,7 @@ class WiseMultiStateNoNetwork extends StatelessWidget {
           WiseBox().wBox20,
           Text(
             strings.multiStateNoNetwork,
-            style: WiseStyle.textStyleSecondText(),
+            style: WiseStyle.textStyleBody(),
           )
         ],
       ),
