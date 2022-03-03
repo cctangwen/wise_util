@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wise_util/business/update/app_update_service.dart';
 import 'package:wise_util/res/wise_color.dart';
 import 'package:wise_util/res/wise_style.dart';
+import 'package:wise_util/widget/wise_alert_dialog/wise_alert_dialog.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
 import 'package:wise_util/widget/wise_loading.dart';
@@ -143,6 +144,25 @@ class HomePage extends StatelessWidget {
             }),
             WiseButton.primaryButton("infoToast", onPressed: () async {
               WiseToast.infoToast(context, 'ppsp');
+            }),
+            WiseButton.primaryButton("searchAppBar", onPressed: () async {
+              Get.toNamed(AppRoute.pageSearchAppBar);
+            }),
+            WiseButton.primaryButton("ok alert dialog", onPressed: () async {
+              var a = await showWiseOkAlertDialog(
+                  context: context, title: "Title", message: "woshi1xiaosi1");
+              print("a:$a");
+            }),
+            WiseButton.primaryButton("ok cancel alert dialog",
+                onPressed: () async {
+              var a = await showWiseOkCancelAlertDialog(
+                context: context,
+                title: "Title",
+                message: "woshi1xiaosi1",
+                defaultType: OkCancelAlertDefaultType.ok,
+                isDestructiveAction: true,
+              );
+              print("a:$a");
             }),
           ],
         ),

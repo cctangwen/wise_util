@@ -14,6 +14,8 @@ import 'package:example/pages/paged_load/paged_load_binding.dart';
 import 'package:example/pages/paged_load/paged_load_view.dart';
 import 'package:example/pages/pull_to_refresh/pull_to_refresh_binding.dart';
 import 'package:example/pages/pull_to_refresh/pull_to_refresh_view.dart';
+import 'package:example/pages/search_app_bar/search_app_bar_binding.dart';
+import 'package:example/pages/search_app_bar/search_app_bar_view.dart';
 import 'package:example/pages/skeleton/skeleton_binding.dart';
 import 'package:example/pages/skeleton/skeleton_view.dart';
 import 'package:example/pages/style/style_view.dart';
@@ -30,6 +32,7 @@ class AppRoute {
   static const String pageGroupPagedLoad = '/groupPagedLoad';
   static const String pageSkeleton = '/skeleton';
   static const String pageAvatar = '/avatar';
+  static const String pageSearchAppBar = '/searchAppBar';
 
   static final List<GetPage> pages = [
     GetPage(
@@ -80,6 +83,11 @@ class AppRoute {
       name: pageAvatar,
       page: () => AvatarPage(),
       binding: AvatarBinding(),
+    ),
+    GetPage(
+      name: pageSearchAppBar,
+      page: () => SearchAppBarPage(),
+      binding: SearchAppBarBinding(),
     ),
   ];
 }
