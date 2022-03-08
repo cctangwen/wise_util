@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wise_util/res/wise_style.dart';
 
 import 'wise_alert_dialog_action.dart';
 
@@ -19,8 +20,10 @@ Future<T?> showWiseAlertDialog<T>({
         context,
         rootNavigator: useRootNavigator,
       ).pop(key);
-  final titleText = title == null ? null : Text(title);
-  final messageText = message == null ? null : Text(message);
+  final titleText =
+      title == null ? null : Text(title, style: WiseStyle.textStyleTitle());
+  final messageText =
+      message == null ? null : Text(message, style: WiseStyle.textStyleBody());
   return GetPlatform.isIOS
       ? showCupertinoDialog(
           context: context,

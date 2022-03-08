@@ -60,10 +60,10 @@ class KeyboardPage extends StatelessWidget {
                       }),
                     ],
                   ),
-                  WiseButton.secondButton("openKeyboard", onPressed: () {
+                  WiseButton.secondaryButton("openKeyboard", onPressed: () {
                     controller.openKeyboard(context);
                   }),
-                  WiseButton.secondButton("closeKeyboard", onPressed: () {
+                  WiseButton.secondaryButton("closeKeyboard", onPressed: () {
                     controller.closeKeyboard();
                   }),
                   // WiseDigitalKeyboard(

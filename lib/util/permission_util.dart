@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:wise_util/widget/wise_alert_dialog/show_wise_ok_alert_dialog.dart';
+import 'package:wise_util/widget/wise_alert_dialog/wise_alert_dialog.dart';
 
 import '/res/wise_localizations.dart';
-import '/res/wise_style.dart';
 import '/util/sp_util.dart';
 
 class PermissionUtil {
@@ -52,31 +52,16 @@ class PermissionUtil {
     return false;
   }
 
-  static _showOpenAppSetting(BuildContext context, String errorHint) {
+  static _showOpenAppSetting(BuildContext context, String errorHint) async {
     WiseString strings =
         WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
-    showDialog(
+    var okCancelResult = await showWiseOkAlertDialog(
         context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-              title: Text(
-                strings.requestPermissionTitle,
-                style: WiseStyle.textStyleTitle(),
-              ),
-              content: Text(
-                errorHint,
-                style: WiseStyle.textStyleBody(),
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      openAppSettings();
-                      Get.back();
-                    },
-                    child: Text(strings.requestPermissionButton))
-              ],
-            ));
-
-    // openAppSettings();
+        title: strings.requestPermissionTitle,
+        okLabel: strings.requestPermissionButton,
+        message: errorHint);
+    if (okCancelResult == OkCancelResult.ok) {
+      openAppSettings();
+    }
   }
 }

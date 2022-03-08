@@ -20,6 +20,9 @@ class WiseDigitalKeyboard extends StatelessWidget {
   ///是否显示确认按钮
   final bool withOKButton;
 
+  ///是否显示小数按钮。若当前地区显示偏好不存在小数符号，即使设置为true，也不会显示出来
+  final bool withDecimalSeparatorButton;
+
   final int maxIntegerLength;
 
   String _content = "";
@@ -28,6 +31,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
     this.onOkPress,
     this.onChange,
     this.withOKButton = true,
+    this.withDecimalSeparatorButton = true,
     this.maxIntegerLength = 8,
   });
 
@@ -226,13 +230,17 @@ class WiseDigitalKeyboard extends StatelessWidget {
               _onAddContent("9");
             })));
     widgetList.add(StaggeredGridTile.fit(
-        crossAxisCellCount: CurrencyFormatter.getDecimalPlaces() > 0 ? 2 : 3,
+        crossAxisCellCount: (CurrencyFormatter.getDecimalPlaces() > 0 &&
+                withDecimalSeparatorButton)
+            ? 2
+            : 3,
         child: _keySpan(
             text: "0",
             onPressed: () {
               _onAddContent("0");
             })));
-    if (CurrencyFormatter.getDecimalPlaces() > 0) {
+    if (CurrencyFormatter.getDecimalPlaces() > 0 &&
+        withDecimalSeparatorButton) {
       widgetList.add(StaggeredGridTile.fit(
           crossAxisCellCount: 1,
           child: _keySpan(
@@ -312,13 +320,17 @@ class WiseDigitalKeyboard extends StatelessWidget {
               _onAddContent("9");
             })));
     widgetList.add(StaggeredGridTile.fit(
-        crossAxisCellCount: CurrencyFormatter.getDecimalPlaces() > 0 ? 1 : 2,
+        crossAxisCellCount: (CurrencyFormatter.getDecimalPlaces() > 0 &&
+                withDecimalSeparatorButton)
+            ? 1
+            : 2,
         child: _keySpan(
             text: "0",
             onPressed: () {
               _onAddContent("0");
             })));
-    if (CurrencyFormatter.getDecimalPlaces() > 0) {
+    if (CurrencyFormatter.getDecimalPlaces() > 0 &&
+        withDecimalSeparatorButton) {
       widgetList.add(StaggeredGridTile.fit(
           crossAxisCellCount: 1,
           child: _keySpan(

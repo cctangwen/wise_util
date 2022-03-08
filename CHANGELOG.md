@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * change package_info_plus to package_info.
+
+## 0.0.4
+
+* change package_info_plus to package_info.

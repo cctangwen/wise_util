@@ -18,7 +18,7 @@ class WiseButton {
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: WiseColor.colorPrimary(), width: 1.w),
-        borderRadius: BorderRadius.all(Radius.circular(20.r)),
+        borderRadius: BorderRadius.all(Radius.circular(24.r)),
       ),
       color: WiseColor.colorPrimary(),
       height: height ?? 40.w,
@@ -36,7 +36,7 @@ class WiseButton {
   }
 
   ///次要按钮
-  static Widget secondButton(
+  static Widget secondaryButton(
     String data, {
     required VoidCallback? onPressed,
     double? height,
@@ -49,7 +49,7 @@ class WiseButton {
         side: BorderSide(
             color: Get.isDarkMode ? Color(0xFF636366) : Color(0xFFD1D1D6),
             width: 1.w),
-        borderRadius: BorderRadius.all(Radius.circular(20.r)),
+        borderRadius: BorderRadius.all(Radius.circular(24.r)),
       ),
       color: WiseColor.colorNormalBackground(),
       height: height ?? 40.w,
@@ -61,6 +61,30 @@ class WiseButton {
           color: WiseColor.colorPrimary(),
           fontSize: 16.sp,
           fontFamily: 'Regular',
+        ),
+      ),
+    );
+  }
+
+  ///文本按钮
+  static Widget textButton(
+    String data, {
+    required VoidCallback? onPressed,
+    EdgeInsetsGeometry? padding,
+    Color? textColor,
+  }) {
+    return InkWell(
+      onTap: onPressed,
+      child: Padding(
+        padding: padding ?? EdgeInsets.all(0.0),
+        child: Text(
+          data,
+          style: TextStyle(
+            color: textColor ?? WiseColor.colorPrimary(),
+            fontSize: 14.sp,
+            fontFamily: 'Regular',
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );

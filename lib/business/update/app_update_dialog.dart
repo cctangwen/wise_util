@@ -103,7 +103,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     secondChild: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        WiseButton.secondButton(
+                        WiseButton.secondaryButton(
                           strings.appUpdateDialogCancel,
                           minWidth: 114.w,
                           onPressed: _cancelUpdate,

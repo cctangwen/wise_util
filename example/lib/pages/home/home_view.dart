@@ -1,10 +1,13 @@
 import 'package:example/router/app_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wise_util/business/update/app_update_service.dart';
 import 'package:wise_util/res/wise_color.dart';
 import 'package:wise_util/res/wise_style.dart';
+import 'package:wise_util/util/permission_util.dart';
 import 'package:wise_util/widget/wise_alert_dialog/wise_alert_dialog.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
@@ -18,6 +21,20 @@ class HomePage extends StatelessWidget {
 
   final controller = Get.find<HomeController>();
 
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  String? selectedValue;
+  List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -27,22 +44,48 @@ class HomePage extends StatelessWidget {
           appBar: AppBar(
             title: Text("example"),
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              width: Get.width,
-              height: Get.height,
-              color: WiseColor.colorNormalBackground(),
+          body: Container(
+            padding: EdgeInsets.all(20),
+            width: Get.width,
+            height: Get.height,
+            color: WiseColor.colorNormalBackground(),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildUtil(),
+                  _buildUtil(context),
                   WiseBox().hBox20,
                   _buildWidget(context),
                   WiseBox().hBox20,
                   _buildRes(),
                   WiseBox().hBox20,
                   _buildBusiness(),
+                  TextField(
+                    decoration: InputDecoration(),
+                  ),
+                  Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        DropdownButton(
+                          hint: Text("please select"),
+                          items: [
+                            DropdownMenuItem<String>(
+                                value: "11", child: Text("aa")),
+                            DropdownMenuItem<String>(
+                                value: "22", child: Text("bb")),
+                            DropdownMenuItem<String>(
+                                value: "33", child: Text("cc")),
+                            DropdownMenuItem<String>(
+                                value: "44", child: Text("dd")),
+                          ],
+                          onChanged: (a) {
+                            print(a);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -52,7 +95,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildUtil() {
+  Widget _buildUtil(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,6 +111,15 @@ class HomePage extends StatelessWidget {
             }),
             WiseButton.primaryButton("formatter", onPressed: () async {
               Get.toNamed(AppRoute.pageFormatter);
+            }),
+            WiseButton.primaryButton("permission", onPressed: () async {
+              var result = await PermissionUtil.checkPermission(
+                  Permission.storage, context, "快去开启存储权限");
+              if (result) {
+                WiseToast.successToast(context, "权限已开启");
+              } else {
+                WiseToast.failToast(context, "权限已关闭");
+              }
             }),
           ],
         ),
