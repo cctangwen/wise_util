@@ -12,4 +12,4 @@
 
 ## 0.0.4
 
-* change package_info_plus to package_info.
+* add custom widget.
