@@ -12,6 +12,8 @@ class WisePagedLoadList<T> extends StatefulWidget {
   ///初始化装载数据
   final Map<String, dynamic>? payload;
 
+  final Widget? separatorBuilder;
+
   ///单页数据大小，默认20条
   final int pageSize;
 
@@ -21,6 +23,7 @@ class WisePagedLoadList<T> extends StatefulWidget {
   WisePagedLoadList({
     required this.future,
     required this.rowBuilder,
+    this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
   });
@@ -70,7 +73,7 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
                     .rowBuilder(_data[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider(height: 1);
+                return widget.separatorBuilder ?? Divider(height: 1);
               },
               itemCount: _data.length)),
     );
