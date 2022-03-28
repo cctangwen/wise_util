@@ -6,6 +6,8 @@ import '/widget/wise_skeleton.dart';
 
 ///分页加载
 class WisePagedLoadList<T> extends StatefulWidget {
+  final Key? key;
+
   ///分页查询方法
   final Future<List<T>> Function(Map<String, dynamic>) future;
 
@@ -21,12 +23,13 @@ class WisePagedLoadList<T> extends StatefulWidget {
   final Widget Function(T) rowBuilder;
 
   WisePagedLoadList({
+    this.key,
     required this.future,
     required this.rowBuilder,
     this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WisePagedLoadListState<T>();
@@ -105,6 +108,11 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
     setState(() {
       _payload = payload;
     });
+    await _refresh();
+  }
+
+  ///重置装载数据
+  Future<void> reload() async {
     await _refresh();
   }
 
