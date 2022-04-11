@@ -47,7 +47,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
               padding: EdgeInsets.all(5.w),
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.topLeft,
-              color: WiseColor.colorBlankBackground(),
+              color: WiseColor.colorBackground(),
               child: StaggeredGrid.count(
                 crossAxisCount: withOKButton ? 4 : 3,
                 crossAxisSpacing: 5.w,
@@ -59,7 +59,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
           Container(
             width: Get.width,
             height: ScreenUtil().bottomBarHeight,
-            color: WiseColor.colorBlankBackground(),
+            color: WiseColor.colorBackground(),
           ),
         ],
       ),
@@ -371,7 +371,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
       height: 50.w * heightMultiple,
       padding: EdgeInsets.all(0),
       child: MaterialButton(
-        color: null == color ? WiseColor.colorNormalBackground() : color,
+        color: null == color ? WiseColor.colorSurface() : color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(5.r)),
         ),
@@ -380,7 +380,8 @@ class WiseDigitalKeyboard extends StatelessWidget {
           onPressed();
         },
         onLongPress: onLongPressed,
-        child: isText ? Text(text, style: WiseStyle.textStyleTitle()) : child,
+        child:
+            isText ? Text(text, style: WiseStyle.textStyleLargeTitle()) : child,
       ),
     );
   }

@@ -27,11 +27,11 @@ class SkeletonPage extends StatelessWidget {
             children: [
               Text(
                 "grid skeleton",
-                style: WiseStyle.textStyleTitle(),
+                style: WiseStyle.textStyleLargeTitle(),
               ),
               Container(
                   margin: EdgeInsets.all(16.w),
-                  color: WiseColor.colorNormalBackground(),
+                  color: WiseColor.colorSurface(),
                   child: WiseSkeleton(
                     wiseSkeletonType: WiseSkeletonType.gridView,
                     gridAspectRatio: 1.2,
@@ -41,12 +41,12 @@ class SkeletonPage extends StatelessWidget {
               WiseBox().hBox20,
               Text(
                 "list skeleton",
-                style: WiseStyle.textStyleTitle(),
+                style: WiseStyle.textStyleLargeTitle(),
               ),
               Container(
                   margin: EdgeInsets.all(16.w),
                   height: 210.w,
-                  color: WiseColor.colorNormalBackground(),
+                  color: WiseColor.colorSurface(),
                   child: WiseSkeleton(
                     wiseSkeletonType: WiseSkeletonType.listView,
                     mainAxisCount: 10,

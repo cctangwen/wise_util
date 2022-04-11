@@ -26,7 +26,7 @@ class AvatarPage extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text("网络图片(正常):", style: WiseStyle.textStyleLabel()),
+                    Text("网络图片(正常):", style: WiseStyle.textStyleLargeLabel()),
                     WiseAvatar(
                         size: 100,
                         src:
@@ -36,7 +36,7 @@ class AvatarPage extends StatelessWidget {
                 WiseBox().hBox20,
                 Row(
                   children: [
-                    Text("网络图片(正常):", style: WiseStyle.textStyleLabel()),
+                    Text("网络图片(正常):", style: WiseStyle.textStyleLargeLabel()),
                     WiseAvatar(
                         src:
                             "https://img2.baidu.com/it/u=1454761046,2213546903&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"),
@@ -45,14 +45,14 @@ class AvatarPage extends StatelessWidget {
                 WiseBox().hBox20,
                 Row(
                   children: [
-                    Text("网络图片(异常):", style: WiseStyle.textStyleLabel()),
+                    Text("网络图片(异常):", style: WiseStyle.textStyleLargeLabel()),
                     WiseAvatar(src: ""),
                   ],
                 ),
                 WiseBox().hBox20,
                 Row(
                   children: [
-                    Text("文本头像:", style: WiseStyle.textStyleLabel()),
+                    Text("文本头像:", style: WiseStyle.textStyleLargeLabel()),
                     WiseAvatar(
                       alt: "PP",
                       backgroundColor: Colors.green,
@@ -62,7 +62,7 @@ class AvatarPage extends StatelessWidget {
                 WiseBox().hBox20,
                 Row(
                   children: [
-                    Text("Icon头像:", style: WiseStyle.textStyleLabel()),
+                    Text("Icon头像:", style: WiseStyle.textStyleLargeLabel()),
                     WiseAvatar(
                       icon: Icon(
                         Icons.storefront,

@@ -75,7 +75,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
               width: 280.w,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.w),
               decoration: BoxDecoration(
-                color: WiseColor.colorNormalBackground(),
+                color: WiseColor.colorSurface(),
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(4)),
               ),
               child: Column(
@@ -83,7 +83,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 children: [
                   Text(
                     strings.appUpdateDialogTitle,
-                    style: WiseStyle.textStyleTitle(),
+                    style: WiseStyle.textStyleLargeTitle(),
                   ),
                   WiseBox().hBox12,
                   //更新内容点
@@ -91,7 +91,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       widget.description,
-                      style: WiseStyle.textStyleBody(),
+                      style: WiseStyle.textStyleMediumBody(),
                       maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -120,7 +120,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                       children: [
                         Text(
                           strings.downloading,
-                          style: WiseStyle.textStyleBody(),
+                          style: WiseStyle.textStyleMediumBody(),
                         ),
                         Container(
                             width: 240.w,

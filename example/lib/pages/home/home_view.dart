@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             width: Get.width,
             height: Get.height,
-            color: WiseColor.colorNormalBackground(),
+            color: WiseColor.colorSurface(),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Util",
-          style: WiseStyle.textStyleTitle(),
+          style: WiseStyle.textStyleLargeTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -133,7 +133,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Res",
-          style: WiseStyle.textStyleTitle(),
+          style: WiseStyle.textStyleLargeTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -156,7 +156,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Widget",
-          style: WiseStyle.textStyleTitle(),
+          style: WiseStyle.textStyleLargeTitle(),
         ),
         Wrap(
           spacing: 16,
@@ -228,7 +228,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(
           "Business",
-          style: WiseStyle.textStyleTitle(),
+          style: WiseStyle.textStyleLargeTitle(),
         ),
         Wrap(
           spacing: 16,

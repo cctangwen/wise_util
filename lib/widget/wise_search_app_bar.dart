@@ -38,7 +38,7 @@ class _WiseSearchAppBarState extends State<WiseSearchAppBar> {
         leading: WiseBox().hBox0,
         title: Container(
           decoration: BoxDecoration(
-              color: WiseColor.colorNormalBackground(),
+              color: WiseColor.colorSurface(),
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           child: Center(
               child: TextField(

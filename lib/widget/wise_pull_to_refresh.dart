@@ -48,7 +48,7 @@ class _WisePullToRefreshState extends State<WisePullToRefresh> {
     return SmartRefresher(
       controller: _refreshController,
       header: ClassicHeader(
-        textStyle: WiseStyle.textStyleBody(),
+        textStyle: WiseStyle.textStyleMediumBody(),
         completeIcon: Icon(Icons.done, color: WiseColor.colorPrimary()),
         idleIcon: Icon(Icons.arrow_downward, color: WiseColor.colorPrimary()),
         releaseIcon: Icon(Icons.refresh, color: WiseColor.colorPrimary()),
@@ -60,7 +60,7 @@ class _WisePullToRefreshState extends State<WisePullToRefresh> {
         idleText: strings.refreshIdle,
       ),
       footer: ClassicFooter(
-        textStyle: WiseStyle.textStyleBody(),
+        textStyle: WiseStyle.textStyleMediumBody(),
         idleIcon: Icon(Icons.arrow_upward, color: WiseColor.colorPrimary()),
         canLoadingIcon: Icon(Icons.refresh, color: WiseColor.colorPrimary()),
         failedIcon: Icon(Icons.error, color: Colors.redAccent),

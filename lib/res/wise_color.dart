@@ -7,10 +7,18 @@ class WiseColor {
   static Color colorPrimary() => Get.theme.primaryColor;
 
   ///正常背景颜色
-  static Color colorNormalBackground() =>
+  static Color colorOnSurface() =>
+      Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E);
+
+  ///正常背景颜色
+  static Color colorSurface() =>
       Get.isDarkMode ? Color(0xFF2C2C2E) : Color(0xFFFFFFFF);
 
   ///空白背景颜色
-  static Color colorBlankBackground() =>
-      Get.isDarkMode ? Color(0xFF121213) : Color(0xFFEEEEEE);
+  static Color colorOnBackground() =>
+      Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E);
+
+  ///空白背景颜色
+  static Color colorBackground() =>
+      Get.isDarkMode ? Color(0xFF121213) : Color(0xFFF8F8F9);
 }

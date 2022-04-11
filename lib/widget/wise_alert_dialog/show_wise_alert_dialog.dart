@@ -20,10 +20,12 @@ Future<T?> showWiseAlertDialog<T>({
         context,
         rootNavigator: useRootNavigator,
       ).pop(key);
-  final titleText =
-      title == null ? null : Text(title, style: WiseStyle.textStyleTitle());
-  final messageText =
-      message == null ? null : Text(message, style: WiseStyle.textStyleBody());
+  final titleText = title == null
+      ? null
+      : Text(title, style: WiseStyle.textStyleLargeTitle());
+  final messageText = message == null
+      ? null
+      : Text(message, style: WiseStyle.textStyleMediumBody());
   return GetPlatform.isIOS
       ? showCupertinoDialog(
           context: context,

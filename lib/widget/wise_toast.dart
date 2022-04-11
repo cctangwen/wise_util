@@ -73,7 +73,7 @@ class WiseToast {
       Card(
         margin: EdgeInsets.symmetric(horizontal: 40.w),
         elevation: 4,
-        color: WiseColor.colorNormalBackground(),
+        color: WiseColor.colorSurface(),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.r)),
         ),
@@ -87,7 +87,7 @@ class WiseToast {
                 prefix ?? WiseBox().hBox0,
                 Text(
                   msg,
-                  style: WiseStyle.textStyleBody(),
+                  style: WiseStyle.textStyleMediumBody(),
                 ),
               ],
             )),

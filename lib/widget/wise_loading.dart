@@ -53,7 +53,7 @@ class _LoadingDialogWidget extends StatelessWidget {
           child: Container(
             height: 120.w,
             decoration: BoxDecoration(
-              color: WiseColor.colorNormalBackground(),
+              color: WiseColor.colorSurface(),
               borderRadius: BorderRadius.all(Radius.circular(4.r)),
             ),
             child: Center(
@@ -69,7 +69,7 @@ class _LoadingDialogWidget extends StatelessWidget {
                   ),
                   Text(
                     tips ?? strings.loading,
-                    style: WiseStyle.textStyleBody(),
+                    style: WiseStyle.textStyleMediumBody(),
                   )
                 ],
               ),

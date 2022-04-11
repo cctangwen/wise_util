@@ -40,6 +40,7 @@ class WiseBox {
   final Widget hBox50 = SizedBox(height: 50.w);
   final Widget hBox60 = SizedBox(height: 60.w);
   final Widget hBox80 = SizedBox(height: 80.w);
+  final Widget hBox108 = SizedBox(height: 108.w);
   final Widget hBox120 = SizedBox(height: 120.w);
   final Widget hBox180 = SizedBox(height: 180.w);
   final Widget hBox200 = SizedBox(height: 200.w);
