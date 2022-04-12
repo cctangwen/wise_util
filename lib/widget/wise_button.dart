@@ -17,9 +17,9 @@ class WiseButton {
       elevation: 0,
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: WiseColor.colorPrimary(), width: 1.w),
         borderRadius: BorderRadius.all(Radius.circular(24.r)),
       ),
+      disabledColor: WiseColor.colorSurfaceVariant(),
       color: WiseColor.colorPrimary(),
       height: height ?? 40.w,
       minWidth: minWidth,
