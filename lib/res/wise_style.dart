@@ -37,7 +37,7 @@ class WiseStyle {
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 14.0.sp,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w600);
 
   ///大号正文Body-适配深色模式
   static TextStyle textStyleLargeBody() => TextStyle(

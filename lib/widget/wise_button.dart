@@ -83,7 +83,7 @@ class WiseButton {
             color: textColor ?? WiseColor.colorPrimary(),
             fontSize: 14.sp,
             fontFamily: 'Regular',
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
