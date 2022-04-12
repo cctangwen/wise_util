@@ -48,7 +48,7 @@ class WiseAreaCodeState extends State<WiseAreaCode> {
             });
       },
       child: Row(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
           WiseBox().wBox16,
           Text(
