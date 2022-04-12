@@ -16,21 +16,21 @@ class WiseStyle {
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 24.0.sp,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w600);
 
   ///大号标题Title-适配深色模式
   static TextStyle textStyleLargeTitle() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 20.0.sp,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w600);
 
   ///中号标题Title-适配深色模式
   static TextStyle textStyleMediumTitle() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 16.0.sp,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w600);
 
   ///小号标题Title-适配深色模式
   static TextStyle textStyleSmallTitle() => TextStyle(

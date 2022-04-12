@@ -9,6 +9,7 @@ import 'package:wise_util/res/wise_color.dart';
 import 'package:wise_util/res/wise_style.dart';
 import 'package:wise_util/util/permission_util.dart';
 import 'package:wise_util/widget/wise_alert_dialog/wise_alert_dialog.dart';
+import 'package:wise_util/widget/wise_area_code/wise_area_code.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
 import 'package:wise_util/widget/wise_loading.dart';
@@ -116,13 +117,14 @@ class HomePage extends StatelessWidget {
               var result = await PermissionUtil.checkPermission(
                   Permission.storage, context, "快去开启存储权限");
               if (result) {
-                WiseToast.successToast(context, "权限已开启");
+                WiseToast.shortToast("权限已开启");
               } else {
-                WiseToast.failToast(context, "权限已关闭");
+                WiseToast.shortToast("权限已关闭");
               }
             }),
           ],
         ),
+        WiseAreaCode(),
       ],
     );
   }
@@ -188,14 +190,11 @@ class HomePage extends StatelessWidget {
             WiseButton.primaryButton("avatar", onPressed: () async {
               Get.toNamed(AppRoute.pageAvatar);
             }),
-            WiseButton.primaryButton("successToast", onPressed: () async {
-              WiseToast.successToast(context, 'ppsp');
+            WiseButton.primaryButton("shortToast", onPressed: () async {
+              WiseToast.shortToast('ppsp');
             }),
-            WiseButton.primaryButton("failToast", onPressed: () async {
-              WiseToast.failToast(context, 'ppsp');
-            }),
-            WiseButton.primaryButton("infoToast", onPressed: () async {
-              WiseToast.infoToast(context, 'ppsp');
+            WiseButton.primaryButton("longToast", onPressed: () async {
+              WiseToast.longToast('ppsp');
             }),
             WiseButton.primaryButton("searchAppBar", onPressed: () async {
               Get.toNamed(AppRoute.pageSearchAppBar);

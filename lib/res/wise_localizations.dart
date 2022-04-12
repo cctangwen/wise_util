@@ -122,6 +122,12 @@ abstract class WiseString {
 
   ///请求权限-设置按钮
   late String requestPermissionButton;
+
+  ///选择地区号-标题
+  late String selectAreaCodeTitle;
+
+  ///选择地区号-搜索
+  late String selectAreaCodeSearch;
 }
 
 class EnWiseString implements WiseString {
@@ -194,6 +200,12 @@ class EnWiseString implements WiseString {
   @override
   String requestStoragePermissionToDownload =
       "Please open the storage permission first to download";
+
+  @override
+  String selectAreaCodeTitle = "Select Country/Region";
+
+  @override
+  String selectAreaCodeSearch = "Search";
 }
 
 class ChWiseString implements WiseString {
@@ -265,6 +277,12 @@ class ChWiseString implements WiseString {
 
   @override
   String requestStoragePermissionToDownload = "请先开启应用存储权限，以便下载安装包";
+
+  @override
+  String selectAreaCodeTitle = "选择国家/地区";
+
+  @override
+  String selectAreaCodeSearch = "搜索";
 }
 
 class JpWiseString implements WiseString {
@@ -336,6 +354,12 @@ class JpWiseString implements WiseString {
 
   @override
   String requestStoragePermissionToDownload = "保存許可を最初にダウンロードしてください";
+
+  @override
+  String selectAreaCodeTitle = "国または地域";
+
+  @override
+  String selectAreaCodeSearch = "検索";
 }
 
 class FrWiseString implements WiseString {
@@ -408,4 +432,10 @@ class FrWiseString implements WiseString {
   @override
   String requestStoragePermissionToDownload =
       "Veuillez d'abord ouvrir les permissions de stockage pour le téléchargement";
+
+  @override
+  String selectAreaCodeTitle = "Sélectionner un pays";
+
+  @override
+  String selectAreaCodeSearch = "Recherche";
 }
