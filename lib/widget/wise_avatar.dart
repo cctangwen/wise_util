@@ -26,6 +26,8 @@ class WiseAvatar extends StatelessWidget {
   ///默认图片大小尺寸
   final double defaultSize = 40.w;
 
+  final Widget? defaultImage;
+
   WiseAvatar({
     this.size,
     this.src,
@@ -33,6 +35,7 @@ class WiseAvatar extends StatelessWidget {
     this.altStyle,
     this.icon,
     this.backgroundColor,
+    this.defaultImage,
   });
 
   @override
@@ -44,8 +47,10 @@ class WiseAvatar extends StatelessWidget {
           width: size ?? defaultSize,
           height: size ?? defaultSize,
           imageUrl: src!,
-          errorWidget: (context, url, error) => _buildDefaultAvatarImage(),
-          placeholder: (context, url) => _buildDefaultAvatarImage(),
+          errorWidget: (context, url, error) =>
+              defaultImage ?? _buildDefaultAvatarImage(),
+          placeholder: (context, url) =>
+              defaultImage ?? _buildDefaultAvatarImage(),
         ),
       );
     }
@@ -81,7 +86,7 @@ class WiseAvatar extends StatelessWidget {
         ),
       );
     }
-    return _buildDefaultAvatarImage();
+    return defaultImage ?? _buildDefaultAvatarImage();
   }
 
   ///默认头像
