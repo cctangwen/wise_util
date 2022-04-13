@@ -17,9 +17,7 @@ class WiseLoading {
 
   ///隐藏Loading对话框
   static void dismiss() {
-    if (Get.isDialogOpen ?? false) {
-      Get.back();
-    }
+    Get.back();
   }
 }
 
