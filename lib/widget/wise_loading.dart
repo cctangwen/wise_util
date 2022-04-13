@@ -17,7 +17,7 @@ class WiseLoading {
 
   ///隐藏Loading对话框
   static void dismiss() {
-    Get.back();
+    Navigator.of(Get.context!).pop(true);
   }
 }
 
@@ -37,7 +37,9 @@ class _LoadingDialogWidget extends StatelessWidget {
 
   Widget _buildDialog(BuildContext context) {
     WiseString strings =
-        WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
+        WiseLocalizations
+            .of(context)
+            ?.currentLocalization ?? EnWiseString();
 
     ///UnconstrainedBox 破解 Dialog的minWidth: 280.0
     return UnconstrainedBox(
