@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                   WiseBox().hBox20,
                   _buildBusiness(),
                   TextField(
-                    decoration: InputDecoration(),
+                    decoration: InputDecoration(labelText: "Password"),
                   ),
                   Container(
                     child: Column(

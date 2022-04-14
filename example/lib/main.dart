@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:wise_util/res/wise_localizations.dart';
+import 'package:wise_util/res/wise_theme.dart';
 import 'package:wise_util/wise_util.dart';
 
 void main() async {
@@ -25,16 +26,10 @@ void main() async {
 
   runApp(GetMaterialApp(
     ///主题样式
-    theme: ThemeData(
-      brightness: Brightness.light,
-      primaryColor: Colors.blue,
-    ),
+    theme: getLightThemeData(Colors.red),
 
     ///深色模式主题样式
-    darkTheme: ThemeData(
-      brightness: Brightness.dark,
-      primaryColor: Colors.blue,
-    ),
+    darkTheme: getDarkThemeData(Colors.red),
 
     ///初始化页面
     initialRoute: AppRoute.pageHome,

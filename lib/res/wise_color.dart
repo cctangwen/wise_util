@@ -22,7 +22,7 @@ class WiseColor {
   static Color colorBackground() =>
       Get.isDarkMode ? Color(0xFF121213) : Color(0xFFF8F8F9);
 
-  ///空白背景颜色
+  ///分割线颜色
   static Color colorSurfaceVariant() =>
       Get.isDarkMode ? Color(0xFF41474D) : Color(0xFFDEE3EA);
 }
