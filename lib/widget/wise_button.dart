@@ -85,7 +85,7 @@ class WiseButton {
             fontFamily: 'Regular',
             fontWeight: FontWeight.w500,
           ),
-          textAlign: TextAlign.end,
+          textAlign: TextAlign.center,
         ),
       ),
     );
