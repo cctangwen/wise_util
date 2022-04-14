@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wise_util/util/http/http_token_interceptor.dart';
 
 import '/config/wise_config.dart';
 import '/res/wise_localizations.dart';
@@ -42,6 +43,16 @@ class HttpManager {
         _dio!.interceptors.add(HttpLogInterceptor());
       }
     }
+  }
+
+  String? _loginPageAlisa;
+
+  void setLoginPageAlisa(String loginPageAlisa) {
+    _loginPageAlisa = loginPageAlisa;
+  }
+
+  void addTokenInterceptor(String url) {
+    if (null != _dio) _dio!.interceptors.add(HttpTokenInterceptor(url));
   }
 
   ///GET请求
@@ -108,6 +119,7 @@ class HttpManager {
       if (!httpResponseData.isSuccess && withErrorHint) {
         WiseSnackBar.showSnackBar(
             title: strings.error, msg: httpResponseData.msg);
+        _checkLoginAuth(httpResponseData.code);
       }
     } catch (e) {
       httpResponseData =
@@ -121,5 +133,15 @@ class HttpManager {
       }
     }
     return httpResponseData;
+  }
+
+  _checkLoginAuth(String errorCode) {
+    if (errorCode == "SYS011") {
+      String currentRoute = Get.currentRoute;
+      print(
+          "捕获到登录拦截代码：$errorCode,当前页面路由：$currentRoute，登录页面路由：$_loginPageAlisa");
+      if (_loginPageAlisa != null && currentRoute != _loginPageAlisa)
+        Get.offAllNamed(_loginPageAlisa!);
+    }
   }
 }

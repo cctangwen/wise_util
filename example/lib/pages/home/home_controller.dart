@@ -8,6 +8,9 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    _httpManager.setLoginPageAlisa("/style");
+    _httpManager.addTokenInterceptor(
+        "https://gw.paycloud.world/wallet/ucs/app/user/login");
   }
 
   switchTheme() {
