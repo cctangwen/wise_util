@@ -6,6 +6,7 @@ import 'package:wise_util/util/screen/screen_size_extension.dart';
 import 'package:wise_util/util/screen/screen_util.dart';
 import 'package:wise_util/widget/wise_area_code/wise_area_code_data.dart';
 import 'package:wise_util/widget/wise_multi_state/wise_mulit_state_no_data.dart';
+import 'package:wise_util/widget/wise_search_app_bar.dart';
 
 import '../wise_list_tile.dart';
 
@@ -31,6 +32,8 @@ class _WiseAreaCodeDialogState extends State {
 
   @override
   Widget build(BuildContext context) {
+    WiseString strings =
+        WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
     return SingleChildScrollView(
       child: Container(
         width: ScreenUtil().screenWidth,
@@ -40,8 +43,18 @@ class _WiseAreaCodeDialogState extends State {
         color: WiseColor.colorSurface(),
         child: Column(
           children: [
-            Expanded(flex: 0, child: _buildAreaCodeDialogBar()),
-            Expanded(flex: 0, child: _buildAreaCodeDialogSearch()),
+            // Expanded(flex: 0, child: _buildAreaCodeDialogBar()),
+            // Expanded(flex: 0, child: _buildAreaCodeDialogSearch()),
+            Expanded(
+                flex: 0,
+                child: WiseSearchAppBar(
+                  searchChangeAutoCallback: true,
+                  appBarColor: WiseColor.colorSurface(),
+                  title: Text(strings.selectAreaCodeTitle),
+                  onSearchFilter: (value) {
+                    _inputSearchTextChange(value);
+                  },
+                )),
             Expanded(flex: 1, child: _buildAreaCodeDialogList()),
           ],
         ),
@@ -150,12 +163,13 @@ class _WiseAreaCodeDialogState extends State {
   }
 
   ///搜索框输入内容变更监听
-  void _inputSearchTextChange(String text) {
-    String keyWordText = text.trim();
+  void _inputSearchTextChange(String? text) {
     _areaCodeList.clear();
-    if (keyWordText.length == 0) {
+    if (null == text || text.trim().isEmpty) {
       _areaCodeList.addAll(countryCodes);
     } else {
+      String keyWordText = text.trim();
+
       ///模糊匹配
       countryCodes.forEach((element) {
         if (null != element["country_name"] &&

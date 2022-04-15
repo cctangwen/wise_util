@@ -16,7 +16,11 @@ class SearchAppBarPage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: WiseSearchAppBar(
+            // searchChangeAutoCallback: true,
             title: Text("123123"),
+            onSearchFilter: (value) {
+              print("value:$value");
+            },
           ),
         );
       },

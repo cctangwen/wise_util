@@ -1,17 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wise_util/res/wise_color.dart';
+import 'package:wise_util/res/wise_localizations.dart';
 import 'package:wise_util/widget/wise_box.dart';
 
-///TODO: 待完善
 class WiseSearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Widget? title;
 
-  final Color? backgroundColor;
+  final Color? appBarColor;
+
+  final Color? textFiledColor;
+
+  final Function(String?) onSearchFilter;
+
+  final bool searchChangeAutoCallback;
 
   WiseSearchAppBar({
+    required this.onSearchFilter,
     this.title,
-    this.backgroundColor,
+    this.appBarColor,
+    this.textFiledColor,
+    this.searchChangeAutoCallback = false,
   });
 
   @override
@@ -24,6 +33,7 @@ class WiseSearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _WiseSearchAppBarState extends State<WiseSearchAppBar> {
   Widget? _title;
   bool isSearchStatus = false;
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -31,50 +41,88 @@ class _WiseSearchAppBarState extends State<WiseSearchAppBar> {
     _title = widget.title;
   }
 
+  _changeSearchStatus(bool value) {
+    setState(() {
+      isSearchStatus = value;
+    });
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isSearchStatus) {
+      WiseString strings =
+          WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
       return AppBar(
-        leading: WiseBox().hBox0,
-        title: Container(
-          decoration: BoxDecoration(
-              color: WiseColor.colorSurface(),
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          child: Center(
-              child: TextField(
-            // focusNode: controller.focusNode,
-            // controller: controller.searchTextController,
-            // cursorColor: Get.theme.primaryColor,
-            textInputAction: TextInputAction.search,
-            // onSubmitted: (s)=>controller.onQueryClick(),
-            decoration: InputDecoration(
-                // hintText: S.current.store_name,
-                // hintStyle: appTextStyle.GREY_MEDIUM_STYLE,
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(top: 3),
-                  child: Icon(
-                    Icons.search,
-                    // color: appColor.color_text_grey,
-                    size: 20,
-                  ),
-                ),
-                border: InputBorder.none),
-          )),
+        backgroundColor: widget.appBarColor,
+        leading: IconButton(
+          onPressed: () {
+            widget.onSearchFilter(null);
+            _changeSearchStatus(false);
+          },
+          icon: Icon(
+            Icons.clear,
+            color: WiseColor.colorOnSurface(),
+          ),
         ),
-        backgroundColor: widget.backgroundColor,
+        actions: [
+          Visibility(
+            visible: !widget.searchChangeAutoCallback,
+            child: IconButton(
+              onPressed: () {
+                String searchFilter = textEditingController.text.trim();
+                if (searchFilter.isNotEmpty)
+                  widget.onSearchFilter(searchFilter);
+              },
+              icon: Icon(
+                Icons.search,
+                color: WiseColor.colorPrimary(),
+              ),
+            ),
+          ),
+        ],
+        title: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: widget.textFiledColor ??
+                WiseColor.colorSurfaceVariant().withOpacity(0.38),
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+          child: TextField(
+            controller: textEditingController,
+            textInputAction: TextInputAction.search,
+            autofocus: true,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: strings.selectAreaCodeSearch,
+              prefix: WiseBox().wBox16,
+            ),
+            onChanged: (value) {
+              if (widget.searchChangeAutoCallback && value.isNotEmpty)
+                widget.onSearchFilter(value);
+            },
+            onSubmitted: (value) {
+              if (value.isNotEmpty) widget.onSearchFilter(value);
+            },
+          ),
+        ),
       );
     } else {
       return AppBar(
         title: _title,
-        backgroundColor: widget.backgroundColor,
+        backgroundColor: widget.appBarColor,
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {
-                  isSearchStatus = true;
-                });
-              },
-              icon: Icon(Icons.search_sharp))
+            onPressed: () {
+              _changeSearchStatus(true);
+            },
+            icon: Icon(Icons.search_sharp),
+          ),
         ],
       );
     }

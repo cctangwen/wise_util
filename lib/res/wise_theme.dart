@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ThemeData getLightThemeData(Color primaryColor) {
   return ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Color(0xFFF8F8F9),
+    scaffoldBackgroundColor: Color(0xFFF2F2F7),
     appBarTheme: _getLightAppBarTheme(),
     primarySwatch: _createMaterialColor(primaryColor),
   );
@@ -14,7 +14,7 @@ ThemeData getLightThemeData(Color primaryColor) {
 ThemeData getDarkThemeData(Color primaryColor) {
   return ThemeData(
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: Color(0xFF121213),
+    scaffoldBackgroundColor: Color(0xFF1C1C1E),
     appBarTheme: _getDarkAppBarTheme(),
     primarySwatch: _createMaterialColor(primaryColor),
   );
@@ -23,7 +23,7 @@ ThemeData getDarkThemeData(Color primaryColor) {
 //浅色模式下AppBar的样式
 AppBarTheme _getLightAppBarTheme() {
   return AppBarTheme(
-    color: Color(0xFFF8F8F9),
+    color: Color(0xFFF2F2F7),
     elevation: 0,
     brightness: Brightness.light,
     textTheme: TextTheme(
@@ -37,7 +37,7 @@ AppBarTheme _getLightAppBarTheme() {
 //深色模式下AppBar的样式
 AppBarTheme _getDarkAppBarTheme() {
   return AppBarTheme(
-    color: Color(0xFF121213),
+    color: Color(0xFF1C1C1E),
     elevation: 0,
     brightness: Brightness.dark,
     textTheme: TextTheme(
