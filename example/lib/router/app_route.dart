@@ -1,5 +1,7 @@
 import 'package:example/pages/avatar/avatar_binding.dart';
 import 'package:example/pages/avatar/avatar_view.dart';
+import 'package:example/pages/container/container_binding.dart';
+import 'package:example/pages/container/container_view.dart';
 import 'package:example/pages/formatter/formatter_binding.dart';
 import 'package:example/pages/formatter/formatter_view.dart';
 import 'package:example/pages/group_paged_load/group_paged_load_binding.dart';
@@ -33,12 +35,18 @@ class AppRoute {
   static const String pageSkeleton = '/skeleton';
   static const String pageAvatar = '/avatar';
   static const String pageSearchAppBar = '/searchAppBar';
+  static const String pageContainer = '/container';
 
   static final List<GetPage> pages = [
     GetPage(
       name: pageHome,
       page: () => HomePage(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: pageContainer,
+      page: () => ContainerPage(),
+      binding: ContainerBinding(),
     ),
     GetPage(
       name: pageStyle,

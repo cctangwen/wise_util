@@ -215,6 +215,9 @@ class HomePage extends StatelessWidget {
               );
               print("a:$a");
             }),
+            WiseButton.primaryButton("container", onPressed: () async {
+              Get.toNamed(AppRoute.pageContainer);
+            }),
           ],
         ),
       ],
