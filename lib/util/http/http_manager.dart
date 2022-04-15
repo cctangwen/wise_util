@@ -99,8 +99,11 @@ class HttpManager {
     _dio!.options.headers["content-type"] = contentType ?? _defaultContentType;
     _dio!.options.headers["accept-language"] =
         Get.locale?.toLanguageTag() ?? "en-US";
+    print("Token:${WiseConfig.getAuthToken()}");
     if (null != WiseConfig.getAuthToken()) {
       _dio!.options.headers["x-auth-token"] = WiseConfig.getAuthToken();
+    } else {
+      _dio!.options.headers.remove("x-auth-token");
     }
     WiseString strings =
         WiseLocalizations.of(Get.context!)?.currentLocalization ??
