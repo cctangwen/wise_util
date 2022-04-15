@@ -5,6 +5,7 @@ ThemeData getLightThemeData(Color primaryColor) {
   return ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Color(0xFFF2F2F7),
+    primaryColor: primaryColor,
     appBarTheme: _getLightAppBarTheme(),
     primarySwatch: _createMaterialColor(primaryColor),
   );
@@ -15,6 +16,7 @@ ThemeData getDarkThemeData(Color primaryColor) {
   return ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Color(0xFF1C1C1E),
+    primaryColor: primaryColor,
     appBarTheme: _getDarkAppBarTheme(),
     primarySwatch: _createMaterialColor(primaryColor),
   );
