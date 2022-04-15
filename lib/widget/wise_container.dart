@@ -24,6 +24,8 @@ class WiseContainer extends StatelessWidget {
 
   final List<BoxShadow>? boxShadow;
 
+  final GestureTapCallback? onTap;
+
   WiseContainer(
       {required this.child,
       this.width,
@@ -33,17 +35,22 @@ class WiseContainer extends StatelessWidget {
       this.padding,
       this.margin,
       this.border,
-      this.boxShadow});
+      this.boxShadow,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.all(16.w),
       child: Ink(
-        padding: padding ?? EdgeInsets.all(16.w),
         width: width,
         height: height,
-        child: child,
+        child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: padding ?? EdgeInsets.all(16.w),
+              child: child,
+            )),
         decoration: BoxDecoration(
           borderRadius: borderRadius ?? BorderRadius.all(Radius.circular(12.r)),
           border: border,
