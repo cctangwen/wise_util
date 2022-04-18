@@ -13,17 +13,18 @@ class WiseDivider extends StatelessWidget {
 
   final Color? color;
 
-  WiseDivider({this.width,
-    this.height,
-    this.startPadding,
-    this.endPadding,
-    this.color});
+  WiseDivider(
+      {this.width,
+      this.height,
+      this.startPadding,
+      this.endPadding,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-          left: startPadding ?? 16.w, right: endPadding ?? 16.w),
+      margin:
+          EdgeInsets.only(left: startPadding ?? 0.w, right: endPadding ?? 0.w),
       width: width ?? double.infinity,
       height: height ?? 1.w,
       color: color ?? WiseColor.colorSurfaceVariant(),
