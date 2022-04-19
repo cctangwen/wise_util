@@ -16,7 +16,7 @@ class WiseTag extends StatelessWidget {
   Widget build(BuildContext context) {
     Color _color = this.color ?? WiseColor.colorPrimary();
     return Container(
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.w),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
         border: Border.all(color: _color, width: 1.w),
@@ -25,7 +25,7 @@ class WiseTag extends StatelessWidget {
       child: Text(
         this.text,
         style: TextStyle(
-          fontSize: fontSize ?? 10.w,
+          fontSize: fontSize ?? 10.sp,
           fontFamily: 'Regular',
           color: _color,
         ),
