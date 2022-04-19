@@ -117,16 +117,13 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
   }
 
   ///下拉刷新
-  Future<bool> _refresh() async {
+  Future<void> _refresh() async {
     _pageNum = 1;
     List<T> newData = await _fetchData();
-    if (newData.length > 0) {
-      setState(() {
-        _data.clear();
-        _data.addAll(newData);
-        _pageNum++;
-      });
-    }
-    return newData.length > 0;
+    setState(() {
+      _data.clear();
+      _data.addAll(newData);
+      _pageNum++;
+    });
   }
 }
