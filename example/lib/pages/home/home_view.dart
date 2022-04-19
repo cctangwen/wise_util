@@ -13,6 +13,7 @@ import 'package:wise_util/widget/wise_area_code/wise_area_code.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
 import 'package:wise_util/widget/wise_loading.dart';
+import 'package:wise_util/widget/wise_tag.dart';
 import 'package:wise_util/widget/wise_toast.dart';
 
 import 'home_controller.dart';
@@ -56,6 +57,10 @@ class HomePage extends StatelessWidget {
                 children: [
                   _buildUtil(context),
                   WiseBox().hBox20,
+                  WiseTag(
+                    text: "Online",
+                    color: Colors.green,
+                  ),
                   _buildWidget(context),
                   WiseBox().hBox20,
                   _buildRes(),
