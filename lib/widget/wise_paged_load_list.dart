@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wise_util/widget/wise_multi_state/wise_mulit_state_no_data.dart';
 
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
@@ -53,15 +54,11 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
 
   @override
   Widget build(BuildContext context) {
-    return WiseMultiStateWidget(
-      future: () async {
-        return await _loadMore();
-      },
-      loadingWidget: WiseSkeleton(
-        wiseSkeletonType: WiseSkeletonType.listView,
-        mainAxisCount: 20,
-      ),
-      successWidget: WisePullToRefresh(
+    Widget _successWidget;
+    if (_data.length == 0) {
+      _successWidget = WiseMultiStateNoData();
+    } else {
+      _successWidget = WisePullToRefresh(
           enablePullDown: true,
           enablePullUp: true,
           onRefresh: () async {
@@ -78,7 +75,17 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
               separatorBuilder: (BuildContext context, int index) {
                 return widget.separatorBuilder ?? Divider(height: 1);
               },
-              itemCount: _data.length)),
+              itemCount: _data.length));
+    }
+    return WiseMultiStateWidget(
+      future: () async {
+        return await _loadMore();
+      },
+      loadingWidget: WiseSkeleton(
+        wiseSkeletonType: WiseSkeletonType.listView,
+        mainAxisCount: 20,
+      ),
+      successWidget: _successWidget,
     );
   }
 
