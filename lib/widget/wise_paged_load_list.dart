@@ -23,10 +23,13 @@ class WisePagedLoadList<T> extends StatefulWidget {
   ///行组件
   final Widget Function(T) rowBuilder;
 
+  final bool shrinkWrap;
+
   WisePagedLoadList({
     this.key,
     required this.future,
     required this.rowBuilder,
+    this.shrinkWrap = false,
     this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
@@ -68,6 +71,7 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
             return await _loadMore();
           },
           child: ListView.separated(
+              shrinkWrap: widget.shrinkWrap,
               itemBuilder: (BuildContext context, int index) {
                 return (widget as WisePagedLoadList<T>)
                     .rowBuilder(_data[index]);

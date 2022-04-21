@@ -43,8 +43,6 @@ class _WiseAreaCodeDialogState extends State {
         color: WiseColor.colorSurface(),
         child: Column(
           children: [
-            // Expanded(flex: 0, child: _buildAreaCodeDialogBar()),
-            // Expanded(flex: 0, child: _buildAreaCodeDialogSearch()),
             Expanded(
                 flex: 0,
                 child: WiseSearchAppBar(
@@ -57,63 +55,6 @@ class _WiseAreaCodeDialogState extends State {
                 )),
             Expanded(flex: 1, child: _buildAreaCodeDialogList()),
           ],
-        ),
-      ),
-    );
-  }
-
-  ///构建对话框的Toolbar
-  Widget _buildAreaCodeDialogBar() {
-    WiseString strings =
-        WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
-    return AppBar(
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: Icon(
-          Icons.close,
-          color: WiseColor.colorOnSurface(),
-        ),
-      ),
-      title: Text(
-        strings.selectAreaCodeTitle,
-        style: WiseStyle.textStyleMediumTitle(),
-      ),
-      backgroundColor: WiseColor.colorSurface(),
-      elevation: 0,
-    );
-  }
-
-  ///构建对话框的搜索框
-  Widget _buildAreaCodeDialogSearch() {
-    WiseString strings =
-        WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: TextField(
-        maxLines: 1,
-        onChanged: (value) {
-          _inputSearchTextChange(value);
-        },
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: WiseColor.colorBackground(),
-          hintText: strings.selectAreaCodeSearch,
-          contentPadding: EdgeInsets.symmetric(vertical: 14.w),
-          prefixIcon: Icon(Icons.search, color: WiseColor.colorOnSurface()),
-          border: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: WiseColor.colorBackground(), width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(30.r))),
-          enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: WiseColor.colorBackground(), width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(30.r))),
-          focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: WiseColor.colorBackground(), width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(30.r))),
         ),
       ),
     );
