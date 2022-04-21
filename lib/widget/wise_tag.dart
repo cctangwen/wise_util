@@ -19,7 +19,6 @@ class WiseTag extends StatelessWidget {
       padding: padding ?? EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        border: Border.all(color: _color, width: 1.w),
         color: _color.withOpacity(0.18),
       ),
       child: Text(
