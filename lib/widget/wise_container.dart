@@ -40,23 +40,21 @@ class WiseContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: margin ?? EdgeInsets.all(16.w),
-      child: Ink(
-        width: width,
-        height: height,
-        child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: padding ?? EdgeInsets.all(16.w),
-              child: child,
-            )),
-        decoration: BoxDecoration(
-          borderRadius: borderRadius ?? BorderRadius.all(Radius.circular(12.r)),
-          border: border,
-          color: color ?? WiseColor.colorSurface(),
-          boxShadow: boxShadow,
-        ),
+    return Container(
+      margin: margin ?? EdgeInsets.all(16.w),
+      width: width,
+      height: height,
+      child: GestureDetector(
+          onTap: onTap,
+          child: Padding(
+            padding: padding ?? EdgeInsets.all(16.w),
+            child: child,
+          )),
+      decoration: BoxDecoration(
+        borderRadius: borderRadius ?? BorderRadius.all(Radius.circular(12.r)),
+        border: border,
+        color: color ?? WiseColor.colorSurface(),
+        boxShadow: boxShadow,
       ),
     );
   }
