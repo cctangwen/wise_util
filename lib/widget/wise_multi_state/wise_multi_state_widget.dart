@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'wise_mulit_state_loading.dart';
+import '../wise_skeleton.dart';
 import 'wise_mulit_state_no_data.dart';
 import 'wise_mulit_state_no_network.dart';
 
@@ -70,7 +70,11 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
             ///异步数据处理中
             case ConnectionState.waiting:
             default:
-              return widget.loadingWidget ?? WiseMultiStateLoading();
+              return widget.loadingWidget ??
+                  WiseSkeleton(
+                    wiseSkeletonType: WiseSkeletonType.listView,
+                    mainAxisCount: 20,
+                  );
           }
         },
       ),
