@@ -14,11 +14,17 @@ class WiseAvatar extends StatelessWidget {
   ///文本头像
   final String? alt;
 
+  ///本地图片地址
+  final String? asset;
+
   ///Icon头像
   final Icon? icon;
 
   ///头像背景色
   final Color? backgroundColor;
+
+  ///图片颜色
+  final Color? color;
 
   ///文本头像文本样式
   final TextStyle? altStyle;
@@ -34,7 +40,9 @@ class WiseAvatar extends StatelessWidget {
     this.alt,
     this.altStyle,
     this.icon,
+    this.asset,
     this.backgroundColor,
+    this.color,
     this.defaultImage,
   });
 
@@ -83,6 +91,22 @@ class WiseAvatar extends StatelessWidget {
           alignment: Alignment.center,
           color: backgroundColor ?? WiseColor.colorPrimary(),
           child: icon,
+        ),
+      );
+    }
+    if (null != asset) {
+      return Container(
+        width: size ?? defaultSize,
+        height: size ?? defaultSize,
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: backgroundColor ?? WiseColor.colorPrimary().withOpacity(0.18),
+          shape: BoxShape.circle,
+        ),
+        child: Image(
+          fit: BoxFit.contain,
+          color: color ?? WiseColor.colorPrimary(),
+          image: AssetImage(asset!),
         ),
       );
     }
