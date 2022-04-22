@@ -6,6 +6,12 @@ class WiseColor {
   ///主题颜色
   static Color colorPrimary() => Get.theme.primaryColor;
 
+  static Color colorPrimaryContainer() =>
+      Get.isDarkMode ? Color(0xFF004B72) : Color(0xFFC9E6FF);
+
+  static Color colorOnPrimaryContainer() =>
+      Get.isDarkMode ? Color(0xFFC9E6FF) : Color(0xFF001E31);
+
   ///正常背景颜色
   static Color colorOnSurface() =>
       Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E);
