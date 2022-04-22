@@ -5,7 +5,7 @@ import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_divider.dart';
 
 class WiseDataDisplay {
-  static Widget buildVerticalData(String label, String? content,
+  static Widget buildVerticalData(String label, dynamic content,
       {bool nullHide = true}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
@@ -20,7 +20,7 @@ class WiseDataDisplay {
           ),
           // WiseBox().hBox4,
           Text(
-            content ?? "-",
+            content.toString() ?? "-",
             style: WiseStyle.textStyleLargeBody(),
           ),
           WiseBox().hBox12,
