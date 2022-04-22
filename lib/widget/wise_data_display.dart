@@ -6,10 +6,10 @@ import 'package:wise_util/widget/wise_divider.dart';
 
 class WiseDataDisplay {
   static Widget buildVerticalData(String label, dynamic content,
-      {bool nullHide = true}) {
+      {bool nullHide = true, EdgeInsetsGeometry? padding}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
-      padding: EdgeInsets.only(left: 16.w),
+      padding: padding ?? EdgeInsets.only(left: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
