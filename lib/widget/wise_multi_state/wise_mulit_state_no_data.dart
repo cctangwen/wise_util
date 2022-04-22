@@ -12,26 +12,28 @@ class WiseMultiStateNoData extends StatelessWidget {
   Widget build(BuildContext context) {
     WiseString strings =
         WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(top: Get.height / 3),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image(
-            image: AssetImage(
-              'assets/images/multi_state_no_data.png',
-              package: 'wise_util',
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(top: Get.height / 3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage(
+                'assets/images/multi_state_no_data.png',
+                package: 'wise_util',
+              ),
+              width: 180.w,
+              height: 100.w,
             ),
-            width: 180.w,
-            height: 100.w,
-          ),
-          WiseBox().wBox20,
-          Text(
-            strings.multiStateNoData,
-            style: WiseStyle.textStyleLargeLabel(),
-          )
-        ],
+            WiseBox().wBox20,
+            Text(
+              strings.multiStateNoData,
+              style: WiseStyle.textStyleLargeLabel(),
+            )
+          ],
+        ),
       ),
     );
   }

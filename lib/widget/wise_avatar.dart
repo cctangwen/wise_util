@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wise_util/res/wise_color.dart';
+import 'package:wise_util/res/wise_style.dart';
 import 'package:wise_util/util/screen/screen_size_extension.dart';
 
 ///头像组件
@@ -63,23 +64,22 @@ class WiseAvatar extends StatelessWidget {
       );
     }
     if (null != alt) {
-      return ClipOval(
-        child: Container(
-          width: size ?? defaultSize,
-          height: size ?? defaultSize,
-          alignment: Alignment.center,
-          color: backgroundColor ?? WiseColor.colorPrimary(),
-          child: Text(
-            alt!,
-            maxLines: 1,
-            overflow: TextOverflow.fade,
-            style: altStyle ??
-                TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
+      return Container(
+        width: size ?? defaultSize,
+        height: size ?? defaultSize,
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: backgroundColor ?? WiseColor.colorPrimary().withOpacity(0.18),
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          alt!,
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+          style: altStyle ??
+              WiseStyle.textStyleLargeBody().copyWith(
+                color: color ?? WiseColor.colorPrimary(),
+              ),
         ),
       );
     }

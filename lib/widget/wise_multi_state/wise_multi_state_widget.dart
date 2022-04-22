@@ -43,42 +43,40 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: FutureBuilder(
-          future: _future,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            switch (snapshot.connectionState) {
+      child: FutureBuilder(
+        future: _future,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          switch (snapshot.connectionState) {
 
-              ///异步操作完成
-              case ConnectionState.done:
-                if (snapshot.hasData) {
-                  if (snapshot.data) {
-                    return widget.successWidget;
-                  } else {
-                    return WiseMultiStateNoData();
-                  }
+            ///异步操作完成
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                if (snapshot.data) {
+                  return widget.successWidget;
                 } else {
-                  ///无返回或返回的为null，显示网络错误状态
-                  return WiseMultiStateNoNetwork(
-                    retry: () {
-                      setState(() {
-                        _future = widget.future();
-                      });
-                    },
-                  );
+                  return WiseMultiStateNoData();
                 }
+              } else {
+                ///无返回或返回的为null，显示网络错误状态
+                return WiseMultiStateNoNetwork(
+                  retry: () {
+                    setState(() {
+                      _future = widget.future();
+                    });
+                  },
+                );
+              }
 
-              ///异步数据处理中
-              case ConnectionState.waiting:
-              default:
-                return widget.loadingWidget ??
-                    WiseSkeleton(
-                      wiseSkeletonType: WiseSkeletonType.listView,
-                      mainAxisCount: 20,
-                    );
-            }
-          },
-        ),
+            ///异步数据处理中
+            case ConnectionState.waiting:
+            default:
+              return widget.loadingWidget ??
+                  WiseSkeleton(
+                    wiseSkeletonType: WiseSkeletonType.listView,
+                    mainAxisCount: 20,
+                  );
+          }
+        },
       ),
     );
   }
