@@ -44,21 +44,21 @@ class WiseStyle {
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 16.0.sp,
-      fontWeight: FontWeight.w500);
+      fontWeight: FontWeight.w600);
 
   ///中号正文Body-适配深色模式
   static TextStyle textStyleMediumBody() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 14.0.sp,
-      fontWeight: FontWeight.w500);
+      fontWeight: FontWeight.w600);
 
   ///小号正文Body-适配深色模式
   static TextStyle textStyleSmallBody() => TextStyle(
       fontFamily: 'Regular',
       color: Get.isDarkMode ? Color(0xFFE2E2E5) : Color(0xFF1A1C1E),
       fontSize: 12.0.sp,
-      fontWeight: FontWeight.w500);
+      fontWeight: FontWeight.w600);
 
   ///大号标签Label-适配深色模式
   static TextStyle textStyleLargeLabel() => TextStyle(
