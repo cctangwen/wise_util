@@ -67,7 +67,7 @@ class WiseAvatar extends StatelessWidget {
       return Container(
         width: size ?? defaultSize,
         height: size ?? defaultSize,
-        padding: EdgeInsets.all(8.r),
+        padding: EdgeInsets.all(4.r),
         decoration: BoxDecoration(
           color: backgroundColor ?? WiseColor.colorPrimary().withOpacity(0.18),
           shape: BoxShape.circle,
@@ -75,11 +75,12 @@ class WiseAvatar extends StatelessWidget {
         child: Text(
           alt!,
           maxLines: 1,
-          overflow: TextOverflow.fade,
+          overflow: TextOverflow.clip,
           style: altStyle ??
               WiseStyle.textStyleLargeBody().copyWith(
                 color: color ?? WiseColor.colorPrimary(),
               ),
+          textAlign: TextAlign.center,
         ),
       );
     }
