@@ -19,7 +19,7 @@ class WiseDataDisplay {
             style: WiseStyle.textStyleSmallLabel(),
           ),
           Text(
-            content!.toString() ?? "-",
+            null != content ? content.toString() : "-",
             style: WiseStyle.textStyleLargeBody(),
           ),
           WiseBox().hBox12,
