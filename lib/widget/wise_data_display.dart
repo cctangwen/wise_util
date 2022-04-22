@@ -18,9 +18,8 @@ class WiseDataDisplay {
             label,
             style: WiseStyle.textStyleSmallLabel(),
           ),
-          // WiseBox().hBox4,
           Text(
-            content.toString() ?? "-",
+            content!.toString() ?? "-",
             style: WiseStyle.textStyleLargeBody(),
           ),
           WiseBox().hBox12,
