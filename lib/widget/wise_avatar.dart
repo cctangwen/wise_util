@@ -68,6 +68,7 @@ class WiseAvatar extends StatelessWidget {
         width: size ?? defaultSize,
         height: size ?? defaultSize,
         padding: EdgeInsets.all(4.r),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: backgroundColor ?? WiseColor.colorPrimary().withOpacity(0.18),
           shape: BoxShape.circle,
