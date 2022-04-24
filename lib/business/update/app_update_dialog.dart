@@ -91,7 +91,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       widget.description,
-                      style: WiseStyle.textStyleMediumBody(),
+                      style: WiseStyle.textStyleMediumLabel(),
                       maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                     ),

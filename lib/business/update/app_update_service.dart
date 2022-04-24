@@ -11,7 +11,8 @@ import '/util/http/http_manager.dart';
 ///应用升级服务
 class AppUpdateService {
   ///检查应用版本信息
-  static Future<bool> checkUpdate({bool showDialog = true}) async {
+  static Future<bool> checkUpdate(
+      {bool showDialog = true, showLoading = false}) async {
     final HttpManager httpManager = Get.find<HttpManager>();
     String api = kReleaseMode
         ? "https://gw.paycloud.world/ims/mp/app/mobile/app/version/update"
@@ -28,7 +29,9 @@ class AppUpdateService {
     params["system_type"] = GetPlatform.isAndroid ? "android" : "ios";
     params["app_name"] = await AppUtil.appName();
     var resp = await httpManager.post(api,
-        params: params, withErrorHint: false, withLoadingHint: false);
+        params: params,
+        withErrorHint: showLoading,
+        withLoadingHint: showLoading);
     try {
       ///发现新版本
       if (resp.isSuccess &&
