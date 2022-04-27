@@ -41,7 +41,7 @@ Map<String, dynamic> languages = {
       "en-US": "English(America)",
       "ja-JP": "英語(アメリカ　　)"
     },
-    "regionsLabel": {"zh-CN": "美国", "en-US": "America", "ja-JP": "アメリカ　　"},
+    "regionsLabel": {"zh-CN": "美国", "en-US": "America", "ja-JP": "アメリカ"},
     "mainCurrency": "USD"
   },
   "en-GB": {
