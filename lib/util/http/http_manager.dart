@@ -137,7 +137,7 @@ class HttpManager {
   }
 
   _checkLoginAuth(String errorCode) {
-    if (errorCode == "SYS011") {
+    if (errorCode == "SYS001") {
       String currentRoute = Get.currentRoute;
       print(
           "捕获到登录拦截代码：$errorCode,当前页面路由：$currentRoute，登录页面路由：$_loginPageAlisa");

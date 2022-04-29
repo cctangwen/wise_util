@@ -23,7 +23,7 @@ class SpUtil {
   }
 
   /// get string.
-  static String? getString(String key, {String? defValue = ''}) {
+  static String? getString(String key, {String? defValue}) {
     return _prefs?.getString(key) ?? defValue;
   }
 
@@ -33,7 +33,7 @@ class SpUtil {
   }
 
   /// get bool.
-  static bool? getBool(String key, {bool? defValue = false}) {
+  static bool? getBool(String key, {bool? defValue}) {
     return _prefs?.getBool(key) ?? defValue;
   }
 
@@ -43,7 +43,7 @@ class SpUtil {
   }
 
   /// get int.
-  static int? getInt(String key, {int? defValue = 0}) {
+  static int? getInt(String key, {int? defValue}) {
     return _prefs?.getInt(key) ?? defValue;
   }
 
@@ -53,7 +53,7 @@ class SpUtil {
   }
 
   /// get double.
-  static double? getDouble(String key, {double? defValue = 0.0}) {
+  static double? getDouble(String key, {double? defValue}) {
     return _prefs?.getDouble(key) ?? defValue;
   }
 

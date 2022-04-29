@@ -26,7 +26,7 @@ class WiseAreaCodeState extends State<WiseAreaCode> {
     super.initState();
   }
 
-  getAreaCode() {
+  String getAreaCode() {
     return _selectAreaCode;
   }
 
