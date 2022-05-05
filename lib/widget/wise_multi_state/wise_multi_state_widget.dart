@@ -19,10 +19,13 @@ class WiseMultiStateWidget extends StatefulWidget {
 
   final Widget? loadingWidget;
 
+  final Widget? noDataWidget;
+
   WiseMultiStateWidget({
     required this.successWidget,
     required this.future,
     this.loadingWidget,
+    this.noDataWidget,
   });
 
   @override
@@ -54,7 +57,7 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
                 if (snapshot.data) {
                   return widget.successWidget;
                 } else {
-                  return WiseMultiStateNoData();
+                  return widget.noDataWidget ?? WiseMultiStateNoData();
                 }
               } else {
                 ///无返回或返回的为null，显示网络错误状态

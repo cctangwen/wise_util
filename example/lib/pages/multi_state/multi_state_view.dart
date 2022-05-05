@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wise_util/widget/wise_multi_state/wise_mulit_state_loading.dart';
 import 'package:wise_util/widget/wise_multi_state/wise_multi_state_widget.dart';
 
 import 'multi_state_controller.dart';
@@ -20,6 +21,7 @@ class MultiStatePage extends StatelessWidget {
           ),
           body: WiseMultiStateWidget(
             successWidget: Text("load success"),
+            loadingWidget: WiseMultiStateLoading(),
             future: () async {
               print("模拟异步操作");
               await Future.delayed(Duration(seconds: 3));

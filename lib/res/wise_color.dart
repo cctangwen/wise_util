@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WiseColor {
@@ -31,4 +32,16 @@ class WiseColor {
   ///分割线颜色
   static Color colorSurfaceVariant() =>
       Get.isDarkMode ? Color(0xFF41474D) : Color(0xFFDEE3EA);
+
+  ///#ffffff转Color
+  static Color rgbStringToColor(String color) {
+    var hexColor = color.replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    if (hexColor.length == 8) {
+      return Color(int.parse("0x$hexColor"));
+    }
+    return Colors.transparent;
+  }
 }
