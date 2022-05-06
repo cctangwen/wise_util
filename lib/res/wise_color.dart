@@ -44,4 +44,16 @@ class WiseColor {
     }
     return Colors.transparent;
   }
+
+  ///Color转#ffffff
+  static String colorToRgbString(Color color) {
+    String hexColor = "#";
+    String red = color.red.toRadixString(16);
+    hexColor = '$hexColor${red.length == 1 ? "0" : ""}$red';
+    String green = color.green.toRadixString(16);
+    hexColor = '$hexColor${green.length == 1 ? "0" : ""}$green';
+    String blue = color.blue.toRadixString(16);
+    hexColor = '$hexColor${blue.length == 1 ? "0" : ""}$blue';
+    return hexColor;
+  }
 }
