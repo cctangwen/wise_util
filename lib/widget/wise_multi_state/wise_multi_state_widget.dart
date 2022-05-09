@@ -57,6 +57,9 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
                 if (snapshot.data) {
                   return widget.successWidget;
                 } else {
+                  if (null != snapshot.error)
+                    print(
+                        "WiseMultiStateWidgetState snapshot error:${snapshot.error}");
                   return widget.noDataWidget ?? WiseMultiStateNoData();
                 }
               } else {
