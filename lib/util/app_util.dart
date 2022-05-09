@@ -24,4 +24,10 @@ class AppUtil {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.packageName;
   }
+
+  ///当前应用信息
+  static Future<String> appInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return "${packageInfo.version} (${packageInfo.buildNumber})";
+  }
 }

@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '/res/wise_color.dart';
 import '/res/wise_localizations.dart';
 import '/res/wise_style.dart';
+import '/util/screen/screen_size_extension.dart';
 
 ///下拉刷新组件
 class WisePullToRefresh extends StatefulWidget {
@@ -25,12 +26,15 @@ class WisePullToRefresh extends StatefulWidget {
   ///[ListView]必须是唯一子组件，普通组件需要使用[CustomScrollView]+[SliverToBoxAdapter]
   final Widget child;
 
+  final bool usePrimary;
+
   WisePullToRefresh({
     required this.child,
     this.enablePullUp = false,
     this.enablePullDown = true,
     this.onRefresh,
     this.onLoading,
+    this.usePrimary = false,
   });
 
   @override
@@ -45,19 +49,33 @@ class _WisePullToRefreshState extends State<WisePullToRefresh> {
   Widget build(BuildContext context) {
     WiseString strings =
         WiseLocalizations.of(context)?.currentLocalization ?? EnWiseString();
+    Color iconColor =
+        widget.usePrimary ? Colors.white : WiseColor.colorPrimary();
     return SmartRefresher(
       controller: _refreshController,
-      header: ClassicHeader(
-        textStyle: WiseStyle.textStyleMediumBody(),
-        completeIcon: Icon(Icons.done, color: WiseColor.colorPrimary()),
-        idleIcon: Icon(Icons.arrow_downward, color: WiseColor.colorPrimary()),
-        releaseIcon: Icon(Icons.refresh, color: WiseColor.colorPrimary()),
+      header: TwoLevelHeader(
+        textStyle: widget.usePrimary
+            ? WiseStyle.textStyleMediumBody().copyWith(color: Colors.white)
+            : WiseStyle.textStyleMediumBody(),
+        completeIcon: Icon(Icons.done, color: iconColor),
+        idleIcon: Icon(Icons.arrow_downward, color: iconColor),
+        releaseIcon: Icon(Icons.refresh, color: iconColor),
         failedIcon: Icon(Icons.error, color: Colors.redAccent),
         releaseText: strings.refreshRelease,
         refreshingText: strings.refreshRefreshing,
         failedText: strings.refreshFailed,
         completeText: strings.refreshCompleted,
         idleText: strings.refreshIdle,
+        refreshingIcon: Container(
+          width: 20.w,
+          height: 20.w,
+          child: CircularProgressIndicator(color: iconColor, strokeWidth: 2),
+        ),
+        decoration: BoxDecoration(
+          color: widget.usePrimary
+              ? WiseColor.colorPrimary()
+              : WiseColor.colorBackground(),
+        ),
       ),
       footer: ClassicFooter(
         textStyle: WiseStyle.textStyleMediumBody(),
