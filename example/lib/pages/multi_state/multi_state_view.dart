@@ -24,6 +24,7 @@ class MultiStatePage extends StatelessWidget {
             loadingWidget: WiseMultiStateLoading(),
             future: () async {
               print("模拟异步操作");
+              throw Exception("123123123123");
               await Future.delayed(Duration(seconds: 3));
               return null;
             },

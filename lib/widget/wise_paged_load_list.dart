@@ -25,6 +25,8 @@ class WisePagedLoadList<T> extends StatefulWidget {
 
   final bool shrinkWrap;
 
+  final bool enableLoadMore;
+
   WisePagedLoadList({
     this.key,
     required this.future,
@@ -33,6 +35,7 @@ class WisePagedLoadList<T> extends StatefulWidget {
     this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
+    this.enableLoadMore = true,
   }) : super(key: key);
 
   @override
@@ -104,6 +107,9 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
 
   ///上拉加载更多
   Future<bool> _loadMore() async {
+    if (widget.enableLoadMore) {
+      return false;
+    }
     List<T> newData = await _fetchData();
     if (newData.length > 0) {
       setState(() {

@@ -57,13 +57,18 @@ class _WiseMultiStateWidgetState extends State<WiseMultiStateWidget> {
                 if (snapshot.data) {
                   return widget.successWidget;
                 } else {
-                  if (null != snapshot.error)
-                    print(
-                        "WiseMultiStateWidgetState snapshot error:${snapshot.error}");
                   return widget.noDataWidget ?? WiseMultiStateNoData();
                 }
+              } else if (snapshot.hasError) {
+                return WiseMultiStateNoNetwork(
+                  errorMessage: "${snapshot.error}",
+                  retry: () {
+                    setState(() {
+                      _future = widget.future();
+                    });
+                  },
+                );
               } else {
-                ///无返回或返回的为null，显示网络错误状态
                 return WiseMultiStateNoNetwork(
                   retry: () {
                     setState(() {

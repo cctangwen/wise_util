@@ -12,7 +12,10 @@ class WiseMultiStateNoNetwork extends StatelessWidget {
 
   final bool isFullScreen;
 
-  WiseMultiStateNoNetwork({this.retry, this.isFullScreen = true});
+  final String? errorMessage;
+
+  WiseMultiStateNoNetwork(
+      {this.retry, this.isFullScreen = true, this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class WiseMultiStateNoNetwork extends StatelessWidget {
               ),
               WiseBox().wBox20,
               Text(
-                strings.multiStateNoNetwork,
+                errorMessage ?? strings.multiStateNoNetwork,
                 style: WiseStyle.textStyleLargeLabel(),
               )
             ],

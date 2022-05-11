@@ -9,6 +9,8 @@ import '/widget/wise_skeleton.dart';
 ///T：单条数据的数据泛型
 ///H：分组数据的数据泛型
 class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
+  final Key? key;
+
   ///分页查询方法
   final Future<List<T>> Function(Map<String, dynamic>) future;
 
@@ -28,13 +30,14 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
   final Widget Function(E) headerBuilder;
 
   WiseGroupPagedLoadList({
+    this.key,
     required this.future,
     required this.group,
     required this.rowBuilder,
     required this.headerBuilder,
     this.pageSize = 20,
     this.payload,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WiseGroupPagedLoadListState<T, E>();
@@ -141,6 +144,11 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
     setState(() {
       _payload = payload;
     });
+    await _refresh();
+  }
+
+  ///重置装载数据
+  Future<void> reload() async {
     await _refresh();
   }
 }
