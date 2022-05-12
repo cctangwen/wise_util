@@ -38,4 +38,34 @@ class WiseDataDisplay {
       ),
     );
   }
+
+  static Widget buildHorizontalData(String label, dynamic content,
+      {bool nullHide = true,
+      EdgeInsetsGeometry? padding,
+      VoidCallback? onPressed}) {
+    if (null == content && nullHide) return WiseBox().hBox0;
+    return Container(
+      padding: padding ?? EdgeInsets.only(bottom: 8.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: WiseStyle.textStyleSmallLabel(),
+          ),
+          Visibility(
+            visible: onPressed == null,
+            replacement: WiseButton.textButton(
+                null != content ? content.toString() : "-", onPressed: () {
+              onPressed!();
+            }),
+            child: Text(
+              null != content ? content.toString() : "-",
+              style: WiseStyle.textStyleSmallBody(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
