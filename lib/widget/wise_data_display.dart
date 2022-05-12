@@ -8,8 +8,8 @@ import 'package:wise_util/widget/wise_divider.dart';
 class WiseDataDisplay {
   static Widget buildVerticalData(String label, dynamic content,
       {bool nullHide = true,
-      EdgeInsetsGeometry? padding,
-      VoidCallback? onPressed}) {
+        EdgeInsetsGeometry? padding,
+        VoidCallback? onPressed}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
       padding: padding ?? EdgeInsets.only(left: 16.w),
@@ -41,11 +41,11 @@ class WiseDataDisplay {
 
   static Widget buildHorizontalData(String label, dynamic content,
       {bool nullHide = true,
-      EdgeInsetsGeometry? padding,
-      VoidCallback? onPressed}) {
+        EdgeInsetsGeometry? padding,
+        VoidCallback? onPressed}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
-      padding: padding ?? EdgeInsets.only(bottom: 8.w),
+      padding: padding ?? EdgeInsets.only(bottom: 4.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
