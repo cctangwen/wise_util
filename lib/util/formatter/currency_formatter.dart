@@ -21,13 +21,13 @@ class CurrencyFormatter {
   }
 
   ///获取货币符号
-  static String getSymbol() {
-    return _getSimpleCurrency().currencySymbol;
+  static String getSymbol({String? currencyName}) {
+    return _getSimpleCurrency(currencyName: currencyName).currencySymbol;
   }
 
   ///获取小数分隔符
-  static String getDecimalSeparator() {
-    String temp = format(0, showSymbol: false);
+  static String getDecimalSeparator({String? currencyName}) {
+    String temp = format(0, showSymbol: false, currencyName: currencyName);
     if (temp.contains(",")) {
       return ",";
     } else if (temp.contains(".")) {
@@ -38,8 +38,8 @@ class CurrencyFormatter {
   }
 
   ///获取小数位数
-  static int getDecimalPlaces() {
-    return _getSimpleCurrency().decimalDigits ?? 2;
+  static int getDecimalPlaces({String? currencyName}) {
+    return _getSimpleCurrency(currencyName: currencyName).decimalDigits ?? 2;
   }
 
   ///获取简单金额,例如:$1.00
