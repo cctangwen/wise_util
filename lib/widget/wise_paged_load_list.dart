@@ -107,7 +107,7 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
 
   ///上拉加载更多
   Future<bool> _loadMore() async {
-    if (widget.enableLoadMore) {
+    if (!widget.enableLoadMore) {
       return false;
     }
     List<T> newData = await _fetchData();
