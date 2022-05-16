@@ -140,10 +140,25 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
   }
 
   ///重置装载数据
-  Future<void> resetPayload(Map<String, dynamic>? payload) async {
-    setState(() {
-      _payload = payload;
-    });
+  Future<void> resetPayload(Map<String, dynamic>? payload,
+      {bool replaceAll = true}) async {
+    ///全部替换参数
+    if (replaceAll) {
+      setState(() {
+        _payload = payload;
+      });
+    } else {
+      ///增量替换参数
+      if (_payload == null) {
+        _payload = Map<String, dynamic>();
+      }
+      payload!.forEach((key, value) {
+        _payload![key] = value;
+      });
+      setState(() {
+        _payload = _payload;
+      });
+    }
     await _refresh();
   }
 
