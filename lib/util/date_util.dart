@@ -1,4 +1,3 @@
-import 'package:timezone/browser.dart';
 import 'package:timezone/timezone.dart';
 
 class DateUtil {
