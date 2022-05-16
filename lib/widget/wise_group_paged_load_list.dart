@@ -109,7 +109,11 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
     Map<String, dynamic> params = Map<String, dynamic>();
     params["page_num"] = pageNum ?? _pageNum;
     params["page_size"] = widget.pageSize;
-    if (null != _payload) params.addAll(_payload!);
+    if (null != _payload) {
+      _payload!.forEach((key, value) {
+        if (null != value) params[key] = value;
+      });
+    }
     return await (widget as WiseGroupPagedLoadList<T, E>).future(params);
   }
 
@@ -144,9 +148,7 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
       {bool replaceAll = true}) async {
     ///全部替换参数
     if (replaceAll) {
-      setState(() {
-        _payload = payload;
-      });
+      _payload = payload;
     } else {
       ///增量替换参数
       if (_payload == null) {
@@ -154,9 +156,6 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
       }
       payload!.forEach((key, value) {
         _payload![key] = value;
-      });
-      setState(() {
-        _payload = _payload;
       });
     }
     await _refresh();

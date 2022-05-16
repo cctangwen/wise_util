@@ -1,21 +1,8 @@
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart';
 
 import '/config/wise_config.dart';
 
 class DatetimeFormatter {
-  ///UTC0时间转换城本地时间
-  static DateTime utc0TimeToLocaleTime(String time) {
-    var offset = DateTime.parse(time).timeZoneOffset;
-    var date = DateTime.parse(time).add(offset);
-    return date;
-  }
-
-  ///本地时间转换成UTC0时间
-  static DateTime localeTimeToUtc0Time(DateTime time) {
-    return TZDateTime.from(time, UTC);
-  }
-
   ///格式化 YEAR_ABBR_MONTH
   static String formatDateYMMM(DateTime datetime) {
     String locale = WiseConfig.getRegion();
