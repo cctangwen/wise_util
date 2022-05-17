@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 
+import '/widget/wise_divider.dart';
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
 import '/widget/wise_skeleton.dart';
@@ -26,6 +27,8 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
   ///行组件
   final Widget Function(T) rowBuilder;
 
+  final Widget? separatorBuilder;
+
   ///行组件
   final Widget Function(E) headerBuilder;
 
@@ -35,6 +38,7 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
     required this.group,
     required this.rowBuilder,
     required this.headerBuilder,
+    this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
   }) : super(key: key);
@@ -92,7 +96,7 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
                     return (widget as WiseGroupPagedLoadList<T, E>)
                         .rowBuilder(t);
                   },
-                  separator: Divider(height: 1),
+                  separator: widget.separatorBuilder ?? WiseDivider(),
                   groupSeparatorBuilder: (E e) {
                     return (widget as WiseGroupPagedLoadList<T, E>)
                         .headerBuilder(e);

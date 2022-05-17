@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wise_util/widget/wise_multi_state/wise_mulit_state_no_data.dart';
 
+import '/widget/wise_divider.dart';
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
 import '/widget/wise_pull_to_refresh.dart';
 import '/widget/wise_skeleton.dart';
@@ -83,7 +84,7 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
                     .rowBuilder(_data[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-                return widget.separatorBuilder ?? Divider(height: 1);
+                return widget.separatorBuilder ?? WiseDivider();
               },
               itemCount: _data.length));
     }

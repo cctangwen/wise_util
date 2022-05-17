@@ -49,6 +49,7 @@ class WiseMultiStateNoNetwork extends StatelessWidget {
               Text(
                 errorMessage ?? strings.multiStateNoNetwork,
                 style: WiseStyle.textStyleLargeLabel(),
+                textAlign: TextAlign.center,
               )
             ],
           ),
