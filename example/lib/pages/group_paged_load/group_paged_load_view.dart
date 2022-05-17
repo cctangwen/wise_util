@@ -19,55 +19,25 @@ class GroupPagedLoadPage extends StatelessWidget {
             title: Text("Group Paged Load"),
           ),
           body: Container(
-            child: WiseGroupPagedLoadList<String, int>(
+            child: WiseGroupPagedLoadList<String, String>(
               future: (map) async {
                 print("map:$map");
                 await Future.delayed(Duration(seconds: 1));
                 return Future.value([
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
-                  "6",
+                  "2022-05-17",
+                  "2022-05-17",
+                  "2022-05-17",
+                  "2022-05-17",
+                  "2022-05-16",
+                  "2022-05-16",
+                  "2022-05-16",
+                  "2022-05-15",
+                  "2022-05-15",
+                  "2022-05-14",
                 ]);
               },
               group: (string) {
-                return int.parse(string) % 3;
+                return string;
               },
               rowBuilder: (value) {
                 return Container(height: 70, child: Text(value));

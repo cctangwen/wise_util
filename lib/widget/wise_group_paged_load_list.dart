@@ -34,7 +34,7 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
 
   final bool reverse;
 
-  final bool desc;
+  final bool asc;
 
   WiseGroupPagedLoadList({
     this.key,
@@ -45,8 +45,8 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
     this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
-    this.reverse = true,
-    this.desc = true,
+    this.reverse = false,
+    this.asc = true,
   }) : super(key: key);
 
   @override
@@ -95,12 +95,14 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
               child: GroupedListView<T, E>(
                   shrinkWrap: true,
                   reverse: widget.reverse,
-                  order: widget.desc
-                      ? GroupedListOrder.DESC
-                      : GroupedListOrder.ASC,
+                  order:
+                      widget.asc ? GroupedListOrder.ASC : GroupedListOrder.DESC,
                   elements: _data,
                   groupBy: (T t) {
                     return (widget as WiseGroupPagedLoadList<T, E>).group(t);
+                  },
+                  groupComparator: (e1, e2) {
+                    return (e2 as Comparable).compareTo(e1 as Comparable);
                   },
                   itemBuilder: (BuildContext context, T t) {
                     return (widget as WiseGroupPagedLoadList<T, E>)
