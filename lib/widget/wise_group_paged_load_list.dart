@@ -88,6 +88,7 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
             SliverToBoxAdapter(
               child: GroupedListView<T, E>(
                   shrinkWrap: true,
+                  order: GroupedListOrder.DESC,
                   elements: _data,
                   groupBy: (T t) {
                     return (widget as WiseGroupPagedLoadList<T, E>).group(t);
