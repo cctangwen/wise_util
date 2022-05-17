@@ -32,6 +32,10 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
   ///行组件
   final Widget Function(E) headerBuilder;
 
+  final bool reverse;
+
+  final bool desc;
+
   WiseGroupPagedLoadList({
     this.key,
     required this.future,
@@ -41,6 +45,8 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
     this.separatorBuilder,
     this.pageSize = 20,
     this.payload,
+    this.reverse = true,
+    this.desc = true,
   }) : super(key: key);
 
   @override
@@ -88,7 +94,10 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
             SliverToBoxAdapter(
               child: GroupedListView<T, E>(
                   shrinkWrap: true,
-                  order: GroupedListOrder.DESC,
+                  reverse: widget.reverse,
+                  order: widget.desc
+                      ? GroupedListOrder.DESC
+                      : GroupedListOrder.ASC,
                   elements: _data,
                   groupBy: (T t) {
                     return (widget as WiseGroupPagedLoadList<T, E>).group(t);
