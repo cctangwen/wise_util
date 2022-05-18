@@ -8,8 +8,8 @@ import 'package:wise_util/widget/wise_divider.dart';
 class WiseDataDisplay {
   static Widget buildVerticalData(String label, dynamic content,
       {bool nullHide = true,
-        EdgeInsetsGeometry? padding,
-        VoidCallback? onPressed}) {
+      EdgeInsetsGeometry? padding,
+      VoidCallback? onPressed}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
       padding: padding ?? EdgeInsets.only(left: 16.w),
@@ -39,10 +39,35 @@ class WiseDataDisplay {
     );
   }
 
+  static Widget buildVerticalCustomData(String label, Widget content,
+      {EdgeInsetsGeometry? padding, VoidCallback? onPressed}) {
+    return Container(
+      padding: padding ?? EdgeInsets.only(left: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WiseBox().hBox12,
+          Text(
+            label,
+            style: WiseStyle.textStyleSmallLabel(),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (null != onPressed) onPressed();
+            },
+            child: content,
+          ),
+          WiseBox().hBox12,
+          WiseDivider(),
+        ],
+      ),
+    );
+  }
+
   static Widget buildHorizontalData(String label, dynamic content,
       {bool nullHide = true,
-        EdgeInsetsGeometry? padding,
-        VoidCallback? onPressed}) {
+      EdgeInsetsGeometry? padding,
+      VoidCallback? onPressed}) {
     if (null == content && nullHide) return WiseBox().hBox0;
     return Container(
       padding: padding ?? EdgeInsets.only(bottom: 4.w),
@@ -67,5 +92,38 @@ class WiseDataDisplay {
         ],
       ),
     );
+  }
+
+  static Widget buildHorizontalCustomData(String label, Widget content,
+      {EdgeInsetsGeometry? padding, VoidCallback? onPressed}) {
+    return Container(
+      padding: padding ?? EdgeInsets.only(bottom: 4.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: WiseStyle.textStyleSmallLabel(),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (null != onPressed) onPressed();
+            },
+            child: content,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildVisibilityView({
+    required bool visible,
+    required Widget child,
+    Widget? replace,
+  }) {
+    if (!visible) {
+      return replace ?? WiseBox().hBox0;
+    }
+    return child;
   }
 }
