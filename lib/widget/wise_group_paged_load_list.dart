@@ -69,9 +69,12 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
     super.initState();
   }
 
+  var multiStateKey = GlobalKey<WiseMultiStateWidgetState>();
+
   @override
   Widget build(BuildContext context) {
     return WiseMultiStateWidget(
+      key: multiStateKey,
       future: () async {
         return await _loadMore();
       },
@@ -149,6 +152,11 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
   Future<bool> _refresh() async {
     _pageNum = 1;
     List<T> newData = await _fetchData();
+    if (newData.length == 0) {
+      multiStateKey.currentState!.forceShowEmptyView();
+    } else {
+      multiStateKey.currentState!.forceShowSuccessView();
+    }
     if (newData.length > 0) {
       setState(() {
         _data.clear();

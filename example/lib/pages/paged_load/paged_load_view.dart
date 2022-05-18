@@ -15,18 +15,27 @@ class PagedLoadPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("paged load list"),
       ),
-      body: Container(
-        child: WisePagedLoadList<String>(
-          future: (map) async {
-            print("map:$map");
-            await Future.delayed(Duration(seconds: 3));
-            return Future.value(["1", "2", "3"]);
-          },
-          payload: {"name": "Tom"},
-          rowBuilder: (value) {
-            return Container(height: 70, child: Text(value));
-          },
-        ),
+      body: Column(
+        children: [
+          Expanded(
+              flex: 0,
+              child: MaterialButton(
+                onPressed: () {
+                  controller.onMaterialButtonClick();
+                },
+                child: Text("111"),
+              )),
+          Expanded(
+            child: WisePagedLoadList<String>(
+              key: controller.key,
+              shrinkWrap: true,
+              future: (params) => controller.fetch(params),
+              rowBuilder: (value) {
+                return Container(height: 70, child: Text(value));
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

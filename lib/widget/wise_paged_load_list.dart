@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wise_util/widget/wise_multi_state/wise_mulit_state_no_data.dart';
 
 import '/widget/wise_divider.dart';
 import '/widget/wise_multi_state/wise_multi_state_widget.dart';
@@ -59,36 +58,35 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
     super.initState();
   }
 
+  var multiStateKey = GlobalKey<WiseMultiStateWidgetState>();
+
   @override
   Widget build(BuildContext context) {
     Widget _successWidget;
-    if (_data.length == 0) {
-      _successWidget = WiseMultiStateNoData();
-    } else {
-      _successWidget = WisePullToRefresh(
-          enablePullDown: true,
-          enablePullUp: true,
-          onRefresh: () async {
-            await _refresh();
-          },
-          onLoading: () async {
-            if (!widget.enableLoadMore) {
-              return false;
-            }
-            return await _loadMore();
-          },
-          child: ListView.separated(
-              shrinkWrap: widget.shrinkWrap,
-              itemBuilder: (BuildContext context, int index) {
-                return (widget as WisePagedLoadList<T>)
-                    .rowBuilder(_data[index]);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return widget.separatorBuilder ?? WiseDivider();
-              },
-              itemCount: _data.length));
-    }
+    _successWidget = WisePullToRefresh(
+        enablePullDown: true,
+        enablePullUp: true,
+        onRefresh: () async {
+          await _refresh();
+        },
+        onLoading: () async {
+          if (!widget.enableLoadMore) {
+            return false;
+          }
+          return await _loadMore();
+        },
+        child: ListView.separated(
+            shrinkWrap: widget.shrinkWrap,
+            itemBuilder: (BuildContext context, int index) {
+              return (widget as WisePagedLoadList<T>).rowBuilder(_data[index]);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return widget.separatorBuilder ?? WiseDivider();
+            },
+            itemCount: _data.length));
+
     return WiseMultiStateWidget(
+      key: multiStateKey,
       future: () async {
         return await _loadMore();
       },
@@ -152,6 +150,11 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
   Future<void> _refresh() async {
     _pageNum = 1;
     List<T> newData = await _fetchData();
+    if (newData.length == 0) {
+      multiStateKey.currentState!.forceShowEmptyView();
+    } else {
+      multiStateKey.currentState!.forceShowSuccessView();
+    }
     setState(() {
       _data.clear();
       _data.addAll(newData);

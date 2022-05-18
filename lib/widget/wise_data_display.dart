@@ -115,15 +115,4 @@ class WiseDataDisplay {
       ),
     );
   }
-
-  static Widget buildVisibilityView({
-    required bool visible,
-    required Widget child,
-    Widget? replace,
-  }) {
-    if (!visible) {
-      return replace ?? WiseBox().hBox0;
-    }
-    return child;
-  }
 }
