@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wise_util/res/wise_style.dart';
+import 'package:wise_util/widget/wise_box.dart';
 
 import '/res/wise_color.dart';
 import '/util/screen/screen_size_extension.dart';
@@ -12,6 +14,7 @@ class WiseButton {
     required VoidCallback? onPressed,
     double? height,
     double? minWidth,
+    IconData? icon,
   }) {
     return MaterialButton(
       elevation: 0,
@@ -24,13 +27,24 @@ class WiseButton {
       height: height ?? 40.w,
       minWidth: minWidth,
       onPressed: onPressed,
-      child: Text(
-        data,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.sp,
-          fontFamily: 'Regular',
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          icon != null
+              ? Padding(
+                  padding: EdgeInsets.only(right: 8.w),
+                  child: Icon(
+                    icon,
+                    size: 20.w,
+                    color: Colors.white,
+                  ),
+                )
+              : WiseBox().hBox0,
+          Text(
+            data,
+            style: WiseStyle.textStyleLargeBody().copyWith(color: Colors.white),
+          ),
+        ],
       ),
     );
   }
@@ -41,6 +55,7 @@ class WiseButton {
     required VoidCallback? onPressed,
     double? height,
     double? minWidth,
+    IconData? icon,
   }) {
     return MaterialButton(
       elevation: 0,
@@ -55,13 +70,25 @@ class WiseButton {
       height: height ?? 40.w,
       minWidth: minWidth,
       onPressed: onPressed,
-      child: Text(
-        data,
-        style: TextStyle(
-          color: WiseColor.colorPrimary(),
-          fontSize: 16.sp,
-          fontFamily: 'Regular',
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          icon != null
+              ? Padding(
+                  padding: EdgeInsets.only(right: 8.w),
+                  child: Icon(
+                    icon,
+                    size: 20.w,
+                    color: Colors.white,
+                  ),
+                )
+              : WiseBox().hBox0,
+          Text(
+            data,
+            style: WiseStyle.textStyleLargeBody()
+                .copyWith(color: WiseColor.colorPrimary()),
+          ),
+        ],
       ),
     );
   }
@@ -76,7 +103,7 @@ class WiseButton {
     return InkWell(
       onTap: onPressed,
       child: Padding(
-        padding: padding ?? EdgeInsets.all(0.0),
+        padding: padding ?? EdgeInsets.zero,
         child: Text(
           data,
           style: TextStyle(
