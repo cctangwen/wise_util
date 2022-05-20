@@ -10,10 +10,16 @@ class WiseImage extends StatelessWidget {
   ///图片资源地址
   final String src;
 
+  final Widget? placeholder;
+
+  final Widget? errorWidget;
+
   WiseImage({
     required this.height,
     required this.width,
     required this.src,
+    this.placeholder,
+    this.errorWidget,
   });
 
   @override
@@ -24,8 +30,9 @@ class WiseImage extends StatelessWidget {
       child: CachedNetworkImage(
         fit: BoxFit.contain,
         imageUrl: src,
-        errorWidget: (context, url, error) => _buildDefaultImage(),
-        placeholder: (context, url) => _buildDefaultImage(),
+        errorWidget: (context, url, error) =>
+            errorWidget ?? _buildDefaultImage(),
+        placeholder: (context, url) => placeholder ?? _buildDefaultImage(),
       ),
     );
   }
