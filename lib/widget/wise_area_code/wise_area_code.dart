@@ -30,6 +30,12 @@ class WiseAreaCodeState extends State<WiseAreaCode> {
     return _selectAreaCode;
   }
 
+  void setAreaCode(String areaCode) {
+    setState(() {
+      _selectAreaCode = areaCode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
