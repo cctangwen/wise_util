@@ -20,8 +20,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
   ///是否显示确认按钮
   final bool withOKButton;
 
-  ///是否显示小数按钮。若当前地区显示偏好不存在小数符号，即使设置为true，也不会显示出来
-  final bool withDecimalSeparatorButton;
+  final String? currency;
 
   final int maxIntegerLength;
 
@@ -31,7 +30,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
     this.onOkPress,
     this.onChange,
     this.withOKButton = true,
-    this.withDecimalSeparatorButton = true,
+    this.currency,
     this.maxIntegerLength = 8,
   });
 
@@ -69,8 +68,10 @@ class WiseDigitalKeyboard extends StatelessWidget {
   ///添加内容事件
   _onAddContent(String newChar) {
     String oldValue = _content;
-    String decimalSeparator = CurrencyFormatter.getDecimalSeparator();
-    int decimalPlaces = CurrencyFormatter.getDecimalPlaces();
+    String decimalSeparator =
+        CurrencyFormatter.getDecimalSeparator(currencyName: currency);
+    int decimalPlaces =
+        CurrencyFormatter.getDecimalPlaces(currencyName: currency);
     if (oldValue.contains(decimalSeparator) && decimalPlaces > 0) {
       ///若已包含小数点，或者若小数点后位数超过限制位数，不允许再输入
       if ((newChar == decimalSeparator) ||
@@ -112,8 +113,10 @@ class WiseDigitalKeyboard extends StatelessWidget {
 
   ///确认内容事件
   _onOKContent() {
-    String decimalSeparator = CurrencyFormatter.getDecimalSeparator();
-    int decimalPlaces = CurrencyFormatter.getDecimalPlaces();
+    String decimalSeparator =
+        CurrencyFormatter.getDecimalSeparator(currencyName: currency);
+    int decimalPlaces =
+        CurrencyFormatter.getDecimalPlaces(currencyName: currency);
 
     ///若最后一位是小数点，删除最后一位
     if (_content.endsWith(decimalSeparator) && decimalPlaces > 0) {
@@ -130,6 +133,10 @@ class WiseDigitalKeyboard extends StatelessWidget {
     WiseString strings =
         WiseLocalizations.of(Get.context!)?.currentLocalization ??
             EnWiseString();
+    int decimalPlaces =
+        CurrencyFormatter.getDecimalPlaces(currencyName: currency);
+    String decimalSeparator =
+        CurrencyFormatter.getDecimalSeparator(currencyName: currency);
     List<Widget> widgetList = [];
 
     widgetList.add(StaggeredGridTile.fit(
@@ -230,23 +237,19 @@ class WiseDigitalKeyboard extends StatelessWidget {
               _onAddContent("9");
             })));
     widgetList.add(StaggeredGridTile.fit(
-        crossAxisCellCount: (CurrencyFormatter.getDecimalPlaces() > 0 &&
-                withDecimalSeparatorButton)
-            ? 2
-            : 3,
+        crossAxisCellCount: decimalPlaces > 0 ? 2 : 3,
         child: _keySpan(
             text: "0",
             onPressed: () {
               _onAddContent("0");
             })));
-    if (CurrencyFormatter.getDecimalPlaces() > 0 &&
-        withDecimalSeparatorButton) {
+    if (decimalPlaces > 0) {
       widgetList.add(StaggeredGridTile.fit(
           crossAxisCellCount: 1,
           child: _keySpan(
-              text: CurrencyFormatter.getDecimalSeparator(),
+              text: decimalSeparator,
               onPressed: () {
-                _onAddContent(CurrencyFormatter.getDecimalSeparator());
+                _onAddContent(decimalSeparator);
               })));
     }
     return widgetList;
@@ -254,6 +257,10 @@ class WiseDigitalKeyboard extends StatelessWidget {
 
   ///不带OK键盘Widget列表
   List<Widget> _getNoOKButtonKeyWidgetList() {
+    int decimalPlaces =
+        CurrencyFormatter.getDecimalPlaces(currencyName: currency);
+    String decimalSeparator =
+        CurrencyFormatter.getDecimalSeparator(currencyName: currency);
     List<StaggeredGridTile> widgetList = [];
 
     widgetList.add(StaggeredGridTile.fit(
@@ -320,23 +327,19 @@ class WiseDigitalKeyboard extends StatelessWidget {
               _onAddContent("9");
             })));
     widgetList.add(StaggeredGridTile.fit(
-        crossAxisCellCount: (CurrencyFormatter.getDecimalPlaces() > 0 &&
-                withDecimalSeparatorButton)
-            ? 1
-            : 2,
+        crossAxisCellCount: decimalPlaces > 0 ? 1 : 2,
         child: _keySpan(
             text: "0",
             onPressed: () {
               _onAddContent("0");
             })));
-    if (CurrencyFormatter.getDecimalPlaces() > 0 &&
-        withDecimalSeparatorButton) {
+    if (decimalPlaces > 0) {
       widgetList.add(StaggeredGridTile.fit(
           crossAxisCellCount: 1,
           child: _keySpan(
-              text: CurrencyFormatter.getDecimalSeparator(),
+              text: decimalSeparator,
               onPressed: () {
-                _onAddContent(CurrencyFormatter.getDecimalSeparator());
+                _onAddContent(decimalSeparator);
               })));
     }
     widgetList.add(StaggeredGridTile.fit(
