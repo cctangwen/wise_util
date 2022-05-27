@@ -59,12 +59,10 @@ dependencies:
 
   encrypt: 5.0.1
 
+  google_fonts: 2.2.0
+
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
-  fonts:
-    - family: Regular                # 字体别名
-      fonts:
-        - asset: assets/fonts/AlibabaSans-Regular.otf # 字体文件目录
-          weight: 700              # 权重 700表示粗体，相当于bold
+    - google_fonts/
