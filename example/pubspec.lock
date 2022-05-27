@@ -184,13 +184,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.3.8"
-  google_fonts:
-    dependency: transitive
-    description:
-      name: google_fonts
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.2.0"
   grouped_list:
     dependency: transitive
     description:
