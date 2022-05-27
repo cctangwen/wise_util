@@ -32,6 +32,8 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
   ///行组件
   final Widget Function(E) headerBuilder;
 
+  final Widget? loadingWidget;
+
   final bool reverse;
 
   final bool asc;
@@ -43,6 +45,7 @@ class WiseGroupPagedLoadList<T, E> extends StatefulWidget {
     required this.rowBuilder,
     required this.headerBuilder,
     this.separatorBuilder,
+    this.loadingWidget,
     this.pageSize = 20,
     this.payload,
     this.reverse = false,
@@ -78,10 +81,11 @@ class WiseGroupPagedLoadListState<T, E> extends State<WiseGroupPagedLoadList> {
       future: () async {
         return await _loadMore();
       },
-      loadingWidget: WiseSkeleton(
-        wiseSkeletonType: WiseSkeletonType.listView,
-        mainAxisCount: 20,
-      ),
+      loadingWidget: widget.loadingWidget ??
+          WiseSkeleton(
+            wiseSkeletonType: WiseSkeletonType.listView,
+            mainAxisCount: 20,
+          ),
       successWidget: WisePullToRefresh(
         enablePullDown: true,
         enablePullUp: true,

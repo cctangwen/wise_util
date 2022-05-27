@@ -23,6 +23,8 @@ class WisePagedLoadList<T> extends StatefulWidget {
   ///行组件
   final Widget Function(T) rowBuilder;
 
+  final Widget? loadingWidget;
+
   final bool shrinkWrap;
 
   final bool enableLoadMore;
@@ -36,6 +38,7 @@ class WisePagedLoadList<T> extends StatefulWidget {
     this.pageSize = 20,
     this.payload,
     this.enableLoadMore = true,
+    this.loadingWidget,
   }) : super(key: key);
 
   @override
@@ -90,10 +93,11 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
       future: () async {
         return await _loadMore();
       },
-      loadingWidget: WiseSkeleton(
-        wiseSkeletonType: WiseSkeletonType.listView,
-        mainAxisCount: 20,
-      ),
+      loadingWidget: widget.loadingWidget ??
+          WiseSkeleton(
+            wiseSkeletonType: WiseSkeletonType.listView,
+            mainAxisCount: 20,
+          ),
       successWidget: _successWidget,
     );
   }

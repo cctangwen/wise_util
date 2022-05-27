@@ -7,7 +7,7 @@ class PagedLoadController extends GetxController {
   final key = GlobalKey<WisePagedLoadListState>();
 
   Future<List<String>> fetch(Map<String, dynamic> params) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 10));
     if (params.containsKey("name")) {
       print("有数据");
       return Future.value(["1", "2", "3"]);
