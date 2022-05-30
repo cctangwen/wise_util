@@ -46,6 +46,14 @@ class WiseStyle {
       fontSize: 16.0.sp,
       fontWeight: FontWeight.w400);
 
+  ///大号正文Body-适配深色模式-禁用
+  static TextStyle textStyleLargeBodyDisabled() =>
+      textStyleLargeBody().copyWith(
+        color: Get.isDarkMode
+            ? Color(0xFFE2E2E5).withOpacity(0.38)
+            : Color(0xFF1A1C1E).withOpacity(0.38),
+      );
+
   ///中号正文Body-适配深色模式
   static TextStyle textStyleMediumBody() => TextStyle(
       fontFamily: 'Medium',
@@ -66,6 +74,14 @@ class WiseStyle {
       color: Get.isDarkMode ? Color(0xFF8B9198) : Color(0xFF41474D),
       fontSize: 16.0.sp,
       fontWeight: FontWeight.w400);
+
+  ///大号正文Body-适配深色模式-禁用
+  static TextStyle textStyleLargeLabelDisabled() =>
+      textStyleLargeLabel().copyWith(
+        color: Get.isDarkMode
+            ? Color(0xFF8B9198).withOpacity(0.38)
+            : Color(0xFF41474D).withOpacity(0.38),
+      );
 
   ///中号标签Label-适配深色模式
   static TextStyle textStyleMediumLabel() => TextStyle(
