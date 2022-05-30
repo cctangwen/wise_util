@@ -95,7 +95,7 @@ class WisePagedLoadListState<T> extends State<WisePagedLoadList> {
       },
       loadingWidget: widget.loadingWidget ??
           WiseSkeleton(
-            wiseSkeletonType: WiseSkeletonType.listView,
+            wiseSkeletonType: WiseSkeletonType.listView2,
             mainAxisCount: 20,
           ),
       successWidget: _successWidget,

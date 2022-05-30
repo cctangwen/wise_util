@@ -89,26 +89,15 @@ class WiseSkeleton extends StatelessWidget {
 
   ///构造列表骨架图组件
   Widget _buildListSkeleton() {
-    if (wiseSkeletonType == WiseSkeletonType.listView)
-      return ListView.separated(
-        padding: EdgeInsets.all(0),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: mainAxisCount,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildListItemSkeleton();
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return WiseBox().hBox0;
-        },
-      );
     return ListView.separated(
       padding: EdgeInsets.all(0),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: mainAxisCount,
       itemBuilder: (BuildContext context, int index) {
-        return _buildListItemSkeleton2();
+        return wiseSkeletonType == WiseSkeletonType.listView
+            ? _buildListItemSkeleton()
+            : _buildListItemSkeleton2();
       },
       separatorBuilder: (BuildContext context, int index) {
         return WiseBox().hBox0;
@@ -156,7 +145,7 @@ class WiseSkeleton extends StatelessWidget {
     );
   }
 
-  ///构造单个列表组件
+  ///构造单个列表组件2
   Widget _buildListItemSkeleton2() {
     return WiseContainer(
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 12.w),
