@@ -26,12 +26,15 @@ class WiseDigitalKeyboard extends StatelessWidget {
 
   String _content = "";
 
+  final double? bottomPadding;
+
   WiseDigitalKeyboard({
     this.onOkPress,
     this.onChange,
     this.withOKButton = true,
     this.currency,
     this.maxIntegerLength = 8,
+    this.bottomPadding,
   });
 
   @override
@@ -57,7 +60,7 @@ class WiseDigitalKeyboard extends StatelessWidget {
               )),
           Container(
             width: Get.width,
-            height: ScreenUtil().bottomBarHeight,
+            height: bottomPadding ?? ScreenUtil().bottomBarHeight,
             color: WiseColor.colorBackground(),
           ),
         ],
@@ -401,6 +404,8 @@ class WiseDigitalKeyboardUtil {
     Function(String)? onChange,
     bool withOKButton = true,
     int maxIntegerLength = 8,
+    String? currency,
+    double? bottomPadding,
   }) {
     if (null == _overlayEntry) {
       _overlayEntry = OverlayEntry(builder: (context) {
@@ -409,6 +414,8 @@ class WiseDigitalKeyboardUtil {
           child: WiseDigitalKeyboard(
             onChange: onChange,
             onOkPress: onOkPress,
+            currency: currency,
+            bottomPadding: bottomPadding,
             withOKButton: withOKButton,
             maxIntegerLength: maxIntegerLength,
           ),

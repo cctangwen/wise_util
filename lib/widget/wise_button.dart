@@ -66,7 +66,7 @@ class WiseButton {
             width: 1.w),
         borderRadius: BorderRadius.all(Radius.circular(24.r)),
       ),
-      color: WiseColor.colorSurface(),
+      color: Colors.transparent,
       height: height ?? 40.w,
       minWidth: minWidth,
       onPressed: onPressed,
