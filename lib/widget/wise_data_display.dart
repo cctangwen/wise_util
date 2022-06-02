@@ -91,6 +91,7 @@ class WiseDataDisplay {
                 child: Text(
                   null != content ? content.toString() : "-",
                   style: WiseStyle.textStyleSmallBody(),
+                  textAlign: TextAlign.end,
                 ),
               ),
             ),

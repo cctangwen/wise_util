@@ -65,6 +65,7 @@ class HomePage extends StatelessWidget {
                   WiseBox().hBox20,
                   WiseDataDisplay.buildHorizontalData("123123123",
                       "asdasdascccccccccasdasdasdasdasdasdasdasdasdascccccasdasdasdasdc"),
+                  WiseDataDisplay.buildHorizontalData("123123123", "aacc"),
                   _buildWidget(context),
                   WiseBox().hBox20,
                   _buildRes(),
