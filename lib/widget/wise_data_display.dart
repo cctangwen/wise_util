@@ -73,20 +73,26 @@ class WiseDataDisplay {
       padding: padding ?? EdgeInsets.only(bottom: 4.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: WiseStyle.textStyleSmallLabel(),
           ),
-          Visibility(
-            visible: onPressed == null,
-            replacement: WiseButton.textButton(
-                null != content ? content.toString() : "-", onPressed: () {
-              onPressed!();
-            }),
-            child: Text(
-              null != content ? content.toString() : "-",
-              style: WiseStyle.textStyleSmallBody(),
+          Expanded(
+            child: Visibility(
+              visible: onPressed == null,
+              replacement: WiseButton.textButton(
+                  null != content ? content.toString() : "-", onPressed: () {
+                onPressed!();
+              }),
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.w),
+                child: Text(
+                  null != content ? content.toString() : "-",
+                  style: WiseStyle.textStyleSmallBody(),
+                ),
+              ),
             ),
           ),
         ],
@@ -100,16 +106,22 @@ class WiseDataDisplay {
       padding: padding ?? EdgeInsets.only(bottom: 4.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: WiseStyle.textStyleSmallLabel(),
           ),
-          GestureDetector(
-            onTap: () {
-              if (null != onPressed) onPressed();
-            },
-            child: content,
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                if (null != onPressed) onPressed();
+              },
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.w),
+                child: content,
+              ),
+            ),
           ),
         ],
       ),

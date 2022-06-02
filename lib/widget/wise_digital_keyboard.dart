@@ -45,23 +45,22 @@ class WiseDigitalKeyboard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              height: 235.w,
-              padding: EdgeInsets.all(5.w),
+              padding: EdgeInsets.all(6.w),
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.topLeft,
-              color: WiseColor.colorBackground(),
+              color: WiseColor.colorSurfaceVariant(),
               child: StaggeredGrid.count(
                 crossAxisCount: withOKButton ? 4 : 3,
-                crossAxisSpacing: 5.w,
-                mainAxisSpacing: 5.w,
+                crossAxisSpacing: 6.w,
+                mainAxisSpacing: 6.w,
                 children: withOKButton
                     ? _getOKButtonKeyWidgetList()
                     : _getNoOKButtonKeyWidgetList(),
               )),
           Container(
-            width: Get.width,
+            width: MediaQuery.of(context).size.width,
             height: bottomPadding ?? ScreenUtil().bottomBarHeight,
-            color: WiseColor.colorBackground(),
+            color: WiseColor.colorSurfaceVariant(),
           ),
         ],
       ),
