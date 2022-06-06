@@ -14,7 +14,6 @@ import 'package:wise_util/widget/wise_alert_dialog/wise_alert_dialog.dart';
 import 'package:wise_util/widget/wise_area_code/wise_area_code.dart';
 import 'package:wise_util/widget/wise_box.dart';
 import 'package:wise_util/widget/wise_button.dart';
-import 'package:wise_util/widget/wise_data_display.dart';
 import 'package:wise_util/widget/wise_loading.dart';
 import 'package:wise_util/widget/wise_tag.dart';
 import 'package:wise_util/widget/wise_toast.dart';
@@ -64,16 +63,16 @@ class HomePage extends StatelessWidget {
                     text: "Online",
                     color: Colors.green,
                   ),
-                  WiseBox().hBox20,
+                  WiseButton.primaryButton("123123", wordKey: "123123",
+                      onPressed: () {
+                    WiseToast.shortToast("cccccccccc");
+                  }),
                   WiseTranslateText(
                     S.current.test,
                     wordKey: "test",
                     style: WiseStyle.textStyleMediumBody(),
                   ),
                   WiseBox().hBox20,
-                  WiseDataDisplay.buildHorizontalData("123123123",
-                      "asdasdascccccccccasdasdasdasdasdasdasdasdasdascccccasdasdasdasdc"),
-                  WiseDataDisplay.buildHorizontalData("123123123", "aacc"),
                   _buildWidget(context),
                   WiseBox().hBox20,
                   _buildRes(),

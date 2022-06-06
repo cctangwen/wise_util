@@ -3,11 +3,12 @@ import 'dart:ui' as ui show TextHeightBehavior;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wise_util/business/translate/wise_translate_dialog.dart';
+import 'package:wise_util/business/translate/wise_translate_service.dart';
 
 class WiseTranslateText extends StatefulWidget {
   final String data;
 
-  final String wordKey;
+  final String? wordKey;
 
   final TextStyle? style;
 
@@ -35,7 +36,7 @@ class WiseTranslateText extends StatefulWidget {
 
   WiseTranslateText(
     this.data, {
-    required this.wordKey,
+    this.wordKey,
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -65,13 +66,67 @@ class _WiseTranslateTextState extends State<WiseTranslateText> {
 
   @override
   Widget build(BuildContext context) {
+    if (kReleaseMode || !AppTranslateService.getSupportTranslate()) {
+      return _buildNormalText();
+    } else if (null == widget.wordKey) {
+      return _buildNormalText();
+    } else {
+      return GestureDetector(
+        onLongPress: () {
+          _showTranslateEditDialog(context, this._data);
+        },
+        child: Column(
+          children: [
+            _buildEditableText(),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _showTranslateEditDialog(BuildContext context, String initValue) {
+    TextEditingController textEditingController = TextEditingController();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return WiseTranslateDialog(
+              wordKey: widget.wordKey!,
+              initValue: initValue,
+              newValue: (value) {
+                setState(() {
+                  _data = value;
+                });
+              });
+        });
+    textEditingController.text = initValue;
+  }
+
+  Widget _buildNormalText() {
+    return Text(
+      _data,
+      style: widget.style,
+      strutStyle: widget.strutStyle,
+      textAlign: widget.textAlign,
+      textDirection: widget.textDirection,
+      locale: widget.locale,
+      softWrap: widget.softWrap,
+      overflow: widget.overflow,
+      textScaleFactor: widget.textScaleFactor,
+      maxLines: widget.maxLines,
+      semanticsLabel: widget.semanticsLabel,
+      textWidthBasis: widget.textWidthBasis,
+      textHeightBehavior: widget.textHeightBehavior,
+    );
+  }
+
+  Widget _buildEditableText() {
     TextStyle? textStyle = widget.style;
-    if (!kReleaseMode && null != textStyle) {
+    if (null != textStyle) {
       textStyle = widget.style!.copyWith(
         decoration: TextDecoration.underline,
       );
     }
-    Widget child = Text(
+    return Text(
       _data,
       style: textStyle,
       strutStyle: widget.strutStyle,
@@ -86,33 +141,5 @@ class _WiseTranslateTextState extends State<WiseTranslateText> {
       textWidthBasis: widget.textWidthBasis,
       textHeightBehavior: widget.textHeightBehavior,
     );
-    if (kReleaseMode) return child;
-    return GestureDetector(
-      onLongPress: () {
-        _showTranslateEditDialog(context, this._data);
-      },
-      child: Column(
-        children: [
-          child,
-        ],
-      ),
-    );
-  }
-
-  void _showTranslateEditDialog(BuildContext context, String initValue) {
-    TextEditingController textEditingController = TextEditingController();
-    showDialog(
-        context: context,
-        builder: (context) {
-          return WiseTranslateDialog(
-              wordKey: widget.wordKey,
-              initValue: initValue,
-              newValue: (value) {
-                setState(() {
-                  _data = value;
-                });
-              });
-        });
-    textEditingController.text = initValue;
   }
 }

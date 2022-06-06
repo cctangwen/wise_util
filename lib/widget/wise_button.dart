@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wise_util/business/translate/wise_translate_text.dart';
 import 'package:wise_util/res/wise_style.dart';
 import 'package:wise_util/widget/wise_box.dart';
 
@@ -15,6 +16,7 @@ class WiseButton {
     double? height,
     double? minWidth,
     IconData? icon,
+    String? wordKey,
   }) {
     return MaterialButton(
       elevation: 0,
@@ -40,8 +42,9 @@ class WiseButton {
                   ),
                 )
               : WiseBox().hBox0,
-          Text(
+          WiseTranslateText(
             data,
+            wordKey: wordKey,
             style: WiseStyle.textStyleLargeBody().copyWith(color: Colors.white),
           ),
         ],
@@ -56,6 +59,7 @@ class WiseButton {
     double? height,
     double? minWidth,
     IconData? icon,
+    String? wordKey,
   }) {
     return MaterialButton(
       elevation: 0,
@@ -83,8 +87,9 @@ class WiseButton {
                   ),
                 )
               : WiseBox().hBox0,
-          Text(
+          WiseTranslateText(
             data,
+            wordKey: wordKey,
             style: WiseStyle.textStyleLargeBody()
                 .copyWith(color: WiseColor.colorPrimary()),
           ),
@@ -99,20 +104,19 @@ class WiseButton {
     required VoidCallback? onPressed,
     EdgeInsetsGeometry? padding,
     Color? textColor,
+    String? wordKey,
   }) {
     return InkWell(
       onTap: onPressed,
       child: Padding(
         padding: padding ?? EdgeInsets.zero,
-        child: Text(
+        child: WiseTranslateText(
           data,
-          style: TextStyle(
-            color: textColor ?? WiseColor.colorPrimary(),
-            fontSize: 14.sp,
-            fontFamily: 'Regular',
-            fontWeight: FontWeight.w500,
-          ),
+          wordKey: wordKey,
           textAlign: TextAlign.center,
+          style: WiseStyle.textStyleMediumBody().copyWith(
+            color: textColor ?? WiseColor.colorPrimary(),
+          ),
         ),
       ),
     );
