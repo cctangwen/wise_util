@@ -1,6 +1,11 @@
+import 'dart:ui' as ui;
+
 import '/util/sp_util.dart';
 
 class WiseConfig {
+  ///语言设置,例如:ja-JP
+  static const String _configLanguage = "wise_config_language";
+
   ///地区偏好设置,例如:ja-JP
   ///影响数字格式化，金额格式化，日期格式化显示
   static const String _configRegion = "wise_config_region";
@@ -21,6 +26,23 @@ class WiseConfig {
   ///设置地区偏好
   static setRegion(String regionCode) async {
     await SpUtil.putString(_configRegion, regionCode);
+  }
+
+  ///获取当前语言
+  static String getLanguage() {
+    String? localLocale = SpUtil.getString(_configLanguage, defValue: null);
+    if (localLocale != null) return localLocale;
+    ui.Locale deviceLocale = ui.window.locale;
+    String code = "${deviceLocale.languageCode}-${deviceLocale.countryCode}";
+    if (code.contains("zh")) return "zh-CN";
+    if (code.contains("fr")) return "fr-FR";
+    if (code.contains("ja")) return "ja-JP";
+    return "en-US";
+  }
+
+  ///设置应用语言
+  static Future<void> setLanguage(String locale) async {
+    await SpUtil.putString(_configLanguage, locale);
   }
 
   ///删除地区偏好
@@ -63,5 +85,6 @@ class WiseConfig {
     await SpUtil.remove(_configRegion);
     await SpUtil.remove(_configCurrency);
     await SpUtil.remove(_configAuthToken);
+    await SpUtil.remove(_configLanguage);
   }
 }
