@@ -110,12 +110,13 @@ class _WiseTranslateDialogState extends State<WiseTranslateDialog> {
                   String newValue = textEditingController.text;
                   var resp = await AppTranslateService.submitWord(
                       widget.wordKey, newValue, widget.initValue);
-                  setState(() {
-                    isFetching = false;
-                  });
                   if (resp) {
                     widget.newValue(newValue);
                     Navigator.of(context).pop();
+                  } else {
+                    setState(() {
+                      isFetching = false;
+                    });
                   }
                 }),
               ],

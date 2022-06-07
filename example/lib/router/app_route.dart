@@ -21,6 +21,8 @@ import 'package:example/pages/search_app_bar/search_app_bar_view.dart';
 import 'package:example/pages/skeleton/skeleton_binding.dart';
 import 'package:example/pages/skeleton/skeleton_view.dart';
 import 'package:example/pages/style/style_view.dart';
+import 'package:example/pages/translate/translate_binding.dart';
+import 'package:example/pages/translate/translate_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppRoute {
@@ -36,6 +38,7 @@ class AppRoute {
   static const String pageAvatar = '/avatar';
   static const String pageSearchAppBar = '/searchAppBar';
   static const String pageContainer = '/container';
+  static const String pageTranslate = '/translate';
 
   static final List<GetPage> pages = [
     GetPage(
@@ -96,6 +99,11 @@ class AppRoute {
       name: pageSearchAppBar,
       page: () => SearchAppBarPage(),
       binding: SearchAppBarBinding(),
+    ),
+    GetPage(
+      name: pageTranslate,
+      page: () => TranslatePage(),
+      binding: TranslateBinding(),
     ),
   ];
 }

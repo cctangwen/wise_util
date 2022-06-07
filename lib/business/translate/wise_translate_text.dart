@@ -6,7 +6,7 @@ import 'package:wise_util/business/translate/wise_translate_dialog.dart';
 import 'package:wise_util/business/translate/wise_translate_service.dart';
 
 class WiseTranslateText extends StatefulWidget {
-  final String data;
+  String data;
 
   final String? wordKey;
 
@@ -103,7 +103,7 @@ class _WiseTranslateTextState extends State<WiseTranslateText> {
 
   Widget _buildNormalText() {
     return Text(
-      _data,
+      widget.data,
       style: widget.style,
       strutStyle: widget.strutStyle,
       textAlign: widget.textAlign,

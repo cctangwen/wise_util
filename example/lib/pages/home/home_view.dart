@@ -1,11 +1,9 @@
-import 'package:example/generated/l10n.dart';
 import 'package:example/router/app_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:wise_util/business/translate/wise_translate_text.dart';
 import 'package:wise_util/business/update/app_update_service.dart';
 import 'package:wise_util/res/wise_color.dart';
 import 'package:wise_util/res/wise_style.dart';
@@ -46,9 +44,8 @@ class HomePage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: WiseTranslateText(
+            title: Text(
               "example",
-              wordKey: "example",
             ),
           ),
           body: Container(
@@ -65,15 +62,6 @@ class HomePage extends StatelessWidget {
                   WiseTag(
                     text: "Online",
                     color: Colors.green,
-                  ),
-                  WiseButton.primaryButton("123123", wordKey: "123123",
-                      onPressed: () {
-                    WiseToast.shortToast("cccccccccc");
-                  }),
-                  WiseTranslateText(
-                    S.current.test,
-                    wordKey: "test",
-                    style: WiseStyle.textStyleMediumBody(),
                   ),
                   WiseBox().hBox20,
                   _buildWidget(context),
@@ -237,6 +225,9 @@ class HomePage extends StatelessWidget {
             }),
             WiseButton.primaryButton("container", onPressed: () async {
               Get.toNamed(AppRoute.pageContainer);
+            }),
+            WiseButton.primaryButton("translate", onPressed: () async {
+              Get.toNamed(AppRoute.pageTranslate);
             }),
           ],
         ),
