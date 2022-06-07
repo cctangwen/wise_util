@@ -62,18 +62,19 @@ class _WiseTranslateDialogState extends State<WiseTranslateDialog> {
             ],
           ),
           WiseBox().hBox16,
-          Row(
-            children: [
-              Text(
-                "Page:${Get.currentRoute}",
-                style: WiseStyle.textStyleMediumLabel(),
-              ),
-            ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Page:${Get.currentRoute.split('?')[0]}",
+              style: WiseStyle.textStyleMediumLabel(),
+              textAlign: TextAlign.start,
+            ),
           ),
           WiseBox().hBox8,
           TextField(
             controller: textEditingController,
             autofocus: true,
+            maxLines: 4,
             style: WiseStyle.textStyleMediumBody(),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),

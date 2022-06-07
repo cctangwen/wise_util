@@ -120,9 +120,13 @@ class _WiseTranslateTextState extends State<WiseTranslateText> {
   }
 
   Widget _buildEditableText() {
-    TextStyle? textStyle = widget.style;
-    if (null != textStyle) {
+    TextStyle? textStyle;
+    if (null != widget.style) {
       textStyle = widget.style!.copyWith(
+        decoration: TextDecoration.underline,
+      );
+    } else {
+      textStyle = TextStyle(
         decoration: TextDecoration.underline,
       );
     }

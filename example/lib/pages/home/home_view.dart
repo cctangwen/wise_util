@@ -46,7 +46,10 @@ class HomePage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("example"),
+            title: WiseTranslateText(
+              "example",
+              wordKey: "example",
+            ),
           ),
           body: Container(
             padding: EdgeInsets.all(20),
