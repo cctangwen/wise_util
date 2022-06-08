@@ -34,8 +34,7 @@ class WiseTranslateText extends StatefulWidget {
 
   final ui.TextHeightBehavior? textHeightBehavior;
 
-  WiseTranslateText(
-    this.data, {
+  WiseTranslateText(this.data, {
     this.wordKey,
     this.style,
     this.strutStyle,
@@ -75,13 +74,11 @@ class _WiseTranslateTextState extends State<WiseTranslateText> {
         onLongPress: () {
           _showTranslateEditDialog(context, this._data);
         },
-        child: Column(
-          children: [
-            _buildEditableText(),
-          ],
-        ),
-      );
-    }
+        child: _buildEditableText(),
+      )
+    ,
+    );
+  }
   }
 
   void _showTranslateEditDialog(BuildContext context, String initValue) {
