@@ -1,23 +1,18 @@
 import 'dart:io';
 
-import 'package:app_installer/app_installer.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '/res/wise_color.dart';
 import '/res/wise_localizations.dart';
 import '/res/wise_style.dart';
-import '/util/app_util.dart';
-import '/util/permission_util.dart';
 import '/util/screen/screen_size_extension.dart';
 import '/widget/wise_box.dart';
 import '/widget/wise_button.dart';
 
 ///应用更新弹窗
-class AppUpdateDialog extends StatefulWidget {
+class AppUpdateDialog extends StatelessWidget {
   ///是否强制更新
   final bool isForceUpdate;
 
@@ -25,25 +20,20 @@ class AppUpdateDialog extends StatefulWidget {
   final String description;
 
   ///android：安装包fileKey
-  final String? fileKey;
+  final String? androidAppId;
 
   ///ios: iosAppId
   final String? iosAppId;
 
-  AppUpdateDialog(
-      {this.isForceUpdate = false,
-      this.description = "",
-      this.fileKey,
-      this.iosAppId});
+  final String? h5DownloadUrl;
 
-  @override
-  State<StatefulWidget> createState() => _AppUpdateDialogState();
-}
-
-class _AppUpdateDialogState extends State<AppUpdateDialog> {
-  bool isDownloadingApk = false;
-
-  double downloadProgress = 0;
+  AppUpdateDialog({
+    this.isForceUpdate = false,
+    this.description = "",
+    this.androidAppId,
+    this.iosAppId,
+    this.h5DownloadUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -90,54 +80,27 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      widget.description,
+                      description,
                       style: WiseStyle.textStyleMediumLabel(),
                       maxLines: 12,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   WiseBox().hBox20,
-                  AnimatedCrossFade(
-                    duration: Duration(milliseconds: 300),
-                    //显示取消和更新按钮
-                    secondChild: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        WiseButton.secondaryButton(
-                          strings.appUpdateDialogCancel,
-                          minWidth: 114.w,
-                          onPressed: _cancelUpdate,
-                        ),
-                        WiseButton.primaryButton(
-                          strings.appUpdateDialogUpdate,
-                          minWidth: 114.w,
-                          onPressed: _confirmUpdate,
-                        ),
-                      ],
-                    ),
-                    //下载进度
-                    firstChild: Column(
-                      children: [
-                        Text(
-                          strings.downloading,
-                          style: WiseStyle.textStyleMediumBody(),
-                        ),
-                        Container(
-                            width: 240.w,
-                            height: 14.w,
-                            margin: EdgeInsets.only(bottom: 14.w, top: 4.w),
-                            child: LinearProgressIndicator(
-                              value: downloadProgress,
-                              valueColor:
-                                  AlwaysStoppedAnimation(Color(0xFF019FE8)),
-                              backgroundColor:
-                                  Color(0xFF019FE8).withOpacity(0.38),
-                            )),
-                      ],
-                    ),
-                    crossFadeState: isDownloadingApk
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      WiseButton.secondaryButton(
+                        strings.appUpdateDialogCancel,
+                        minWidth: 114.w,
+                        onPressed: _cancelUpdate,
+                      ),
+                      WiseButton.primaryButton(
+                        strings.appUpdateDialogUpdate,
+                        minWidth: 114.w,
+                        onPressed: _confirmUpdate,
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -150,7 +113,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
 
   ///取消（稍后）更新
   void _cancelUpdate() async {
-    if (widget.isForceUpdate) {
+    if (isForceUpdate) {
       ///强制更新，退出应用
       exit(0);
     } else {
@@ -162,75 +125,36 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
   ///确认（现在）更新
   void _confirmUpdate() async {
     if (GetPlatform.isAndroid) {
-      if (null != widget.fileKey) _androidUpdate(widget.fileKey!);
+      _androidUpdate();
+      Get.back();
     }
     if (GetPlatform.isIOS) {
-      if (null != widget.iosAppId) _iosUpdate(widget.iosAppId!);
+      _iosUpdate();
       Get.back();
     }
   }
 
-  void _androidUpdate(String fileUrl) async {
-    WiseString strings =
-        WiseLocalizations.of(Get.context!)?.currentLocalization ??
-            EnWiseString();
-
-    ///检查存储权限
-    bool hasStoragePermission = await PermissionUtil.checkPermission(
-        Permission.storage,
-        Get.context!,
-        strings.requestStoragePermissionToDownload);
-    if (!hasStoragePermission) {
-      return null;
-    }
-
-    /// 创建存储文件
-    Directory? storageDir = await getExternalStorageDirectory();
-    String storagePath = storageDir!.path;
-    String fileName =
-        "$storagePath/${DateTime.now().millisecondsSinceEpoch}.apk";
-    File file = new File(fileName);
-    if (!file.existsSync()) {
-      file.createSync();
-    }
-    try {
-      setState(() {
-        isDownloadingApk = true;
-      });
-
-      /// 发起下载请求
-      Response response = await Dio().get(
-        fileUrl,
-        onReceiveProgress: (num received, num total) {
-          setState(() {
-            downloadProgress = received / total;
-            if (downloadProgress == 1) {
-              Get.back();
-            }
-          });
-        },
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-        ),
-      );
-      file.writeAsBytesSync(response.data);
-      AppInstaller.installApk(fileName);
-    } on SocketException {
-      ///网络错误提示
-      setState(() {
-        isDownloadingApk = false;
-      });
-    } catch (e) {
-      setState(() {
-        isDownloadingApk = false;
-      });
-    }
+  /// "1582773616"
+  void _iosUpdate() async {
+    ///跳转到IOS应用市场
+    if (null != iosAppId)
+      launch("https://apps.apple.com/cn/app/wiseboss/id$iosAppId");
   }
 
-  /// "1582773616"
-  void _iosUpdate(String iosAppId) async {
-    ///跳转到IOS应用市场
-    AppInstaller.goStore(await AppUtil.appPackageName(), iosAppId);
+  void _androidUpdate() async {
+    bool canRedirectToGoogle = false;
+
+    ///跳转到Google应用市场
+    if (null != androidAppId) {
+      String googlePlayUrl =
+          "https://play.google.com/store/apps/details?id=$androidAppId";
+      canRedirectToGoogle = await canLaunch(googlePlayUrl);
+      if (canRedirectToGoogle) {
+        launch(googlePlayUrl);
+      }
+    }
+
+    ///跳转到H5官网下载地址
+    if (!canRedirectToGoogle && null != h5DownloadUrl) launch(h5DownloadUrl!);
   }
 }

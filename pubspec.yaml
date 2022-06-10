@@ -42,7 +42,9 @@ dependencies:
   path_provider: ^2.0.2
 
   # 应用安装插件
-  app_installer: ^1.1.0
+  #  app_installer: ^1.1.0
+
+  url_launcher: ^6.0.10
 
   # 微光
   shimmer: ^2.0.0

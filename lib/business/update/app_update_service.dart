@@ -39,18 +39,19 @@ class AppUpdateService {
           int.parse(resp.data["version_num"].toString()) >
               await AppUtil.appBuildNumber()) {
         if (showDialog) {
-          String? iosAppId;
+          Map<String, dynamic> address = {};
           try {
             ///获取后台地址字段中的ios_app_id值
-            iosAppId = convert.jsonDecode(resp.data["address"])["ios_app_id"];
+            address = convert.jsonDecode(resp.data["address"]);
           } catch (e) {}
 
           Get.dialog(
               AppUpdateDialog(
-                isForceUpdate: resp.data["force_update"].toString() == "1",
+                isForceUpdate: resp.data["force_update"].toString() == "0",
                 description: resp.data["description"],
-                fileKey: resp.data["oss_file_name"],
-                iosAppId: iosAppId,
+                iosAppId: address["ios_app_id"],
+                androidAppId: address["android_app_id"],
+                h5DownloadUrl: address["h5_download_url"],
               ),
               barrierDismissible: false);
         }
