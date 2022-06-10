@@ -1,6 +1,6 @@
-# example
+# wise_util_example
 
-A new Flutter project.
+Demonstrates how to use the wise_util plugin.
 
 ## Getting Started
 
