@@ -148,7 +148,7 @@ class AppUpdateDialog extends StatelessWidget {
     MethodChannel _channel = const MethodChannel('wise_util');
 
     canRedirectToGooglePlay =
-        await _channel.invokeMethod("isAppInstalled", "com.android.vending");
+        await _channel.invokeMethod("isPlayStoreInstalled");
 
     print("canRedirectToGoogle:$canRedirectToGooglePlay");
 

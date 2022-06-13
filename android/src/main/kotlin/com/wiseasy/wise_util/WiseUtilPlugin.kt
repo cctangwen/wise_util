@@ -1,7 +1,7 @@
 package com.wiseasy.wise_util
 
 import android.content.Context
-import android.text.TextUtils
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.annotation.NonNull
 import com.aliyun.sls.android.producer.LogProducerCallback
@@ -14,6 +14,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import java.io.File
+
 
 /** WiseUtilPlugin */
 class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
@@ -53,8 +54,8 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                 }
 
             }
-            "isAppInstalled" -> {
-                result.success(checkAppInstalled(context!!, call.arguments.toString()))
+            "isPlayStoreInstalled" -> {
+                result.success(isPlayStoreInstalled(context!!))
             }
             else -> {
                 result.notImplemented()
@@ -62,22 +63,13 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    fun checkAppInstalled(context: Context, pkgName: String): Boolean {
-        if (TextUtils.isEmpty(pkgName)) {
-            return false
+    fun isPlayStoreInstalled(context: Context): Boolean {
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo("com.android.vending", 0)
+            packageInfo.applicationInfo.enabled
+        } catch (exc: PackageManager.NameNotFoundException) {
+            false
         }
-        val packageManager = context.packageManager
-        // 获取已安装的app信息
-        val pkgInfos = packageManager.getInstalledPackages(0)
-        if (pkgInfos != null) {
-            for (i in pkgInfos.indices) {
-                val pkg = pkgInfos[i].packageName
-                if (pkgName == pkg) {
-                    return true
-                }
-            }
-        }
-        return false
     }
 
     private fun init(
