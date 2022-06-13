@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:is_app_installed/is_app_installed.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/res/wise_color.dart';
@@ -144,8 +144,12 @@ class AppUpdateDialog extends StatelessWidget {
 
   void _androidUpdate() async {
     bool? canRedirectToGooglePlay;
+
+    MethodChannel _channel = const MethodChannel('wise_util');
+
     canRedirectToGooglePlay =
-        await IsAppInstalled.isAppInstalled("com.android.vending");
+        await _channel.invokeMethod("isAppInstalled", "com.android.vending");
+
     print("canRedirectToGoogle:$canRedirectToGooglePlay");
 
     if (null != androidAppId) {

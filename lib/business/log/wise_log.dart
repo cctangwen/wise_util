@@ -21,7 +21,7 @@ class WiseLog {
 
   static config(String endpoint, String project, String logstore,
       String accessKeyID, String accessKeySecret, String securityToken) async {
-    await _channel.invokeMethod('config', [
+    await _channel.invokeMethod('init', [
       endpoint,
       project,
       logstore,
@@ -29,14 +29,6 @@ class WiseLog {
       accessKeySecret,
       securityToken
     ]);
-  }
-
-  static create() async {
-    await _channel.invokeMethod('create');
-  }
-
-  static setTopic(String topic) async {
-    await _channel.invokeMethod('setTopic', topic);
   }
 
   static addTag(Map<String, String> content) async {
