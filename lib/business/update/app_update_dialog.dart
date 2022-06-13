@@ -143,17 +143,13 @@ class AppUpdateDialog extends StatelessWidget {
   }
 
   void _androidUpdate() async {
-    bool? canRedirectToGooglePlay;
-
+    bool canRedirectToGooglePlay = false;
     MethodChannel _channel = const MethodChannel('wise_util');
-
     canRedirectToGooglePlay =
-        await _channel.invokeMethod("isPlayStoreInstalled");
-
+        await _channel.invokeMethod("isGooglePlayInstalled");
     print("canRedirectToGoogle:$canRedirectToGooglePlay");
-
     if (null != androidAppId) {
-      if (null != canRedirectToGooglePlay && canRedirectToGooglePlay == true) {
+      if (canRedirectToGooglePlay == true) {
         ///跳转到Google应用市场
         launch("https://play.google.com/store/apps/details?id=$androidAppId");
       } else {

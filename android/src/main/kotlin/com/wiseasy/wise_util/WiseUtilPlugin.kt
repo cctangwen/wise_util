@@ -1,6 +1,7 @@
 package com.wiseasy.wise_util
 
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.annotation.NonNull
@@ -8,6 +9,8 @@ import com.aliyun.sls.android.producer.LogProducerCallback
 import com.aliyun.sls.android.producer.LogProducerClient
 import com.aliyun.sls.android.producer.LogProducerConfig
 import com.aliyun.sls.android.producer.LogProducerException
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GooglePlayServicesUtil
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -54,8 +57,8 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                 }
 
             }
-            "isPlayStoreInstalled" -> {
-                result.success(isPlayStoreInstalled(context!!))
+            "isGooglePlayInstalled" -> {
+                result.success(isGooglePlayInstalled(context!!))
             }
             else -> {
                 result.notImplemented()
@@ -63,13 +66,47 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    fun isPlayStoreInstalled(context: Context): Boolean {
-        return try {
-            val packageInfo = context.packageManager.getPackageInfo("com.android.vending", 0)
-            packageInfo.applicationInfo.enabled
-        } catch (exc: PackageManager.NameNotFoundException) {
-            false
+    fun isGooglePlayInstalled(context: Context): Boolean {
+        val isHuawei = checkAppInstalled(context, "com.huawei.camera");
+        if (isHuawei) return false
+        val status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context)
+        return status == ConnectionResult.SUCCESS
+    }
+
+    fun checkAppInstalled(context: Context, pkgName: String): Boolean {
+        if (pkgName.isEmpty()) {
+            return false
         }
+        var packageInfo: PackageInfo?
+        try {
+            try {
+                packageInfo = context.packageManager.getPackageInfo(
+                    pkgName,
+                    PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES
+                )
+                if (packageInfo == null) {
+                    //donothing
+                } else {
+                    return true //true为安装了，false为未安装
+                }
+            } catch (e: Exception) {
+                packageInfo = null
+//                e.printStackTrace()
+            }
+            val packageManager = context.packageManager
+            val info = packageManager.getInstalledPackages(0)
+            if (info.isEmpty()) return false
+            for (i in info.indices) {
+                val name = info[i].packageName
+                if (pkgName.equals(name)) {
+                    return true
+                }
+            }
+        } catch (e: Exception) {
+            packageInfo = null
+//            e.printStackTrace()
+        }
+        return false
     }
 
     private fun init(
