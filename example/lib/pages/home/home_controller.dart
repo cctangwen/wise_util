@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wise_util/business/log/wise_log.dart';
 import 'package:wise_util/business/translate/wise_translate_service.dart';
@@ -8,7 +9,7 @@ class HomeController extends GetxController {
   final HttpManager _httpManager = Get.find<HttpManager>();
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
     _httpManager.setLoginPageAlisa("/style");
     _httpManager.addTokenInterceptor(
@@ -17,6 +18,9 @@ class HomeController extends GetxController {
     AppTranslateService.setSupportTranslate(true);
 
     WiseLog.init("WiseBoss");
+    MethodChannel _channel = const MethodChannel('is_app_installed2');
+    var s = await _channel.invokeMethod("getPlatformVersion");
+    print("s:$s");
   }
 
   switchTheme() {

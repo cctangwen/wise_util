@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import AliyunLogProducer
 
-public class SwiftWiseUtilPlugin: NSObject, FlutterPlugin {
+public class WiseUtilPlugin: NSObject, FlutterPlugin {
 
    var logClient: AliyunLog?;
 
