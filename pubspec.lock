@@ -198,6 +198,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.17.0"
+  is_app_installed:
+    dependency: "direct main"
+    description:
+      name: is_app_installed
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.4"
   js:
     dependency: transitive
     description:

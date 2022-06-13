@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:is_app_installed/is_app_installed.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/res/wise_color.dart';
@@ -143,24 +143,19 @@ class AppUpdateDialog extends StatelessWidget {
   }
 
   void _androidUpdate() async {
-    bool canRedirectToGoogle = false;
+    bool? canRedirectToGooglePlay;
+    canRedirectToGooglePlay =
+        await IsAppInstalled.isAppInstalled("com.android.vending");
+    print("canRedirectToGoogle:$canRedirectToGooglePlay");
 
-    MethodChannel _channel = const MethodChannel('wise_util');
-    canRedirectToGoogle =
-        await _channel.invokeMethod('isAppInstalled', "com.android.vending");
-    print("canRedirectToGoogle:$canRedirectToGoogle");
-
-    ///跳转到Google应用市场
     if (null != androidAppId) {
-      String googlePlayUrl =
-          "https://play.google.com/store/apps/details?id=$androidAppId";
-      canRedirectToGoogle = await canLaunch(googlePlayUrl);
-      if (canRedirectToGoogle) {
-        launch(googlePlayUrl);
+      if (null != canRedirectToGooglePlay && canRedirectToGooglePlay == true) {
+        ///跳转到Google应用市场
+        launch("https://play.google.com/store/apps/details?id=$androidAppId");
+      } else {
+        ///跳转到H5官网下载地址
+        if (null != h5DownloadUrl) launch(h5DownloadUrl!);
       }
     }
-
-    ///跳转到H5官网下载地址
-    if (!canRedirectToGoogle && null != h5DownloadUrl) launch(h5DownloadUrl!);
   }
 }

@@ -61,6 +61,8 @@ dependencies:
 
   encrypt: 5.0.1
 
+  is_app_installed: 0.0.4
+
 flutter:
   uses-material-design: true
   assets:
