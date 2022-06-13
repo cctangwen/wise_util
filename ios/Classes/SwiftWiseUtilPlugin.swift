@@ -7,7 +7,7 @@ public class SwiftWiseUtilPlugin: NSObject, FlutterPlugin {
    var logClient: AliyunLog?;
 
    public static func register(with registrar: FlutterPluginRegistrar) {
-     let channel = FlutterMethodChannel(name: "wise_log", binaryMessenger: registrar.messenger())
+     let channel = FlutterMethodChannel(name: "wise_util", binaryMessenger: registrar.messenger())
      let instance = SwiftWiseLogPlugin()
      registrar.addMethodCallDelegate(instance, channel: channel)
    }

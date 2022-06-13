@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -143,6 +144,11 @@ class AppUpdateDialog extends StatelessWidget {
 
   void _androidUpdate() async {
     bool canRedirectToGoogle = false;
+
+    MethodChannel _channel = const MethodChannel('wise_util');
+    canRedirectToGoogle =
+        await _channel.invokeMethod('isAppInstalled', "com.android.vending");
+    print("canRedirectToGoogle:$canRedirectToGoogle");
 
     ///跳转到Google应用市场
     if (null != androidAppId) {

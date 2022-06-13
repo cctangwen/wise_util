@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wise_util/business/log/wise_log.dart';
 import 'package:wise_util/business/translate/wise_translate_service.dart';
 import 'package:wise_util/util/http/http_manager.dart';
 
@@ -14,6 +15,8 @@ class HomeController extends GetxController {
         "https://gw.paycloud.world/wallet/ucs/app/user/login");
     AppTranslateService.setProjectName("WiseBoss");
     AppTranslateService.setSupportTranslate(true);
+
+    WiseLog.init("WiseBoss");
   }
 
   switchTheme() {
