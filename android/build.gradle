@@ -39,5 +39,4 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.aliyun.openservices:aliyun-log-android-sdk:2.6.0'
-    implementation 'com.google.android.gms:play-services:3.1.36'
 }

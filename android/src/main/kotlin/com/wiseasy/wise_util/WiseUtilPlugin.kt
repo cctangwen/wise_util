@@ -9,8 +9,6 @@ import com.aliyun.sls.android.producer.LogProducerCallback
 import com.aliyun.sls.android.producer.LogProducerClient
 import com.aliyun.sls.android.producer.LogProducerConfig
 import com.aliyun.sls.android.producer.LogProducerException
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GooglePlayServicesUtil
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -69,8 +67,13 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
     fun isGooglePlayInstalled(context: Context): Boolean {
         val isHuawei = checkAppInstalled(context, "com.huawei.camera");
         if (isHuawei) return false
-        val status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context)
-        return status == ConnectionResult.SUCCESS
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo("com.android.vending", 0)
+            packageInfo.applicationInfo.enabled
+        } catch (exc: PackageManager.NameNotFoundException) {
+            false
+        }
+        return false
     }
 
     fun checkAppInstalled(context: Context, pkgName: String): Boolean {
