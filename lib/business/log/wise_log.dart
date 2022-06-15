@@ -26,7 +26,6 @@ class WiseLog {
         appAlisa
       ]);
       _initSuccess = true;
-      await addDeviceTag();
     }
   }
 
