@@ -7,6 +7,8 @@ import '/config/wise_config.dart';
 import '/res/wise_localizations.dart';
 import '/widget/wise_loading.dart';
 import '/widget/wise_snack_bar.dart';
+import '../date_util.dart';
+import '../random_util.dart';
 import 'http_log_interceptor.dart';
 import 'http_response_data.dart';
 
@@ -103,6 +105,8 @@ class HttpManager {
     } else {
       _dio!.options.headers.remove("x-auth-token");
     }
+    _dio!.options.headers["X-Psn"] =
+        "99${DateUtil.formatDate(DateTime.now(), format: "MMddHHmmss")}${RandomUtil.number(8)}";
     WiseString strings =
         WiseLocalizations.of(Get.context!)?.currentLocalization ??
             EnWiseString();
