@@ -17,7 +17,7 @@ class HomeController extends GetxController {
     AppTranslateService.setSupportTranslate(true);
 
     await WiseLog.init("WiseBoss");
-    WiseLog.addTag("123123123123");
+    WiseLog.addTag();
   }
 
   switchTheme() {

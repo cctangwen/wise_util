@@ -29,7 +29,7 @@ class WiseLog {
     }
   }
 
-  static addTag(String user) async {
+  static addTag(String? user) async {
     var params = Map<String, dynamic>();
     params['user_identification'] = user;
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
