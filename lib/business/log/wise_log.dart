@@ -1,5 +1,7 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:wise_util/business/log/wise_log_service.dart';
 import 'package:wise_util/util/date_util.dart';
 
@@ -7,66 +9,75 @@ import 'package:wise_util/util/date_util.dart';
 class WiseLog {
   static const MethodChannel _channel = const MethodChannel('wise_util');
 
+  static bool _initSuccess = false;
+
   static init(String appAlisa) async {
+    if (_initSuccess) return;
     var resp = await WiseLogService.getAccessToken(appAlisa);
     if (null != resp) {
       Map<String, dynamic> credentials = resp['logservice_credentials'];
-      await config(
-          credentials['endpoint'],
-          credentials['project'],
-          credentials['logstore'],
-          credentials['accessKeyId'],
-          credentials['accessKeySecret'],
-          credentials['securityToken'],
-          appAlisa);
+      await _channel.invokeMethod('init', [
+        credentials['endpoint'],
+        credentials['project'],
+        credentials['logstore'],
+        credentials['accessKeyId'],
+        credentials['accessKeySecret'],
+        credentials['securityToken'],
+        appAlisa
+      ]);
+      _initSuccess = true;
     }
   }
 
-  static config(
-      String endpoint,
-      String project,
-      String logstore,
-      String accessKeyID,
-      String accessKeySecret,
-      String securityToken,
-      String appAlisa) async {
-    await _channel.invokeMethod('init', [
-      endpoint,
-      project,
-      logstore,
-      accessKeyID,
-      accessKeySecret,
-      securityToken,
-      appAlisa
-    ]);
-  }
-
-  static addTag(Map<String, String> content) async {
-    await _channel.invokeMethod('addTag', content);
-  }
-
-  static debug(dynamic content) async {
+  static addTag(String user) async {
     var params = Map<String, dynamic>();
-    params["time"] = DateUtil.formatDate(DateTime.now());
-    params["level"] = "debug";
-    params["content"] = content.toString();
-    debugPrint(content);
-    return await _channel.invokeMethod('addLog', params);
+    params['user_identification'] = user;
+    DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    if (GetPlatform.isIOS) {
+      var device = await deviceInfoPlugin.iosInfo;
+      params['device_type'] = 'ios';
+      params['device_model'] = device.model;
+      params['device_os_version'] = device.systemVersion;
+    } else {
+      var device = await deviceInfoPlugin.androidInfo;
+      params['device_type'] = 'android';
+      params['device_model'] = device.model;
+      params['device_os_version'] = device.version.release;
+    }
+    await _channel.invokeMethod('addTag', params);
   }
 
-  static info(dynamic content) async {
+  static debug(dynamic content) {
+    debugPrint(content);
+  }
+
+  static info(dynamic content) {
+    debugPrint(content);
+    if (!_initSuccess) return;
     var params = Map<String, dynamic>();
     params["time"] = DateUtil.formatDate(DateTime.now());
     params["level"] = "info";
     params["content"] = content;
-    return await _channel.invokeMethod('addLog', params);
+    _channel.invokeMethod('addLog', params);
   }
 
-  static error(dynamic content) async {
+  static error(dynamic content) {
+    debugPrint(content);
+    if (!_initSuccess) return;
     var params = Map<String, dynamic>();
     params["time"] = DateUtil.formatDate(DateTime.now());
     params["level"] = "error";
     params["content"] = content;
-    return await _channel.invokeMethod('addLog', params);
+    _channel.invokeMethod('addLog', params);
+  }
+
+  static request(dynamic content) {
+    debugPrint(content);
+    if (!_initSuccess) return;
+    var params = Map<String, dynamic>();
+    params["time"] = DateUtil.formatDate(DateTime.now());
+    params["level"] = "request";
+    params["content"] = content;
+    _channel.invokeMethod('addLog', params);
   }
 }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:wise_util/util/http/http_manager.dart';
 
 class WiseLogService {
-  ///提交翻译词汇
+  ///获取getAccessToken
   static Future<Map<String, dynamic>?> getAccessToken(String appName) async {
     final HttpManager httpManager = Get.find<HttpManager>();
     String api = kReleaseMode

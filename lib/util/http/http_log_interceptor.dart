@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:wise_util/business/log/wise_log.dart';
 
 class HttpLogInterceptor extends Interceptor {
   @override
@@ -19,7 +20,8 @@ class HttpLogInterceptor extends Interceptor {
       } else
         requestStr += "- BODY:${data.toString()}\n";
     }
-    print(requestStr);
+    WiseLog.request(requestStr);
+    // print(requestStr);
     handler.next(options);
   }
 
@@ -29,14 +31,14 @@ class HttpLogInterceptor extends Interceptor {
         "- URL:\n${err.requestOptions.baseUrl + err.requestOptions.path}\n"
         "- METHOD: ${err.requestOptions.method}\n";
     errorStr +=
-        "- HEADER:\n${err.response?.headers.map.mapToStructureString()}\n";
+        "- HEADER:${err.requestOptions.headers.mapToStructureString()}\n";
     if (err.response != null && err.response!.data != null) {
       errorStr += "- ERROR:\n${_parseResponse(err.response!)}\n";
     } else {
       errorStr += "- ERROR-TYPE: ${err.type}\n";
       errorStr += "- MSG: ${err.message}\n";
     }
-    printWrapped(errorStr);
+    WiseLog.request(errorStr);
     handler.next(err);
   }
 
@@ -53,7 +55,8 @@ class HttpLogInterceptor extends Interceptor {
     if (response.data != null) {
       responseStr += "- BODY:${_parseResponse(response)}";
     }
-    printWrapped(responseStr);
+    // printWrapped(responseStr);
+    WiseLog.request(responseStr);
     handler.next(response);
   }
 
