@@ -26,12 +26,18 @@ class WiseLog {
         appAlisa
       ]);
       _initSuccess = true;
+      await addDeviceTag();
     }
   }
 
-  static addTag(String? user) async {
+  static addUserTag(String user) async {
     var params = Map<String, dynamic>();
     params['user_identification'] = user;
+    await _channel.invokeMethod('addTag', params);
+  }
+
+  static addDeviceTag() async {
+    var params = Map<String, dynamic>();
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (GetPlatform.isIOS) {
       var device = await deviceInfoPlugin.iosInfo;
