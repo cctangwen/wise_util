@@ -34,7 +34,7 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         when (call.method) {
             "init" -> {
                 var params = call.arguments as List<String>
-                init(params[0], params[1], params[2], params[3], params[4], params[5])
+                init(params[0], params[1], params[2], params[3], params[4], params[5], params[6])
                 result.success("")
             }
             "addLog" -> {
@@ -118,7 +118,8 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         logStore: String?,
         accessKeyId: String?,
         accessKeySecret: String?,
-        accessKeyToken: String?
+        accessKeyToken: String?,
+        appAlisa: String,
     ) {
         try {
             config =
@@ -132,9 +133,9 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                     accessKeyToken
                 )
             // 设置主题
-            config!!.setTopic("test_topic")
+            config!!.setTopic(appAlisa)
             // 设置tag信息，此tag会附加在每条日志上
-            config!!.addTag("test", "test_tag")
+//            config!!.addTag("test", "test_tag")
             // 每个缓存的日志包的大小上限，取值为1~5242880，单位为字节。默认为1024 * 1024
             config!!.setPacketLogBytes(1024 * 1024)
             // 每个缓存的日志包中包含日志数量的最大值，取值为1~4096，默认为1024

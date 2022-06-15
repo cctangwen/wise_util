@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:wise_util/business/log/wise_log_service.dart';
+import 'package:wise_util/util/date_util.dart';
 
 ///阿里云远程日志服务
 class WiseLog {
@@ -15,19 +17,27 @@ class WiseLog {
           credentials['logstore'],
           credentials['accessKeyId'],
           credentials['accessKeySecret'],
-          credentials['securityToken']);
+          credentials['securityToken'],
+          appAlisa);
     }
   }
 
-  static config(String endpoint, String project, String logstore,
-      String accessKeyID, String accessKeySecret, String securityToken) async {
+  static config(
+      String endpoint,
+      String project,
+      String logstore,
+      String accessKeyID,
+      String accessKeySecret,
+      String securityToken,
+      String appAlisa) async {
     await _channel.invokeMethod('init', [
       endpoint,
       project,
       logstore,
       accessKeyID,
       accessKeySecret,
-      securityToken
+      securityToken,
+      appAlisa
     ]);
   }
 
@@ -35,10 +45,28 @@ class WiseLog {
     await _channel.invokeMethod('addTag', content);
   }
 
-  static addLog(String name, [Map<String, String>? content]) async {
-    if (content == null) content = {};
-    content["name"] = name;
-    content["gmt_create"] = "${DateTime.now().millisecondsSinceEpoch ~/ 1000}";
-    return await _channel.invokeMethod('addLog', content);
+  static debug(dynamic content) async {
+    var params = Map<String, dynamic>();
+    params["time"] = DateUtil.formatDate(DateTime.now());
+    params["level"] = "debug";
+    params["content"] = content.toString();
+    debugPrint(content);
+    return await _channel.invokeMethod('addLog', params);
+  }
+
+  static info(dynamic content) async {
+    var params = Map<String, dynamic>();
+    params["time"] = DateUtil.formatDate(DateTime.now());
+    params["level"] = "info";
+    params["content"] = content;
+    return await _channel.invokeMethod('addLog', params);
+  }
+
+  static error(dynamic content) async {
+    var params = Map<String, dynamic>();
+    params["time"] = DateUtil.formatDate(DateTime.now());
+    params["level"] = "error";
+    params["content"] = content;
+    return await _channel.invokeMethod('addLog', params);
   }
 }
