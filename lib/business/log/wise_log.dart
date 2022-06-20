@@ -1,32 +1,43 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wise_util/business/log/wise_log_service.dart';
+import 'package:wise_util/util/app_util.dart';
 import 'package:wise_util/util/date_util.dart';
 
 ///阿里云远程日志服务
 class WiseLog {
   static const MethodChannel _channel = const MethodChannel('wise_util');
 
-  static bool _initSuccess = false;
-
-  static init(String appAlisa) async {
-    if (_initSuccess) return;
+  static init(
+      {required String appAlisa,
+      required String endpoint,
+      required String project,
+      required String logstore}) async {
+    await _channel.invokeMethod('init', [
+      endpoint,
+      project,
+      logstore,
+      "1111111111",
+      "2222222222",
+      "3333333333",
+      appAlisa
+    ]);
     var resp = await WiseLogService.getAccessToken(appAlisa);
     if (null != resp) {
       Map<String, dynamic> credentials = resp['logservice_credentials'];
       await _channel.invokeMethod('init', [
-        credentials['endpoint'],
-        credentials['project'],
-        credentials['logstore'],
+        endpoint,
+        project,
+        logstore,
         credentials['accessKeyId'],
         credentials['accessKeySecret'],
         credentials['securityToken'],
         appAlisa
       ]);
-      _initSuccess = true;
     }
+    addDeviceTag();
   }
 
   static addUserTag(String user) async {
@@ -49,6 +60,7 @@ class WiseLog {
       params['device_model'] = device.model;
       params['device_os_version'] = device.version.release;
     }
+    params['app_info'] = await AppUtil.appInfo();
     await _channel.invokeMethod('addTag', params);
   }
 
@@ -58,7 +70,6 @@ class WiseLog {
 
   static info(dynamic content) {
     debugPrint(content);
-    if (!_initSuccess) return;
     var params = Map<String, dynamic>();
     params["time"] = DateUtil.formatDate(DateTime.now());
     params["level"] = "info";
@@ -68,7 +79,6 @@ class WiseLog {
 
   static error(dynamic content) {
     debugPrint(content);
-    if (!_initSuccess) return;
     var params = Map<String, dynamic>();
     params["time"] = DateUtil.formatDate(DateTime.now());
     params["level"] = "error";
@@ -78,7 +88,6 @@ class WiseLog {
 
   static request(dynamic content) {
     debugPrint(content);
-    if (!_initSuccess) return;
     var params = Map<String, dynamic>();
     params["time"] = DateUtil.formatDate(DateTime.now());
     params["level"] = "request";

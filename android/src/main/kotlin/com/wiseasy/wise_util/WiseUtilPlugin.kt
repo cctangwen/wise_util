@@ -20,9 +20,9 @@ import java.io.File
 /** WiseUtilPlugin */
 class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
-    private var client: LogProducerClient? = null
+    private var logProducerClient: LogProducerClient? = null
     private var context: Context? = null
-    var config: LogProducerConfig? = null
+    var logProducerConfig: LogProducerConfig? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -33,8 +33,16 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "init" -> {
-                var params = call.arguments as List<String>
-                init(params[0], params[1], params[2], params[3], params[4], params[5], params[6])
+                val params = call.arguments as List<String>
+                initAliLog(
+                    params[0],
+                    params[1],
+                    params[2],
+                    params[3],
+                    params[4],
+                    params[5],
+                    params[6]
+                )
                 result.success("")
             }
             "addLog" -> {
@@ -44,16 +52,15 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                 for ((key, value) in entrySet) {
                     log.putContent(key, value)
                 }
-                client!!.addLog(log)
+                logProducerClient?.addLog(log)
                 result.success("")
             }
             "addTag" -> {
                 val params = call.arguments as Map<String, String>
                 val entrySet: Set<Map.Entry<String, String>> = params.entries
                 for ((key, value) in entrySet) {
-                    config!!.addTag(key, value)
+                    logProducerConfig?.addTag(key, value)
                 }
-
             }
             "isGooglePlayInstalled" -> {
                 result.success(isGooglePlayInstalled(context!!))
@@ -64,7 +71,8 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    fun isGooglePlayInstalled(context: Context): Boolean {
+    //是否安装了谷歌市场
+    private fun isGooglePlayInstalled(context: Context): Boolean {
         val isHuawei = checkAppInstalled(context, "com.huawei.camera");
         if (isHuawei) return false
         return try {
@@ -73,56 +81,44 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
         } catch (exc: PackageManager.NameNotFoundException) {
             false
         }
-        return false
     }
 
-    fun checkAppInstalled(context: Context, pkgName: String): Boolean {
-        if (pkgName.isEmpty()) {
-            return false
-        }
-        var packageInfo: PackageInfo?
+    //按包名检查应用是否安装
+    private fun checkAppInstalled(context: Context, pkgName: String): Boolean {
+        val packageInfo: PackageInfo?
         try {
-            try {
-                packageInfo = context.packageManager.getPackageInfo(
-                    pkgName,
-                    PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES
-                )
-                if (packageInfo == null) {
-                    //donothing
-                } else {
-                    return true //true为安装了，false为未安装
-                }
-            } catch (e: Exception) {
-                packageInfo = null
-//                e.printStackTrace()
+            packageInfo = context.packageManager.getPackageInfo(
+                pkgName,
+                PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES
+            )
+            if (packageInfo != null) {
+                return true
             }
             val packageManager = context.packageManager
             val info = packageManager.getInstalledPackages(0)
             if (info.isEmpty()) return false
             for (i in info.indices) {
                 val name = info[i].packageName
-                if (pkgName.equals(name)) {
+                if (pkgName == name) {
                     return true
                 }
             }
         } catch (e: Exception) {
-            packageInfo = null
-//            e.printStackTrace()
         }
         return false
     }
 
-    private fun init(
-        endPoint: String?,
-        project: String?,
-        logStore: String?,
-        accessKeyId: String?,
-        accessKeySecret: String?,
-        accessKeyToken: String?,
+    private fun initAliLog(
+        endPoint: String,
+        project: String,
+        logStore: String,
+        accessKeyId: String,
+        accessKeySecret: String,
+        accessKeyToken: String,
         appAlisa: String,
     ) {
         try {
-            config =
+            logProducerConfig =
                 LogProducerConfig(
                     context,
                     endPoint,
@@ -133,44 +129,42 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                     accessKeyToken
                 )
             // 设置主题
-            config!!.setTopic(appAlisa)
-            // 设置tag信息，此tag会附加在每条日志上
-//            config!!.addTag("test", "test_tag")
+            logProducerConfig?.setTopic(appAlisa)
             // 每个缓存的日志包的大小上限，取值为1~5242880，单位为字节。默认为1024 * 1024
-            config!!.setPacketLogBytes(1024 * 1024)
+            logProducerConfig?.setPacketLogBytes(1024 * 1024)
             // 每个缓存的日志包中包含日志数量的最大值，取值为1~4096，默认为1024
-            config!!.setPacketLogCount(1024)
+            logProducerConfig?.setPacketLogCount(1024)
             // 被缓存日志的发送超时时间，如果缓存超时，则会被立即发送，单位为毫秒，默认为3000
-            config!!.setPacketTimeout(3000)
+            logProducerConfig?.setPacketTimeout(30000)
             // 单个Producer Client实例可以使用的内存的上限，超出缓存时add_log接口会立即返回失败
             // 默认为64 * 1024 * 1024
-            config!!.setMaxBufferLimit(64 * 1024 * 1024)
+            logProducerConfig?.setMaxBufferLimit(64 * 1024 * 1024)
             // 发送线程数，默认为1
-            config!!.setSendThreadCount(1)
+            logProducerConfig?.setSendThreadCount(1)
 
             //网络连接超时时间，整数，单位秒，默认为10
-            config!!.setConnectTimeoutSec(10)
+            logProducerConfig?.setConnectTimeoutSec(10)
             //日志发送超时时间，整数，单位秒，默认为15
-            config!!.setSendTimeoutSec(10)
+            logProducerConfig?.setSendTimeoutSec(10)
             //flusher线程销毁最大等待时间，整数，单位秒，默认为1
-            config!!.setDestroyFlusherWaitSec(2)
+            logProducerConfig?.setDestroyFlusherWaitSec(2)
             //sender线程池销毁最大等待时间，整数，单位秒，默认为1
-            config!!.setDestroySenderWaitSec(2)
+            logProducerConfig?.setDestroySenderWaitSec(2)
             //数据上传时的压缩类型，默认为LZ4压缩，0 不压缩，1 LZ4压缩，默认为1
-            config!!.setCompressType(1)
+            logProducerConfig?.setCompressType(1)
             //设备时间与标准时间之差，值为标准时间-设备时间，一般此种情况用户客户端设备时间不同步的场景
             //整数，单位秒，默认为0；比如当前设备时间为1607064208, 标准时间为1607064308，则值设置为 1607064308 - 1607064208 = 10
-            config!!.setNtpTimeOffset(3)
+            logProducerConfig?.setNtpTimeOffset(3)
             //日志时间与本机时间之差，超过该大小后会根据 `drop_delay_log` 选项进行处理。
             //一般此种情况只会在设置persistent的情况下出现，即设备下线后，超过几天/数月启动，发送退出前未发出的日志
             //整数，单位秒，默认为7*24*3600，即7天
-            config!!.setMaxLogDelayTime(7 * 24 * 3600)
+            logProducerConfig?.setMaxLogDelayTime(7 * 24 * 3600)
             //对于超过 `max_log_delay_time` 日志的处理策略
             //0 不丢弃，把日志时间修改为当前时间; 1 丢弃，默认为 1 （丢弃）
-            config!!.setDropDelayLog(0)
+            logProducerConfig?.setDropDelayLog(0)
             //是否丢弃鉴权失败的日志，0 不丢弃，1丢弃
             //默认为 0，即不丢弃
-            config!!.setDropUnauthorizedLog(0)
+            logProducerConfig?.setDropUnauthorizedLog(0)
             // 是否使用主线程回调
             // false: 使用主线程回调。回调会在主线程上执行，且每个 client 都有自己单独的回调。
             // true: 使用 sender 线程回调。回调会在 sender 现呈上执行，每次执行回调时都会 attach 一个新的 java 线程，所有 client 共用一个回调。
@@ -180,24 +174,24 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
              */
             // 1 开启断点续传功能， 0 关闭
             // 每次发送前会把日志保存到本地的binlog文件，只有发送成功才会删除，保证日志上传At Least Once
-            config!!.setPersistent(1)
+            logProducerConfig?.setPersistent(1)
             // 持久化的文件名，需要保证文件所在的文件夹已创建。
             // !!!!!!!!!!!!!!!!!!!注意!!!!!!!!!!!!!!!!!!!
             // 配置多个客户端时，不应设置相同文件
-            config!!.setPersistentFilePath(
+            logProducerConfig?.setPersistentFilePath(
                 context!!.filesDir.absolutePath + java.lang.String.format(
                     "%slog_data.dat",
                     File.separator
                 )
             )
             // 是否每次AddLog强制刷新，高可靠性场景建议打开
-            config!!.setPersistentForceFlush(0)
+            logProducerConfig?.setPersistentForceFlush(0)
             // 持久化文件滚动个数，建议设置成10。
-            config!!.setPersistentMaxFileCount(10)
+            logProducerConfig?.setPersistentMaxFileCount(10)
             // 每个持久化文件的大小，建议设置成1-10M
-            config!!.setPersistentMaxFileSize(1024 * 1024)
+            logProducerConfig?.setPersistentMaxFileSize(1024 * 1024)
             // 本地最多缓存的日志数，不建议超过1M，通常设置为65536即可
-            config!!.setPersistentMaxLogCount(65536)
+            logProducerConfig?.setPersistentMaxLogCount(65536)
             /**
              * 以下为通过 LogProducerConfig 构造一个 LogProducerClient 实例
              */
@@ -221,8 +215,11 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
                         )
                     )
                 }
+            if (null != logProducerClient) {
+                logProducerClient!!.destroyLogProducer();
+            }
             // 需要关注日志的发送成功或失败状态时, 第二个参数需要传入一个 callbak
-            client = LogProducerClient(config, callback)
+            logProducerClient = LogProducerClient(logProducerConfig, callback)
         } catch (e: LogProducerException) {
             e.printStackTrace()
         }
