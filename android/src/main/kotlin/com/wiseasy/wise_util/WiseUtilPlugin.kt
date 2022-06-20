@@ -135,7 +135,7 @@ class WiseUtilPlugin : FlutterPlugin, MethodCallHandler {
             // 每个缓存的日志包中包含日志数量的最大值，取值为1~4096，默认为1024
             logProducerConfig?.setPacketLogCount(1024)
             // 被缓存日志的发送超时时间，如果缓存超时，则会被立即发送，单位为毫秒，默认为3000
-            logProducerConfig?.setPacketTimeout(30000)
+            logProducerConfig?.setPacketTimeout(1800000)
             // 单个Producer Client实例可以使用的内存的上限，超出缓存时add_log接口会立即返回失败
             // 默认为64 * 1024 * 1024
             logProducerConfig?.setMaxBufferLimit(64 * 1024 * 1024)
