@@ -2,48 +2,11 @@ import Flutter
 import UIKit
 import AliyunLogProducer
 
-public class WiseUtilPlugin: NSObject, FlutterPlugin {
-
-   var logClient: AliyunLog?;
-
-   public static func register(with registrar: FlutterPluginRegistrar) {
-     let channel = FlutterMethodChannel(name: "wise_util", binaryMessenger: registrar.messenger())
-     let instance = SwiftWiseLogPlugin()
-     registrar.addMethodCallDelegate(instance, channel: channel)
-   }
-
-   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-         if(call.method == "init"){
-             let params = call.arguments as! [String];
-             logClient = AliyunLog(endpoint: params[0], project: params[1], logstore: params[2], accessKeyID: params[3], accessKeySecret: params[4],securityToken:params[5])
-             result(true)
-         }
-         guard let client = logClient else {
-             result(false)
-             return
-         }
-         if (call.method == "create") {
-             client.create()
-             result(nil)
-         } else if (call.method == "setTopic") {
-             client.setTopic(topic: call.arguments as! String)
-             result(nil)
-         } else if (call.method == "addTag") {
-             client.addTag(content: call.arguments as! [String: String])
-             result(nil)
-         } else if (call.method == "addLog") {
-             result(client.addLog(content: call.arguments as! [String: String]))
-         } else {
-             result(nil)
-         }
-     }
-}
-
 class AliyunLog {
     private var mLogConfig: LogProducerConfig;
     private lazy var mLogClient: LogProducerClient = LogProducerClient();
 
-    init(endpoint:String, project:String, logstore:String, accessKeyID:String, accessKeySecret:String,securityToken:String) {
+    init(endpoint:String, project:String, logstore:String, accessKeyID:String, accessKeySecret:String,securityToken:String,appAlisa:String) {
         mLogConfig = LogProducerConfig(endpoint:endpoint, project:project, logstore:logstore, accessKeyID:accessKeyID, accessKeySecret:accessKeySecret,securityToken:securityToken)!
         // 设置默认使用https
         mLogConfig.setUsingHttp(1)
@@ -51,9 +14,9 @@ class AliyunLog {
         let file = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
         let path = file! + "/log.dat"
         mLogConfig.setPersistentFilePath(path)
-    }
-
-    func create(){
+        mLogConfig.setPacketTimeout(30000)
+        setTopic(topic: appAlisa)
+        mLogClient.destroyLogProducer()
         mLogClient = LogProducerClient(logProducerConfig: mLogConfig)
     }
 
@@ -74,5 +37,41 @@ class AliyunLog {
             log.putContent(key, value: value)
         }
         return mLogClient.add(log, flush:0) == LogProducerResult.OK
+    }
+}
+
+
+public class SwiftWiseLogPlugin: NSObject, FlutterPlugin {
+
+   var logClient: AliyunLog?;
+
+  public static func register(with registrar: FlutterPluginRegistrar) {
+    let channel = FlutterMethodChannel(name: "wise_log", binaryMessenger: registrar.messenger())
+    let instance = SwiftWiseLogPlugin()
+    registrar.addMethodCallDelegate(instance, channel: channel)
+  }
+
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if(call.method == "init"){
+            let params = call.arguments as! [String];
+            logClient = AliyunLog(endpoint: params[0], project: params[1], logstore: params[2], accessKeyID: params[3], accessKeySecret: params[4],securityToken:params[5],appAlisa: params[6])
+            result(true)
+        }
+        guard let client = logClient else {
+            result(false)
+            return
+        }
+
+        if (call.method == "setTopic") {
+            client.setTopic(topic: call.arguments as! String)
+            result(nil)
+        } else if (call.method == "addTag") {
+            client.addTag(content: call.arguments as! [String: String])
+            result(nil)
+        } else if (call.method == "addLog") {
+            result(client.addLog(content: call.arguments as! [String: String]))
+        } else {
+            result(nil)
+        }
     }
 }
