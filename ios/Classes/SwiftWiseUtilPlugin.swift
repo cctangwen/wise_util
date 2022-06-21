@@ -40,7 +40,7 @@ class AliyunLog {
     }
 }
 
-public class WiseUtilPlugin: NSObject, FlutterPlugin {
+public class SwiftWiseUtilPlugin: NSObject, FlutterPlugin {
    var logClient: AliyunLog?;
 
   public static func register(with registrar: FlutterPluginRegistrar) {
