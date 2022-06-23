@@ -26,17 +26,21 @@ class WiseContainer extends StatelessWidget {
 
   final GestureTapCallback? onTap;
 
-  WiseContainer(
-      {required this.child,
-      this.width,
-      this.height,
-      this.color,
-      this.borderRadius,
-      this.padding,
-      this.margin,
-      this.border,
-      this.boxShadow,
-      this.onTap});
+  final DecorationImage? image;
+
+  WiseContainer({
+    required this.child,
+    this.width,
+    this.height,
+    this.color,
+    this.borderRadius,
+    this.padding,
+    this.margin,
+    this.border,
+    this.boxShadow,
+    this.onTap,
+    this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,7 @@ class WiseContainer extends StatelessWidget {
         border: border,
         color: color ?? WiseColor.colorSurface(),
         boxShadow: boxShadow,
+        image: image,
       ),
     );
   }
