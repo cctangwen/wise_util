@@ -35,6 +35,8 @@ class WiseAvatar extends StatelessWidget {
 
   final Widget? defaultImage;
 
+  final bool nullImage;
+
   WiseAvatar({
     this.size,
     this.src,
@@ -45,10 +47,14 @@ class WiseAvatar extends StatelessWidget {
     this.backgroundColor,
     this.color,
     this.defaultImage,
+    this.nullImage = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (nullImage) {
+      return _buildDefaultAvatarImage();
+    }
     if (null != src) {
       return ClipOval(
         child: CachedNetworkImage(
