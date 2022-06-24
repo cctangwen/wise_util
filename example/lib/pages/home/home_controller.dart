@@ -16,11 +16,12 @@ class HomeController extends GetxController {
     AppTranslateService.setProjectName("WiseBoss");
     AppTranslateService.setSupportTranslate(true);
 
-    WiseLog.init(
+    await WiseLog.init(
         appAlisa: "WiseBoss",
         endpoint: "https://eu-west-1.log.aliyuncs.com",
         project: "k8s-log-ce6e41397056c4e8084434f1bf0c552ff",
         logstore: "wiseboss-app-log");
+    WiseLog.addUserTag("我是蒲攀");
   }
 
   switchTheme() {

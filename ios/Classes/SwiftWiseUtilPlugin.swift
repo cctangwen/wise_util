@@ -14,7 +14,7 @@ class AliyunLog {
         let file = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
         let path = file! + "/log.dat"
         mLogConfig.setPersistentFilePath(path)
-        mLogConfig.setPacketTimeout(30000)
+        mLogConfig.setPacketTimeout(1800000)
         setTopic(topic: appAlisa)
         mLogClient.destroyLogProducer()
         mLogClient = LogProducerClient(logProducerConfig: mLogConfig)
